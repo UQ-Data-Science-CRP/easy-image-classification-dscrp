@@ -26,24 +26,20 @@ No prior machine learning experience is required, but a basic familiarity with P
 
 By the end of this workshop, participants will be able to:
 
-- Understand the key concepts behind image classification and object detection
-- Annotate and prepare an image dataset using Roboflow
-- Train an image classification or object detection model using Roboflow's AutoML tools
-- Export a trained model and integrate it into a Python script
-- Evaluate model performance and understand common pitfalls
-- Identify suitable use cases for automated image classification in their own work
+1. Understand the key concepts behind deep learning, image classification, and object detection.
+2. Annotate and prepare an image dataset with the help of foundational models.
+3. Learn the basics of training, evaluating, and testing models.
+4. Hands-on use and testing of computer vision models in Python using open-source libraries.
 
 ---
 
 ## Workshop Topics
 
-1. **Introduction to computer vision** — What is image classification vs. object detection? When should you use each?
-2. **Dataset preparation** — Sourcing images, organising classes, and best practices for building a training dataset
-3. **Image annotation with Roboflow** — Labelling images using Roboflow's annotation tools and applying dataset augmentations
-4. **Model training** — Using Roboflow's AutoML pipeline to train a model without writing any ML code
-5. **Exporting and deploying with Python** — Using the Roboflow Python SDK to load a trained model and run inference on new images
-6. **Model evaluation** — Interpreting accuracy metrics, confusion matrices, and understanding model limitations
-7. **Practical applications and next steps** — Discussion of real-world use cases and how to extend the workflow for custom projects
+1. **Intro to computer vision** — Key concepts in deep learning, image classification, and object detection, and when to apply each.
+2. **Dataset preparation** — Sourcing and organising images, labelling with foundational model assistance, and applying dataset augmentations in Roboflow.
+3. **Basics of training, evaluation, and testing** — Running a training pipeline, interpreting performance metrics, and testing model predictions.
+4. **Easy deployment of models** — Using the Roboflow Python SDK and open-source libraries to run inference on new images.
+5. **Practical applications and next steps** — Real-world use cases and how to extend the workflow for your own research or projects.
 
 ---
 
