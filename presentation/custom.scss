@@ -1,0 +1,208 @@
+/*-- scss:defaults --*/
+
+// UQ brand palette
+// Source of truth: resources/theme_instructions.md
+$uq-purple:        #51247A;   // title slide background only
+$uq-purple-dark:   #3B1A5A;
+$uq-purple-light:  #7A4FA3;
+$uq-magenta:       #962A8B;   // headings & subheadings
+$uq-red:           #E62645;
+$uq-orange:        #EB602B;   // warnings
+$uq-green:         #2EA836;   // tips
+$uq-blue:          #00A2C7;
+$uq-blue-alt:      #4085C6;   // mermaid diagrams
+$uq-grey:          #44546A;
+$uq-grey-light:    #E7E6E6;
+$uq-black:         #000000;
+
+// Typography
+$font-family-sans-serif: "Helvetica Neue", Arial, "Liberation Sans", sans-serif !default;
+$presentation-font-size-root: 30px;
+$presentation-heading-font: "Helvetica Neue", Arial, sans-serif !default;
+$presentation-heading-color: $uq-magenta !default;
+$presentation-heading-font-weight: 700;
+
+// Base colours
+$body-bg: #FFFFFF;
+$body-color: #1c1c1c;
+$link-color: $uq-blue-alt;
+$selection-bg: rgba($uq-purple, 0.25);
+
+// Code
+$code-color: $uq-purple-dark;
+$code-block-bg: #F7F4FB;
+$code-block-border-color: $uq-purple-light;
+
+/*-- scss:rules --*/
+
+.reveal .slide-background-content {
+  background-color: #FFFFFF;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  color: $uq-magenta;
+  letter-spacing: -0.01em;
+}
+
+.reveal h1.title {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.reveal .subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+
+// Accent bar under each section heading
+.reveal section h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 5px;
+  background: $uq-magenta;
+  margin-top: 0.25em;
+  margin-bottom: 0.4em;
+  border-radius: 2px;
+}
+
+// Title slide special
+.reveal .title-slide {
+  text-align: left;
+}
+.reveal .title-slide h1.title {
+  font-size: 2.1em;
+}
+// Force all text on the title slide to white
+#title-slide .title,
+#title-slide .subtitle,
+#title-slide .author,
+#title-slide .date {
+  color: #ffffff !important;
+}
+
+// Callouts (tips, warnings)
+.callout {
+  border-radius: 8px;
+  padding: 0.6em 0.9em;
+  margin: 0.6em 0;
+  font-size: 0.85em;
+  line-height: 1.35;
+}
+.callout-tip {
+  background: rgba($uq-green, 0.10);   // #2ea836
+  border-left: 5px solid $uq-green;
+}
+.callout-warning {
+  background: rgba($uq-orange, 0.12);  // #eb602b
+  border-left: 5px solid $uq-orange;
+}
+.callout-note {
+  background: rgba($uq-blue, 0.10);
+  border-left: 5px solid $uq-blue;
+}
+.callout-important {
+  background: rgba($uq-red, 0.10);
+  border-left: 5px solid $uq-red;
+}
+
+// Code blocks
+.reveal pre {
+  font-size: 0.55em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 6px;
+}
+.reveal code {
+  color: $uq-purple-dark;
+}
+
+// Tables
+.reveal table {
+  border-collapse: collapse;
+  font-size: 0.8em;
+}
+.reveal table thead {
+  background: $uq-magenta;
+  color: #fff;
+}
+.reveal table th, .reveal table td {
+  padding: 0.35em 0.6em;
+  border: 1px solid $uq-grey-light;
+}
+
+// Progress bar (bottom of slide)
+.reveal .progress {
+  color: $uq-magenta;
+  height: 6px;
+}
+
+// Footer / slide number – bottom-right corner
+.reveal .slide-number {
+  color: #fff;
+  background: $uq-magenta;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 14px;
+  right: 16px;
+  bottom: 14px;
+}
+
+// Footer bar
+.reveal .footer {
+  color: $uq-grey;
+  font-size: 0.55em;
+  left: 16px;
+  bottom: 14px;
+}
+
+// Two-column layout
+.cols { display: flex; gap: 1.2em; }
+.col  { flex: 1; }
+
+// "Pill" badges
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: $uq-magenta;
+  color: #fff;
+  font-size: 0.7em;
+  margin-right: 6px;
+}
+.badge.red    { background: $uq-red; }
+.badge.orange { background: $uq-orange; }
+.badge.green  { background: $uq-green; }
+.badge.blue   { background: $uq-blue; }
+.badge.grey   { background: $uq-grey; }
+
+// Hero title slide background accent
+.title-slide-bg {
+  background: linear-gradient(135deg, $uq-purple 0%, $uq-purple-dark 100%);
+  color: #fff !important;
+}
+
+// Section dividers (level-1 header)
+.reveal section.level1 {
+  // nothing special; used by Quarto for chapters
+}
+
+// Key-point boxes
+.keybox {
+  background: rgba($uq-magenta, 0.07);
+  border-left: 5px solid $uq-magenta;
+  padding: 0.6em 0.9em;
+  border-radius: 6px;
+  margin: 0.4em 0;
+}
+
+// Hide progress bar and slide number on the title slide only
+.reveal section#title-slide ~ * {}
+body.reveal-viewport:has(section#title-slide.present) .slide-number,
+body.reveal-viewport:has(section#title-slide.present) .progress {
+  display: none !important;
+}
+
+// Small helper
+.small { font-size: 0.75em; }
+.muted { color: $uq-grey; }
+.center { text-align: center; }
