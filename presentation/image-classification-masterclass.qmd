@@ -256,7 +256,6 @@ In some situations manual labelling is still necessary - for those highly domain
 | Classifying plant diseases from leaf images | Segment parts of a plant (leaf, trunk, fruit etc) |
 
 
-
 ## 'Rapid' in Roboflow
 Semi-automated labelling in action 
 
@@ -324,13 +323,11 @@ The **test set is sacred**. Use it when you are ready to test / report your fina
 ## Adding variability to your splits
 Models only learn from the data you show them. If your training set is too narrow, your model will fail when it sees something new in the real world.
 
-
-
 ::: {.callout-warning}
 This is one of the most common sources of "it worked in the lab but fails in the field" problems. 
 :::
 
-## How to actually train a model?
+## How to *actually* train a model?
 There are many frameworks and libraries to train models, but here is classic object detection example
 
 ```python
@@ -349,452 +346,208 @@ model = YOLO("yolov8n.pt")
 model.train(data=f"{dataset.location}/data.yaml", epochs=30, imgsz=640)
 
 ```
+## How to *actually* train a model? (cont.)
+In Roboflow, its all point and click tools. Plenty of options, tutorials and code (if you want to do it yourself).
+
+![](assets/roboflow_training_1..png){width="100%"}
+^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
+
+---
+![](assets/roboflow_training_2.png){width="100%"}
+^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
+---
+
+---
+![](assets/training_in_roboflow.png){width="100%"}
+^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
+---
+
 
 ## A quick overview of model frameworks
-
+| # | Model | Type | Strengths | Best For |
+|---|---|---|---|---|
+| 🥇 | **YOLO26** | Detection / Multi-task | Fastest edge inference, NMS-free, multi-task | IoT, robotics, real-time apps |
+| 🥈 | **YOLOv12** | Detection | Best accuracy, attention-centric | Research & benchmarking |
+| 🥉 | **RF-DETR** | Detection / Segmentation | Best cross-domain generalisation | Medical, infrastructure |
+| 4 | **OpenCV** | Classical CV | No ML needed, rock-solid preprocessing | Pipelines, rule-based vision |
+| 5 | **SAM 2** | Segmentation | Zero-shot, no labels needed | Healthcare, geospatial |
+| 6 | **Detectron2** | Detection / Segmentation | Modular, research-grade PyTorch | Academic, satellite imagery |
+| 7 | **DINOv2** | Self-supervised ViT | Rich features, no labels | Scarce data, fine-grained tasks |
+| 8 | **CLIP** | Vision-Language | Image + text, zero-shot classification | Search, e-commerce, multimodal |
+| 9 | **EfficientNet** | Classification | Lightweight, mobile-friendly | Mobile, edge, IoT |
+| 10 | **TensorRT / ONNX** | Inference Optimization | Max speed on any hardware | Production deployment |
 
 ## How to interpret evaluation and testing results?
 ![](assets/eval-metrics.png){width="100%"}
+^[Image obtained from [Roboflow's website](https://roboflow.com).]
+
+## Precision, recall and F1 
+- **Precision**: Of all the positive predictions, how many were correct? (TP / (TP + FP))
+- **Recall**: Of all the actual positives, how many did we correctly identify? (TP / (TP + FN))
+- **F1 Score**: The harmonic mean of precision and recall. It balances the two metrics. (2 * (Precision * Recall) / (Precision + Recall))
 
 
-# 4 · Domain Shift
+## The accuracy trap
+Accuracy can be misleading, especially with imbalanced datasets. For example, if 95% of your data belongs to one class, a model that always predicts that class will have 95% accuracy but will fail to identify the minority class.
 
-## What is domain shift?
+![](assets/class_imbalance.jpeg){width="100%"}
+^[Image obtained from Towards Data Science]
 
+## What to do when accuracies are not acceptable?
+- **Collect more data** — especially for underrepresented classes
+- **Data augmentation** — artificially increase dataset size by applying transformations (rotation, flipping, color jitter)
+
+![](assets/class_imbalance.jpeg){width="100%"}
+^[Image obtained from Towards Data Science]
+
+
+## Dealing with confidence scores
+Most models output a confidence score for each prediction/inference. It's important to choose an appropriate threshold for these scores to balance precision and recall according to your specific use case.
+
+::: {.cols}
+::: {.col .center .small}
+**Classification**<br>
+`{label: 'cat', conf: 0.94}`
+:::
+::: {.col .center .small}
+**Detection**<br>
+`[{label:'cat', bbox:[x1,y1,x2,y2], conf:0.91}]`
+:::
+::: {.col .center .small}
+**Segmentation**<br>
+`mask: ndarray[H,W] of class ids`
+:::
+:::
+
+## Dealing with confidence scores (cont.)
+
+::: {.cols}
+::: {.col .small .center}
+**🔽 Low threshold (e.g. 0.2)**
+
+Accepts many predictions, even uncertain ones.
+
+*Use when missing a case is costly*
+*(e.g. disease screening)*
+:::
+::: {.col .small .center}
+**⚖️ Balanced threshold (e.g. 0.5)**
+
+Accepts predictions the model is fairly sure about.
+
+*Tune from here based on your use case*
+:::
+::: {.col .small .center}
+**🔼 High threshold (e.g. 0.9)**
+
+Only accepts very confident predictions.
+
+*Use when a false alarm is costly*
+*(e.g. automated actions)*
+:::
+:::
+
+---
+::: {.small .muted}
+Let's take a 10 minute break!
+:::
+---
+
+# 4 · Domain Shift, Transfer Learning & Foundational Models
+---
+```{mermaid}
+flowchart TD
+    A["Define task ✅"] --> B["Data✅"]
+    B --> C[Train✅]
+    C --> D[Val✅ and Test✅]
+    D --> C 
+    D --> E[Deploy]
+```
+---
+
+## Issues and solutions for real-world deployment
+- **Domain shift** → monitor and adapt
+- **Transfer learning** → leverage pre-trained models
+- **Foundational models** → zero-shot or few-shot with large pre-trained models
+
+## Domain shift: the silent killer of CV projects
 ::: {.keybox}
 **Domain shift** = when the distribution of data at deployment differs from the distribution at training.
 :::
 
+![](assets/domain_shift_example.jpeg){width="100%"}
 
+^[Image obtained from ResearchGate]
 
----
+## Why domain shift is a problem
+Models learn patterns in the training data. If the deployment data looks different, those patterns may not hold, leading to poor performance.
 
-## Examples & quick detection
+To solve this, you need to monitor when domain shift occurs and adapt your model or data collection strategy accordingly.
 
-::: {.cols}
-::: {.col .small}
-**Examples**
-- Model trained on iPhone photos → deployed on drone
-- Daytime training → dawn/dusk deployment
-- Great Barrier Reef corals → Red Sea corals
-- Healthy crops 2024 → drought crops 2026
-:::
-::: {.col .small}
-**How to detect it**
-- Compare **feature embeddings** (e.g. CLIP features) between train and deploy sets
-- Monitor **prediction confidence** distribution over time
-- Track **class ratios** in production
-- Periodic **spot-checking** by a human expert
-:::
-:::
+## Transfer learning: a powerful tool to combat domain shift
+Transfer learning allows you to take a model trained on one dataset and fine-tune it on a smaller dataset from the new domain. This can help your model adapt to the new data distribution without needing to train from scratch.
 
-```python
-# Quick "is my new data different?" check using embeddings
-from sentence_transformers import SentenceTransformer
-from scipy.spatial.distance import cdist
+![](assets/transfer-learning.png){width="100%"}
+^[Image obtained from Linkedin]
 
-enc = SentenceTransformer("clip-ViT-B-32")
-train_emb = enc.encode(train_images)
-new_emb   = enc.encode(new_images)
-mean_dist = cdist(train_emb.mean(0, keepdims=True), new_emb).mean()
-```
+## Foundational models: the new frontier
+Foundational models are large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning. They are trained on internet-scale data and can often generalize well to new domains.
 
-::: notes
-Frame: "your metric is only as good as the assumption that tomorrow looks like yesterday." Recommend building a small drift-monitoring dashboard into any real deployment.
-:::
+![](assets/foundation-models.png){width="100%"}
 
----
+^[Image obtained from [Roboflow's website](https://roboflow.com).]
 
-## Mitigations
 
-- **Collect a little data in the new domain** and fine-tune (usually best ROI)
-- **Aggressive augmentation** that simulates the shift (lighting, blur, colour jitter)
-- **Domain adaptation** techniques (DANN, CORAL) — rarely worth the complexity in practice
-- **Foundation models** — large pre-trained features are more robust out-of-the-box
-- **Human-in-the-loop** for the first N predictions in a new domain
 
-::: {.callout-tip}
-A **50-image fine-tune** in the new domain usually beats a cleverer domain-adaptation algorithm on the old data.
-:::
-
-::: notes
-Be honest: domain adaptation is an active research area but in applied settings the pragmatic answer is almost always "label a few hundred images in the new domain and fine-tune." Tie this forward to transfer learning.
-:::
-
-# 5 · Transfer Learning
-
-## Why it works
-
-::: {.cols}
-::: {.col}
-- Early layers learn **generic features** (edges, textures)
-- Late layers learn **task-specific features**
-- Swap the final layer → keep the rest
-- Small dataset? Only fine-tune the head. Bigger? Unfreeze more.
-:::
-::: {.col}
-```{mermaid}
-%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    A[Big dataset<br/>ImageNet] --> B[Pre-trained<br/>backbone]
-    B -->|freeze most layers| C[Your small dataset]
-    C --> D[New classification head]
-    D --> E[Fine-tuned model]
-```
-:::
-:::
-
-::: {.keybox}
-Transfer learning turns a 100k-image problem into a 1k-image problem.
-:::
-
-::: notes
-Rule of thumb: with <1k images, only train the head. 1k-10k: unfreeze last block. >10k: unfreeze everything but keep a low LR on the backbone. Mention discriminative LRs (smaller LR for earlier layers).
-:::
-
----
-
-## Transfer learning in 15 lines
-
-```python
-import torch, torch.nn as nn
-from torchvision.models import resnet50, ResNet50_Weights
-
-model = resnet50(weights=ResNet50_Weights.DEFAULT)
-
-# 1) freeze the backbone
-for p in model.parameters():
-    p.requires_grad = False
-
-# 2) replace the classification head (ImageNet had 1000 classes)
-NUM_CLASSES = 5
-model.fc = nn.Linear(model.fc.in_features, NUM_CLASSES)
-
-# 3) only the new head is trainable
-opt = torch.optim.AdamW(model.fc.parameters(), lr=1e-3)
-
-# 4) train as usual (see Section 3)
-```
-
-::: notes
-Point out: `timm` library has hundreds of backbones with the same API. Newer recipes often just use a Vision Transformer (ViT) backbone — convnets still competitive for small data.
-:::
-
-# 6 · Foundational Models
-
-## What are they?
-
-::: {.keybox}
-Models trained on **internet-scale** data that can be used **zero-shot** or with minimal adaptation for many downstream tasks.
-:::
-
-| Model | What it does | Use it for |
-|---|---|---|
-| **CLIP** | Aligns image ↔ text embeddings | Zero-shot classification, retrieval, drift detection |
-| **DINOv2** | Self-supervised image features | Strong backbone, embeddings, clustering |
-| **SAM / SAM 2** | Promptable segmentation | Annotation acceleration, masks without training |
-| **GroundingDINO** | Open-vocabulary detection | "Find anything" from a text prompt |
-| **YOLO-World** | Real-time open-vocab detection | Fast detection without retraining |
-
-::: notes
-Foundational models have radically changed the workflow. 3 years ago you'd spend 2 weeks training a classifier from scratch. Now: CLIP zero-shot → SAM masks → GroundingDINO boxes → fine-tune only if needed. Mention licence gotchas (some are non-commercial).
-:::
-
----
-
-## Zero-shot classification with CLIP
-
-```python
-import torch, clip
-from PIL import Image
-
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model, preprocess = clip.load("ViT-B/32", device=device)
-
-image = preprocess(Image.open("coral.jpg")).unsqueeze(0).to(device)
-texts = clip.tokenize([
-    "a photo of healthy coral",
-    "a photo of bleached coral",
-    "a photo of dead coral",
-]).to(device)
-
-with torch.no_grad():
-    logits_per_image, _ = model(image, texts)
-    probs = logits_per_image.softmax(dim=-1).cpu().numpy()
-
-print(probs)   # e.g. [[0.78, 0.18, 0.04]]
-```
-
-::: {.callout-tip}
-Use CLIP zero-shot as your **baseline**. If a fine-tuned model can't beat it, something is wrong.
-:::
-
-::: notes
-CLIP as baseline is a habit that saves projects. Also mention: CLIP features are excellent inputs to a simple logistic regression — often matches a from-scratch CNN with 1% of the effort.
-:::
-
----
-
-## SAM: masks without training
-
-```python
-from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
-
-sam = sam_model_registry["vit_h"](checkpoint="sam_vit_h.pth").to("cuda")
-masks = SamAutomaticMaskGenerator(sam).generate(image_rgb)
-# masks is a list of dicts: {'segmentation': ndarray, 'area': int, ...}
-```
-
-::: {.callout-note}
-SAM gives you **masks** but not **labels**. Pair it with CLIP or a small classifier for "mask → label".
-:::
-
-::: notes
-The "SAM + CLIP" combo is the modern annotation accelerator: one click per object, automatic labels, human review. Roboflow bakes this in as "Smart Polygon" and similar tools.
-:::
-
-# 7 · Evaluation — Beyond F1
-
-## F1 is a starting point, not the finish line
-
-::: {.callout-warning}
-A single F1 number hides **where** and **why** your model fails. Stakeholders deserve — and need — more.
-:::
-
-Questions a single F1 can't answer:
-
-- Does it fail on the **rare** class or the **common** class?
-- Is it **over-confident** when wrong?
-- How does it degrade across **subgroups** (sites, seasons, camera types)?
-- Are errors **safety-critical** or merely annoying?
-- Is there a **threshold** I should choose differently?
-
-::: notes
-Reframe: F1 is a compressed summary — useful for model selection, terrible for deployment decisions. Push the audience to always bring at least 3 views to a stakeholder: confusion matrix, per-class metrics, calibration.
-:::
-
----
-
-## A richer evaluation toolkit
-
-| Tool | What it tells you | When to use |
-|---|---|---|
-| **Confusion matrix** | Per-class errors & confusions | Always |
-| **Per-class precision/recall** | Class imbalance effects | Imbalanced data |
-| **ROC & PR curves** | Threshold trade-offs | Binary / one-vs-rest |
-| **Calibration plot** | Are confidences trustworthy? | Any probabilistic output |
-| **Cohen's κ / MCC** | Agreement beyond chance | Imbalanced or ordinal |
-| **mAP / IoU** | Detection & segmentation quality | Detection / segmentation |
-| **Subgroup analysis** | Fairness & drift hotspots | Always, if metadata exists |
-| **Error case gallery** | Qualitative failure modes | Before deployment |
-
-::: notes
-Emphasise the last two: subgroup analysis and error-case galleries have saved more projects than fancy metrics. Build an "error wall" — literally a folder of the 50 worst predictions — and review it with domain experts.
-:::
-
----
-
-## Code: the evaluation essentials
-
-```python
-from sklearn.metrics import (classification_report, confusion_matrix,
-                             roc_auc_score, cohen_kappa_score)
-from sklearn.calibration import calibration_curve
-import matplotlib.pyplot as plt
-
-print(classification_report(y_true, y_pred, digits=3))
-print("kappa :", cohen_kappa_score(y_true, y_pred))
-print("AUROC :", roc_auc_score(y_true, y_prob, multi_class="ovr"))
-
-# Calibration plot — are the probabilities trustworthy?
-frac_pos, mean_pred = calibration_curve(y_true == 1, y_prob[:, 1], n_bins=10)
-plt.plot(mean_pred, frac_pos, "o-"); plt.plot([0,1],[0,1], "--")
-plt.xlabel("Predicted probability"); plt.ylabel("Observed frequency")
-```
-
-::: {.callout-tip}
-A **well-calibrated** 0.7 should happen ~70% of the time. If it happens 30% or 95% of the time, your confidences are lying.
-:::
-
-::: notes
-Calibration is under-taught. For any system that triages or ranks, miscalibration is worse than miscoverage. Mention temperature scaling as a cheap post-hoc fix.
-:::
-
----
-
-## For detection & segmentation
-
-- **IoU** (Intersection over Union) — overlap between prediction and truth
-- **mAP @ 0.5** — mean Average Precision at IoU threshold 0.5 (lenient)
-- **mAP @ 0.5:0.95** — averaged over 10 IoU thresholds (COCO standard, strict)
-- **Per-class AP** — same story as per-class F1
-- **Boundary F-score** — specifically for segmentation edge quality
-
-::: {.callout-note}
-mAP can hide systematic issues. Always **visualise predictions on ~50 images** before trusting a number.
-:::
-
-::: notes
-Stress visual inspection. I have seen mAP 0.85 models that were unusable because they missed the one species that actually mattered to the ecologist.
-:::
-
-# 8 · Deployment
+# 5 · Deployment
 
 ## What "deployment" actually means
+Deployment is not just about putting a model in production. It encompasses the entire lifecycle of maintaining and improving a model after it's been deployed.
 
-```{mermaid}
-%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    A[Trained weights] --> B[Package<br/>ONNX / TorchScript / TFLite]
-    B --> C[Serve<br/>API / edge / batch]
-    C --> D[Monitor<br/>drift, latency, errors]
-    D -->|alerts| E[Retrain / rollback]
-    E --> A
-```
+Lets display this in Roboflow
 
-::: {.keybox}
-**Shipping weights is 20% of deployment. The other 80% is monitoring, retraining, and the humans in the loop.**
-:::
-
-::: notes
-This is the biggest gap between academic ML and production ML. Most research models never cross this line. The slide after next is the checklist you should answer before shipping.
-:::
+---
+![](assets/roboflow_deployment.png){width="100%"}
+^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
 ---
 
-## The deployment checklist
 
-::: {.cols}
-::: {.col .small}
-**Performance**
-
-- Target latency (ms/frame)?
-- Throughput (images/sec)?
-- Batch vs streaming?
-
-**Hardware**
-
-- CPU / GPU / edge (Jetson, Coral)?
-- Offline vs connected?
-- Memory ceiling?
-
-**Data pipeline**
-
-- Pre/post-processing matches training?
-- Input validation & logging?
-- Fallback when input is bad?
-:::
-::: {.col .small}
-**Operations**
-
-- Versioning of model + data + code?
-- Rollback plan?
-- Monitoring (drift, latency, errors)?
-- Retraining cadence?
-
-**Humans & ethics**
-
-- Who reviews flagged cases?
-- Who is accountable for errors?
-- Privacy / consent of imagery?
-- Bias & fairness audits?
-
-**Cost**
-
-- $ per 1000 inferences?
-- $ per retrain cycle?
-:::
-:::
-
-::: notes
-Walk through each bullet at pace. Highlight: "pre/post-processing matches training" is the silent killer — a 0.5 drop in mean normalisation can halve accuracy. Also: privacy of human subjects in imagery is increasingly non-optional.
-:::
+## Active learning: a human-in-the-loop approach to deployment
+Active learning is a strategy where the model identifies uncertain predictions and requests human feedback to improve its performance
 
 ---
 
-## Serving patterns
+# 6 · Ensembles & Workflows
 
-| Pattern | When | Example |
-|---|---|---|
-| **Batch** | You have a pile of images to process overnight | Cron + script on a GPU node |
-| **REST API** | Web/mobile apps need on-demand inference | FastAPI + ONNX on a cloud GPU |
-| **Edge** | Network/privacy/latency constraints | Jetson Nano / Coral TPU |
-| **Managed** | You don't want to babysit infrastructure | Roboflow Hosted, Replicate, Modal |
+## Ensembles: combining multiple models
 
-```python
-# Minimal FastAPI inference service
-from fastapi import FastAPI, UploadFile
-from PIL import Image
-import io, torch
+- Different models make **different mistakes**
+- Averaging reduces **variance**
+- Typical gain: +1-5% accuracy, "for free"
 
-app = FastAPI(); model = torch.jit.load("model.ts").eval()
+![](assets/ensemble-learning.webp){width="100%"}
+^[Image obtained from IBM]
 
-@app.post("/predict")
-async def predict(file: UploadFile):
-    img = preprocess(Image.open(io.BytesIO(await file.read())))
-    with torch.no_grad():
-        probs = model(img.unsqueeze(0)).softmax(-1).tolist()[0]
-    return {"probs": probs}
-```
 
-::: notes
-For 90% of research projects, "managed" is the right answer. The time cost of self-hosting GPUs rarely pays back. Roboflow's hosted inference is a concrete option we'll see in the practical.
-:::
+# 7· AI vs Expertise
 
-# 9 · AI vs Expertise
+## A simplified list of things you can do manually, with Roboflow or with expertise:
+| Task | Manual / Code | Roboflow | Need an Expert |
+|---|---|---|---|
+| **Data Collection** | Scrape, photograph, organise yourself | Upload, version, collaborate in UI | When data is complex, sensitive or scarce |
+| **Data Labelling** | LabelImg, CVAT, manual annotation | Built-in labelling tool + auto-label (SAM) | Large-scale or medical-grade annotation |
+| **Data Augmentation** | Albumentations, imgaug in code | One-click augmentation presets in UI | Custom domain-specific augmentation strategies |
+| **Model Training** | PyTorch / YOLO CLI, manage compute yourself | Train YOLO, RF-DETR etc. in UI or via API | Custom architectures, fine-tuning foundation models |
+| **Eval & Testing** | Write mAP, confusion matrix scripts manually | Auto metrics dashboard, visual eval tools | Statistical analysis, edge case testing, bias audits |
+| **App Development** | Build Flask/FastAPI inference server from scratch | Roboflow Inference SDK + hosted API | Scalable backend, auth, multi-model pipelines |
+| **Deployment (Cloud)** | Docker, AWS/GCP setup, manage endpoints | One-click deploy to hosted inference endpoint | High availability, autoscaling, enterprise SLAs |
+| **Deployment (Edge)** | Export ONNX/TensorRT, flash device manually | Export-ready models + Inference on Jetson/RPi | Custom hardware, optimisation, quantisation |
+| **Model Monitoring** | Build custom logging and drift detection | Dataset health checks, re-labelling workflows | Production drift monitoring, automated retraining |
+| **Team Collaboration** | Git, shared drives, manual versioning | Workspaces, dataset versioning, role management | MLOps pipelines, CI/CD for models |
 
-## What you can *confidently* do yourself
 
-::: {.cols}
-::: {.col}
-[DIY-friendly]{.badge .green}
-
-- **Zero-shot** classification with CLIP on clear categories
-- **Fine-tune** a pre-trained classifier on 500-5000 labelled images
-- **Run inference** with pre-trained detection/segmentation models
-- Use **Roboflow / Ultralytics / HuggingFace** end-to-end
-- Simple **evaluation** dashboards (confusion matrix + curves)
-:::
-::: {.col}
-[Call-an-expert]{.badge .red}
-
-- Deployment at **scale** (1000s of req/sec, edge fleets)
-- **Safety-critical** decisions (medical, autonomous, regulatory)
-- **Novel modalities** (multi-spectral, 3D, video, time-series)
-- **Custom architectures** or loss functions
-- **Dataset strategy** for very rare classes / severe imbalance
-- **MLOps, monitoring, drift detection** pipelines
-:::
-:::
-
-::: notes
-Reframe the question from "can AI do this?" to "can *I* do this with today's tools, and is the risk of being wrong acceptable?" Emphasise: the tools are genuinely great for 80% of problems. The remaining 20% eat 80% of the effort — that's where specialists earn their keep.
-:::
-
----
-
-## A decision sketch
-
-```{mermaid}
-%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart TD
-    A[I have an image problem] --> B{Is it a standard task<br/>class/detect/segment?}
-    B -- no --> X[Talk to an expert]
-    B -- yes --> C{Can I collect / label<br/>a few hundred images?}
-    C -- no --> Y[Zero-shot with CLIP/SAM<br/>or talk to an expert]
-    C -- yes --> D{Is the consequence of a<br/>wrong prediction acceptable?}
-    D -- no --> X
-    D -- yes --> E[DIY with Roboflow /<br/>transfer learning]
-    E --> F{Does it meet<br/>evaluation criteria?}
-    F -- yes --> G[Deploy, monitor, iterate]
-    F -- no --> X
-```
-
-::: notes
-Keep this diagram as a take-home. Many attendees will map their project to this tree in real time. Offer to walk through it one-on-one in the DS-CRP consultation (next section).
-:::
-
-# 10 · How DS-CRP Can Help
+# 8 · How DS-CRP Can Help
 
 ## The Data Science Central Research Platform
 
@@ -818,157 +571,31 @@ The **DS-CRP** is UQ's centralised data-science support team. We exist to help r
 - Project scoping sessions
 - Hands-on collaboration
 - Training and upskilling
-- Referrals to specialist partners (QCIF, RCC, eResearch)
+- Cost-recovery model for hands-on support
 :::
 :::
 
-::: notes
-Be concrete about what a short consultation looks like: 30 minutes, bring your data and your question, leave with a plan. Emphasise that there is no charge and no commitment.
-:::
 
 ---
 
 ## Book a consultation — it's free
 
 ::: {.center}
-**Image classification consultation with Sebastian**
 
 [➜ Book a short consultation](https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&origin=lprLink&route=shorturl)
 
-::: {.small .muted}
-The form above will go straight to me. Bring your data, your question, or just your curiosity — I will help you figure out the next step.
-:::
 :::
 
-::: {.callout-tip}
-Good candidates for a consultation: *"I think I need CV but I'm not sure which task,"* *"My model works in the lab but fails in the field,"* *"I have 5000 images and no idea where to start,"* *"Should I use Roboflow or build from scratch?"*
-:::
 
-::: notes
-Spend a minute on this. Explicitly invite questions from the room. If any attendee describes a project that fits, offer to book them on the spot. Also mention: I can route you to other DS-CRP specialists if your problem is tabular/NLP/etc.
-:::
 
-# 11 · Ensembles & Workflows
-
-## Ensembles: combining multiple models
-
-::: {.cols}
-::: {.col}
-**Why ensemble?**
-
-- Different models make **different mistakes**
-- Averaging reduces **variance**
-- Typical gain: +1-5% accuracy, "for free"
-
-**Types**
-
-- **Averaging** — average softmax outputs
-- **Voting** — majority class wins
-- **Stacking** — a meta-model learns how to combine
-- **Test-time augmentation (TTA)** — same model, multiple augmented views
-:::
-::: {.col}
-```{mermaid}
-%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    I[Image] --> M1[Model A<br/>ResNet]
-    I --> M2[Model B<br/>ViT]
-    I --> M3[Model C<br/>EfficientNet]
-    M1 --> AVG[Average / Vote]
-    M2 --> AVG
-    M3 --> AVG
-    AVG --> P[Prediction]
-```
-:::
-:::
 
 ::: notes
 Pragmatic note: in industry, ensembles are often avoided because of latency. In research, use them shamelessly — they're a free accuracy boost. TTA is the cheapest ensemble of all (no extra training).
 :::
 
----
 
-## Code: averaging & TTA
 
-```python
-# --- Model averaging ---
-import torch.nn.functional as F
-
-def ensemble(models, x):
-    probs = [F.softmax(m(x), dim=-1) for m in models]
-    return torch.stack(probs).mean(0)
-
-# --- Test-time augmentation ---
-def tta_predict(model, x, augs):
-    preds = [F.softmax(model(aug(x)), dim=-1) for aug in augs]
-    return torch.stack(preds).mean(0)
-
-augs = [
-    lambda x: x,
-    lambda x: torch.flip(x, dims=[-1]),   # horizontal flip
-    lambda x: torch.flip(x, dims=[-2]),   # vertical flip
-]
-```
-
-::: notes
-TTA typically gives +0.5-2% with no retraining. Warn: keep the same augmentations at eval that make sense for the domain — flipping microscopy might be invalid.
-:::
-
----
-
-## Workflows: cascades & humans-in-the-loop
-
-Ensembles combine models. **Workflows** combine *steps*. In production this often matters more.
-
-```{mermaid}
-%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    A[Image] --> B[Fast detector<br/>YOLO]
-    B -->|crops| C[Accurate classifier<br/>ViT]
-    C -->|low conf| H[Human review]
-    C -->|high conf| O[Output + log]
-    H --> O
-    O --> D[Drift monitor]
-    D -->|shift detected| R[Retrain trigger]
-```
-
-::: {.keybox}
-A clever workflow often beats a smarter model. Think in terms of **pipelines**, not monoliths.
-:::
-
-::: notes
-Real-world tip: a fast "reject" stage (is there even an object here?) + a slow accurate stage on the hits is cheaper and better than one big model on every frame. Also: a confidence-thresholded human-review stage is the single highest-leverage workflow pattern.
-:::
-
----
-
-## A small real-world pattern
-
-```python
-# Two-stage cascade with human-in-the-loop
-from ultralytics import YOLO
-detector  = YOLO("yolov8n.pt")
-classifier = torch.jit.load("fine_grained_classifier.ts").eval()
-
-def pipeline(image, conf_threshold=0.85):
-    detections = detector(image)[0].boxes
-    outputs = []
-    for box in detections:
-        crop = crop_from_box(image, box)
-        probs = classifier(preprocess(crop).unsqueeze(0)).softmax(-1)
-        conf, cls = probs.max(-1)
-        if conf.item() < conf_threshold:
-            outputs.append({"bbox": box, "label": None, "needs_review": True})
-        else:
-            outputs.append({"bbox": box, "label": cls.item(), "conf": conf.item()})
-    return outputs
-```
-
-::: notes
-Walk through: detect → crop → classify fine-grained → threshold for human review. This single pattern covers a huge fraction of applied CV projects. Roboflow Workflows (their new feature) encodes exactly this.
-:::
-
-# Practical · Roboflow
+# 9 · Practical Demos
 
 ## What we'll do next (30 min)
 
@@ -981,57 +608,8 @@ Walk through: detect → crop → classify fine-grained → threshold for human 
    - Use a pre-trained model for inference
    - Fork a dataset and adapt it to your own project
 
-::: {.callout-tip}
-Everything we do is mirrored in the companion repo: **github.com/QCIF-SustainableFutures/roboflow-training**
-:::
-
-::: notes
-Housekeeping: make sure everyone has a free Roboflow account and a Google account. Share the Colab link. Remind them Colab gives a free GPU — Runtime → Change runtime type → GPU. Do a slow first pass then let them explore.
-:::
-
----
-
-## Roboflow Notebooks · quickstart
-
-```python
-# In Colab — first cell
-!pip install roboflow ultralytics --quiet
-
-from roboflow import Roboflow
-rf = Roboflow(api_key="YOUR_KEY")
-project = rf.workspace("qcif").project("my-classification-project")
-dataset = project.version(1).download("folder")   # classification format
-
-from ultralytics import YOLO
-model = YOLO("yolov8n-cls.pt")
-model.train(data=dataset.location, epochs=20, imgsz=224)
-model.val()
-```
-
-::: {.callout-warning}
-Never commit your Roboflow API key. Use Colab secrets or environment variables.
-:::
 
 
----
-
-
-
-## Roboflow Universe · quickstart
-
-- **Universe** = public catalogue of datasets and models
-- Filter by task (classification / detection / segmentation)
-- **Fork** any dataset to your workspace
-- One-click **deploy** for many models
-- Great for **baselines** and rapid prototyping
-
-::: {.callout-tip}
-Before collecting your own data, **always check Universe first**. Someone may have already labelled exactly what you need.
-:::
-
-::: notes
-Live demo: search for a dataset close to the audience's domain (marine, agriculture, medical). Show forking, show "Deploy" → "Hosted API", call the hosted API from a Colab cell. End by emphasising this is a legitimate starting point, not a shortcut.
-:::
 
 # Wrap-up
 
@@ -1044,24 +622,15 @@ Live demo: search for a dataset close to the audience's domain (marine, agricult
 - **Domain shift** is the #1 real-world failure; mitigate with a little fine-tuning
 - **Transfer learning** turns big problems into small ones
 - **Foundational models** (CLIP / SAM / GroundingDINO) are a free head-start
-- **Evaluate beyond F1** — calibration, subgroups, error galleries
-- **Deployment is 80% operations**, not weights
 - **Ensembles & workflows** often beat a bigger model
 - **Know when to DIY vs call DS-CRP**
 :::
 
-::: notes
-Keep recap fast. Invite final questions. Reiterate the consultation link and the GitHub repo.
-:::
-
----
 
 ## Take these with you
 
-- **Companion repo** — github.com/QCIF-SustainableFutures/roboflow-training
 - **DS-CRP consultation** — [booking form](https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&origin=lprLink&route=shorturl)
 - **Roboflow Universe** — universe.roboflow.com
-- **Papers With Code** — for any task: paperswithcode.com
 - **HuggingFace Models** — huggingface.co/models
 
 ::: {.center}
@@ -1070,6 +639,3 @@ Keep recap fast. Invite final questions. Reiterate the consultation link and the
 **s.lopezmarcano@uq.edu.au**
 :::
 
-::: notes
-End warm. Offer to stay behind for 10 minutes for one-on-one questions. Remind about the thumbs-up/down feedback and any survey link.
-:::
