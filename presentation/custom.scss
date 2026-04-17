@@ -206,3 +206,22 @@ body.reveal-viewport:has(section#title-slide.present) .progress {
 .small { font-size: 0.75em; }
 .muted { color: $uq-grey; }
 .center { text-align: center; }
+
+// Mermaid diagram size cap
+.reveal .mermaid svg {
+  max-height: 55vh !important;
+  width: auto !important;
+}
+
+// Verified stamp — bottom-right corner of checked slides
+.verified-stamp {
+  position: fixed;
+  bottom: 1.4rem;
+  right: 5rem;
+  color: $uq-purple;
+  font-size: 1.5rem;
+  opacity: 0.75;
+  z-index: 999;
+  pointer-events: none;
+  line-height: 1;
+}

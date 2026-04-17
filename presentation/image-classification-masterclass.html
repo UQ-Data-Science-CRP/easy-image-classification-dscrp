@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland">
-  <meta name="dcterms.date" content="2026-04-15">
+  <meta name="dcterms.date" content="2026-04-17">
   <title>Easy Image Classification</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -96,7 +96,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="image-classification-masterclass_files/libs/revealjs/dist/theme/quarto-19f715cbc0c8b71e78a1bc1e4437c28b.css">
+  <link rel="stylesheet" href="image-classification-masterclass_files/libs/revealjs/dist/theme/quarto-c90457718c1c597388ade5b4e78affc1.css">
   <link href="image-classification-masterclass_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="image-classification-masterclass_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="image-classification-masterclass_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,13 +209,16 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 
-  <p class="date">2026-04-15</p>
+  <p class="date">2026-04-17</p>
 </section>
 <section>
 <section id="welcome" class="title-slide slide level1 center">
 <h1>Welcome</h1>
 <div class="small muted">
 <p>A ‘masterclass-style’ computer vision workshop (image classification)</p>
+</div>
+<div class="verified-stamp">
+<p>✔</p>
 </div>
 </section>
 <section id="what-youll-leave-with" class="slide level2">
@@ -229,19 +232,6 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <li>Hands-on with <strong>Roboflow Notebooks + Universe</strong></li>
 <li>A direct line to the <strong>DS-CRP</strong> for your own project</li>
 </ul>
-<aside class="notes">
-<p>Emphasise: this is a masterclass, not a course. We will NOT turn you into a CV engineer in 2 hours. We WILL give you enough understanding to ask good questions, choose good tools, and know when to call for backup. Remind them: all code examples are illustrative — the point is the idea, not syntax perfection.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="ground-rules" class="slide level2">
 <h2>Ground rules</h2>
@@ -280,7 +270,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>All theory will be paired with a Python examples so you can see how the idea lands in practice.</p>
+<p>All theory will be paired with Python examples so you can see how the idea lands in practice.</p>
 </div>
 </div>
 </div>
@@ -322,7 +312,8 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </section>
 <section id="what-is-roboflow" class="slide level2">
 <h2>What is Roboflow</h2>
-<!-- TODO: add here what is Roboflow, and all the packages in python they have - inference, roboflow and supervision -->
+<p>Roboflow is a platform for computer vision projects. It provides tools for: - <strong>Data management</strong> — upload, annotate, version control - <strong>Model training</strong> — pre-trained backbones, transfer learning, custom training loops - <strong>Evaluation</strong> — metrics, confusion matrices, error analysis - <strong>Deployment</strong> — hosted inference, API, edge deployment</p>
+<p>https://roboflow.com/</p>
 </section>
 <section id="the-computer-vision-workflow" class="slide level2">
 <h2>The computer vision workflow</h2>
@@ -368,6 +359,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </section>
 <section id="the-three-core-cv-tasks" class="slide level2">
 <h2>The three core CV tasks</h2>
+<p>There are three core CV tasks that cover most use cases. They differ in the specificity of their output.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -413,17 +405,18 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>Cost scales with specificity. <strong>Segmentation masks take ~10× longer to annotate</strong> than classification labels. Pick the minimum task that answers your question.</p>
+<p>Cost scales with task type. Segmentation tasks are more expensive than classification tasks.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="visual-examples" class="slide level2">
 <h2>Visual examples</h2>
-<!-- TODO: add this image here presentation/assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp -->
-</section>
+
+<img data-src="assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp" style="width:100.0%" class="r-stretch"></section>
 <section id="visual-examples-cont." class="slide level2">
 <h2>Visual examples (cont.)</h2>
+<p>This is how the model ‘sees’ the data and what it learns to output for each task.</p>
 <div class="cols">
 <div class="col center small">
 <p><strong>Classification</strong><br> <code>{label: 'cat', conf: 0.94}</code></p>
@@ -487,28 +480,13 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <td><strong>Classification</strong></td>
 </tr>
 <tr class="even">
-<td><strong>Traffic</strong></td>
-<td><em>Where are all vehicles in this frame, and how many?</em></td>
-<td><strong>Detection</strong></td>
-</tr>
-<tr class="odd">
 <td><strong>Microscopy (health)</strong></td>
-<td><em>Is this cell healthy, cancerous, or necrotic?</em></td>
-<td><strong>Classification</strong></td>
-</tr>
-<tr class="even">
-<td><strong>Microscopy (health)</strong></td>
-<td><em>How many nuclei are in this slide ROI?</em></td>
+<td><em>How many nuclei are in this slide?</em></td>
 <td><strong>Detection</strong></td>
 </tr>
 <tr class="odd">
 <td><strong>Agriculture</strong></td>
-<td><em>Is this crop leaf healthy or diseased?</em></td>
-<td><strong>Classification</strong></td>
-</tr>
-<tr class="even">
-<td><strong>Agriculture</strong></td>
-<td><em>What fraction of the canopy is affected by blight?</em></td>
+<td><em>What fraction of the canopy is affected by disease?</em></td>
 <td><strong>Segmentation</strong></td>
 </tr>
 </tbody>
@@ -521,33 +499,13 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </section>
 <section id="the-data-centric-mindset" class="slide level2">
 <h2>The data-centric mindset</h2>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Important</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Data is the foundation of computer vision. A better dataset beats a better model every time.</strong></p>
-</div>
-</div>
-</div>
-</section>
-<section id="what-is-labelled-data" class="slide level2">
-<h2>What is labelled data?</h2>
-<!-- TODO: add this image here presentation/assets/Image-Annotation-1.jpg -->
+<p>Data is the foundation of computer vision. A better dataset beats a better model every time.</p>
+<p><a href="assets/Image-Annotation-1.jpg" width="100%"></a></p>
 </section>
 <section id="moving-away-from-manual-labelling" class="slide level2">
 <h2>Moving away from manual labelling</h2>
 <p>In the early days of computer vision, labelling was a purely manual process. Now we can leverage <strong>semi-automated labelling</strong> techniques to speed up the annotation process.</p>
-</section>
-<section id="rapid-in-roboflow" class="slide level2">
-<h2>‘Rapid’ in Roboflow</h2>
-<video controls="" autoplay="" muted="" loop="" width="100%">
-<source src="assets/rapid_demo.webm" type="video/webm">
-</video>
+<p>For example we can ask ‘foundational models’ like ‘CLIP’ or ‘SAM’ to find and label your object of interest in an image.</p>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -562,6 +520,23 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 </section>
+<section id="rapid-in-roboflow" class="slide level2">
+<h2>‘Rapid’ in Roboflow</h2>
+<video controls="" autoplay="" muted="" loop="" width="100%">
+<source src="assets/rapid_demo.webm" type="video/webm">
+</video>
+</section>
+<section id="other-cool-features-in-roboflow-re-to-data-collection-labelling" class="slide level2">
+<h2>Other cool features in Roboflow (re to data collection &amp; labelling)</h2>
+<ul>
+<li>You can upload and annotate data collected ‘live’ in your mobile</li>
+<li>Accepts images, videos, pdfs, etc</li>
+</ul>
+</section>
+<section class="slide level2">
+
+
+<img data-src="assets/roboflow-upload.png" style="width:100.0%" class="r-stretch"></section>
 <section id="roboflow-universe-pre-labelled-datasets-pre-trained-models" class="slide level2">
 <h2>Roboflow Universe: pre-labelled datasets &amp; pre-trained models</h2>
 <p>Roboflow Universe is a public repository of datasets and models. You can search for a dataset/model that matches your problem, and either use it directly or fine-tune it on your data.</p>
@@ -601,36 +576,22 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p><strong>Important</strong></p>
 </div>
 <div class="callout-content">
-<p>The <strong>test set is sacred</strong>. If you look at it more than once, you have leaked information and your metric is optimistic.</p>
+<p>The <strong>test set is sacred</strong>. Use it when you are ready to test / report your final results.</p>
 </div>
 </div>
 </div>
-<aside class="notes">
-<p>This is the single most violated rule in applied ML. Researchers re-touch their test set dozens of times. Recommend lockbox protocol: commit test set to a separate file and don’t open until final evaluation. Mention nested cross-validation for small data.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="splitting-matters-stratify-group" class="slide level2">
-<h2>Splitting matters — stratify &amp; group</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, GroupShuffleSplit</span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a><span class="co"># Stratify by label so class ratios are preserved</span></span>
-<span id="cb2-4"><a href=""></a>X_tv, X_test, y_tv, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb2-5"><a href=""></a>    X, y, test_size<span class="op">=</span><span class="fl">0.15</span>, stratify<span class="op">=</span>y, random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb2-6"><a href=""></a>)</span>
-<span id="cb2-7"><a href=""></a></span>
-<span id="cb2-8"><a href=""></a><span class="co"># If you have groups (same site, same camera, same patient) — split by GROUP</span></span>
-<span id="cb2-9"><a href=""></a>gss <span class="op">=</span> GroupShuffleSplit(n_splits<span class="op">=</span><span class="dv">1</span>, test_size<span class="op">=</span><span class="fl">0.15</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb2-10"><a href=""></a>train_idx, test_idx <span class="op">=</span> <span class="bu">next</span>(gss.split(X, y, groups<span class="op">=</span>site_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="how-to-select-data-for-each-split" class="slide level2">
+<h2>How to select data for each split?</h2>
+<ul>
+<li><strong>Random split</strong> — good for i.i.d. data, but optimistic if there’s temporal/spatial correlation</li>
+<li><strong>Stratified split</strong> — ensures class balance in each set, but still optimistic if there’s correlation</li>
+<li><strong>Group split</strong> — splits by a grouping variable (e.g.&nbsp;site, date, camera), more realistic for deployment</li>
+</ul>
+</section>
+<section id="adding-variability-to-your-splits" class="slide level2">
+<h2>Adding variability to your splits</h2>
+<p>Models only learn from the data you show them. If your training set is too narrow, your model will fail when it sees something new in the real world.</p>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -640,101 +601,32 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>If frames from the same video/site/patient end up on <strong>both sides</strong> of your split, your metric is fiction.</p>
+<p>This is one of the most common sources of “it worked in the lab but fails in the field” problems.</p>
 </div>
 </div>
 </div>
-<aside class="notes">
-<p>Classic failure mode in ecological imagery: frames 1-100 of a transect land in train, frames 101-200 in test — near-duplicates → 99% accuracy → deploys → 60% accuracy. Group-aware splitting is mandatory for most field data.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="a-minimal-training-loop" class="slide level2">
-<h2>A minimal training loop</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> torch, torch.nn <span class="im">as</span> nn</span>
-<span id="cb3-2"><a href=""></a></span>
-<span id="cb3-3"><a href=""></a>model, opt <span class="op">=</span> build_model().cuda(), torch.optim.AdamW(model.parameters(), <span class="fl">1e-4</span>)</span>
-<span id="cb3-4"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss()</span>
-<span id="cb3-5"><a href=""></a></span>
-<span id="cb3-6"><a href=""></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(EPOCHS):</span>
-<span id="cb3-7"><a href=""></a>    model.train()</span>
-<span id="cb3-8"><a href=""></a>    <span class="cf">for</span> xb, yb <span class="kw">in</span> train_loader:</span>
-<span id="cb3-9"><a href=""></a>        opt.zero_grad()</span>
-<span id="cb3-10"><a href=""></a>        loss <span class="op">=</span> loss_fn(model(xb.cuda()), yb.cuda())</span>
-<span id="cb3-11"><a href=""></a>        loss.backward()<span class="op">;</span> opt.step()</span>
-<span id="cb3-12"><a href=""></a></span>
-<span id="cb3-13"><a href=""></a>    model.<span class="bu">eval</span>()</span>
-<span id="cb3-14"><a href=""></a>    <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb3-15"><a href=""></a>        val_acc <span class="op">=</span> evaluate(model, val_loader)</span>
-<span id="cb3-16"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss">: val_acc=</span><span class="sc">{</span>val_acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-17"><a href=""></a>    save_if_best(model, val_acc)           <span class="co"># early stopping</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>Underline: save best on validation, NOT last epoch. Talk about learning rate schedules, early stopping patience, and the fact that most practical training is now just “fine-tune for 10-30 epochs, pick best validation checkpoint.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="how-to-actually-train-a-model" class="slide level2">
+<h2>How to actually train a model?</h2>
+<p>There are many frameworks and libraries to train models, but here is classic object detection example</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
+<span id="cb2-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
+<span id="cb2-3"><a href=""></a><span class="im">import</span> supervision <span class="im">as</span> sv</span>
+<span id="cb2-4"><a href=""></a></span>
+<span id="cb2-5"><a href=""></a><span class="co"># 1. pull dataset</span></span>
+<span id="cb2-6"><a href=""></a>dataset <span class="op">=</span> Roboflow(api_key<span class="op">=</span><span class="st">"YOUR_KEY"</span>) <span class="op">\</span></span>
+<span id="cb2-7"><a href=""></a>    .workspace(<span class="st">"my-workspace"</span>) <span class="op">\</span></span>
+<span id="cb2-8"><a href=""></a>    .project(<span class="st">"my-detection-project"</span>) <span class="op">\</span></span>
+<span id="cb2-9"><a href=""></a>    .version(<span class="dv">1</span>).download(<span class="st">"yolov8"</span>)</span>
+<span id="cb2-10"><a href=""></a></span>
+<span id="cb2-11"><a href=""></a><span class="co"># 2. train</span></span>
+<span id="cb2-12"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
+<span id="cb2-13"><a href=""></a>model.train(data<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>dataset<span class="sc">.</span>location<span class="sc">}</span><span class="ss">/data.yaml"</span>, epochs<span class="op">=</span><span class="dv">30</span>, imgsz<span class="op">=</span><span class="dv">640</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="reading-training-curves" class="slide level2">
-<h2>Reading training curves</h2>
-<div class="cols">
-<div class="col">
-<p><strong>Healthy</strong>: train ↓ and val ↓ together, then val plateaus.</p>
-<p><strong>Overfitting</strong>: train ↓, val ↑ (or flat). <em>Add regularisation, augment, get more data.</em></p>
-<p><strong>Underfitting</strong>: both curves high, flat. <em>Bigger model, train longer, check data.</em></p>
-<p><strong>Broken</strong>: loss explodes / NaN. <em>Lower LR, check labels, check preprocessing.</em></p>
-</div>
-<div class="col">
-<div class="cell" data-reveal="true" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart TB
-    A[Plot train &amp; val loss every epoch] --&gt; B{val loss plateauing?}
-    B -- yes --&gt; C[Stop, take best checkpoint]
-    B -- no --&gt; D{val rising while train falls?}
-    D -- yes --&gt; E[Overfit:&lt;br/&gt;augment, regularise]
-    D -- no --&gt; F[Keep training]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Push: always plot curves. Metrics-only workflows hide problems. TensorBoard, wandb, or even matplotlib — doesn’t matter, just plot.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
+<section id="how-to-interpret-evaluation-and-testing-results" class="slide level2">
+<h2>How to interpret evaluation and testing results?</h2>
+
+<img data-src="assets/eval-metrics.png" style="width:100.0%" class="r-stretch"></section></section>
 <section>
 <section id="domain-shift" class="title-slide slide level1 center">
 <h1>4 · Domain Shift</h1>
@@ -745,38 +637,6 @@ flowchart TB
 <div class="keybox">
 <p><strong>Domain shift</strong> = when the distribution of data at deployment differs from the distribution at training.</p>
 </div>
-<p>Common flavours:</p>
-<ul>
-<li><strong>Covariate shift</strong> — input pixels differ (new camera, lighting, season)</li>
-<li><strong>Label shift</strong> — class frequencies change (rare species becomes common)</li>
-<li><strong>Concept drift</strong> — the <em>meaning</em> of the label changes over time (new disease morphology)</li>
-</ul>
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>Domain shift is the <strong>#1 reason</strong> research models fail in the real world. Accuracy on a held-out test set predicts almost nothing about accuracy in a new environment.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>This is where “it worked in the lab” projects go to die. Examples from your domain: camera swap between field campaigns, turbidity change in water, new biofouling pattern on cages. Encourage: always evaluate on a <em>held-out deployment domain</em>, not just random split.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="examples-quick-detection" class="slide level2">
 <h2>Examples &amp; quick detection</h2>
@@ -788,14 +648,14 @@ flowchart TB
 <p><strong>How to detect it</strong> - Compare <strong>feature embeddings</strong> (e.g.&nbsp;CLIP features) between train and deploy sets - Monitor <strong>prediction confidence</strong> distribution over time - Track <strong>class ratios</strong> in production - Periodic <strong>spot-checking</strong> by a human expert</p>
 </div>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="co"># Quick "is my new data different?" check using embeddings</span></span>
-<span id="cb4-2"><a href=""></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
-<span id="cb4-3"><a href=""></a><span class="im">from</span> scipy.spatial.distance <span class="im">import</span> cdist</span>
-<span id="cb4-4"><a href=""></a></span>
-<span id="cb4-5"><a href=""></a>enc <span class="op">=</span> SentenceTransformer(<span class="st">"clip-ViT-B-32"</span>)</span>
-<span id="cb4-6"><a href=""></a>train_emb <span class="op">=</span> enc.encode(train_images)</span>
-<span id="cb4-7"><a href=""></a>new_emb   <span class="op">=</span> enc.encode(new_images)</span>
-<span id="cb4-8"><a href=""></a>mean_dist <span class="op">=</span> cdist(train_emb.mean(<span class="dv">0</span>, keepdims<span class="op">=</span><span class="va">True</span>), new_emb).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co"># Quick "is my new data different?" check using embeddings</span></span>
+<span id="cb3-2"><a href=""></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
+<span id="cb3-3"><a href=""></a><span class="im">from</span> scipy.spatial.distance <span class="im">import</span> cdist</span>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a>enc <span class="op">=</span> SentenceTransformer(<span class="st">"clip-ViT-B-32"</span>)</span>
+<span id="cb3-6"><a href=""></a>train_emb <span class="op">=</span> enc.encode(train_images)</span>
+<span id="cb3-7"><a href=""></a>new_emb   <span class="op">=</span> enc.encode(new_images)</span>
+<span id="cb3-8"><a href=""></a>mean_dist <span class="op">=</span> cdist(train_emb.mean(<span class="dv">0</span>, keepdims<span class="op">=</span><span class="va">True</span>), new_emb).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Frame: “your metric is only as good as the assumption that tomorrow looks like yesterday.” Recommend building a small drift-monitoring dashboard into any real deployment.</p>
 <style type="text/css">
@@ -901,23 +761,23 @@ flowchart LR
 </section>
 <section id="transfer-learning-in-15-lines" class="slide level2">
 <h2>Transfer learning in 15 lines</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> torch, torch.nn <span class="im">as</span> nn</span>
-<span id="cb5-2"><a href=""></a><span class="im">from</span> torchvision.models <span class="im">import</span> resnet50, ResNet50_Weights</span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a>model <span class="op">=</span> resnet50(weights<span class="op">=</span>ResNet50_Weights.DEFAULT)</span>
-<span id="cb5-5"><a href=""></a></span>
-<span id="cb5-6"><a href=""></a><span class="co"># 1) freeze the backbone</span></span>
-<span id="cb5-7"><a href=""></a><span class="cf">for</span> p <span class="kw">in</span> model.parameters():</span>
-<span id="cb5-8"><a href=""></a>    p.requires_grad <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb5-9"><a href=""></a></span>
-<span id="cb5-10"><a href=""></a><span class="co"># 2) replace the classification head (ImageNet had 1000 classes)</span></span>
-<span id="cb5-11"><a href=""></a>NUM_CLASSES <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb5-12"><a href=""></a>model.fc <span class="op">=</span> nn.Linear(model.fc.in_features, NUM_CLASSES)</span>
-<span id="cb5-13"><a href=""></a></span>
-<span id="cb5-14"><a href=""></a><span class="co"># 3) only the new head is trainable</span></span>
-<span id="cb5-15"><a href=""></a>opt <span class="op">=</span> torch.optim.AdamW(model.fc.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span>
-<span id="cb5-16"><a href=""></a></span>
-<span id="cb5-17"><a href=""></a><span class="co"># 4) train as usual (see Section 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">import</span> torch, torch.nn <span class="im">as</span> nn</span>
+<span id="cb4-2"><a href=""></a><span class="im">from</span> torchvision.models <span class="im">import</span> resnet50, ResNet50_Weights</span>
+<span id="cb4-3"><a href=""></a></span>
+<span id="cb4-4"><a href=""></a>model <span class="op">=</span> resnet50(weights<span class="op">=</span>ResNet50_Weights.DEFAULT)</span>
+<span id="cb4-5"><a href=""></a></span>
+<span id="cb4-6"><a href=""></a><span class="co"># 1) freeze the backbone</span></span>
+<span id="cb4-7"><a href=""></a><span class="cf">for</span> p <span class="kw">in</span> model.parameters():</span>
+<span id="cb4-8"><a href=""></a>    p.requires_grad <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb4-9"><a href=""></a></span>
+<span id="cb4-10"><a href=""></a><span class="co"># 2) replace the classification head (ImageNet had 1000 classes)</span></span>
+<span id="cb4-11"><a href=""></a>NUM_CLASSES <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb4-12"><a href=""></a>model.fc <span class="op">=</span> nn.Linear(model.fc.in_features, NUM_CLASSES)</span>
+<span id="cb4-13"><a href=""></a></span>
+<span id="cb4-14"><a href=""></a><span class="co"># 3) only the new head is trainable</span></span>
+<span id="cb4-15"><a href=""></a>opt <span class="op">=</span> torch.optim.AdamW(model.fc.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span>
+<span id="cb4-16"><a href=""></a></span>
+<span id="cb4-17"><a href=""></a><span class="co"># 4) train as usual (see Section 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Point out: <code>timm</code> library has hundreds of backbones with the same API. Newer recipes often just use a Vision Transformer (ViT) backbone — convnets still competitive for small data.</p>
 <style type="text/css">
@@ -999,24 +859,24 @@ flowchart LR
 </section>
 <section id="zero-shot-classification-with-clip" class="slide level2">
 <h2>Zero-shot classification with CLIP</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">import</span> torch, clip</span>
-<span id="cb6-2"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb6-3"><a href=""></a></span>
-<span id="cb6-4"><a href=""></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb6-5"><a href=""></a>model, preprocess <span class="op">=</span> clip.load(<span class="st">"ViT-B/32"</span>, device<span class="op">=</span>device)</span>
-<span id="cb6-6"><a href=""></a></span>
-<span id="cb6-7"><a href=""></a>image <span class="op">=</span> preprocess(Image.<span class="bu">open</span>(<span class="st">"coral.jpg"</span>)).unsqueeze(<span class="dv">0</span>).to(device)</span>
-<span id="cb6-8"><a href=""></a>texts <span class="op">=</span> clip.tokenize([</span>
-<span id="cb6-9"><a href=""></a>    <span class="st">"a photo of healthy coral"</span>,</span>
-<span id="cb6-10"><a href=""></a>    <span class="st">"a photo of bleached coral"</span>,</span>
-<span id="cb6-11"><a href=""></a>    <span class="st">"a photo of dead coral"</span>,</span>
-<span id="cb6-12"><a href=""></a>]).to(device)</span>
-<span id="cb6-13"><a href=""></a></span>
-<span id="cb6-14"><a href=""></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb6-15"><a href=""></a>    logits_per_image, _ <span class="op">=</span> model(image, texts)</span>
-<span id="cb6-16"><a href=""></a>    probs <span class="op">=</span> logits_per_image.softmax(dim<span class="op">=-</span><span class="dv">1</span>).cpu().numpy()</span>
-<span id="cb6-17"><a href=""></a></span>
-<span id="cb6-18"><a href=""></a><span class="bu">print</span>(probs)   <span class="co"># e.g. [[0.78, 0.18, 0.04]]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> torch, clip</span>
+<span id="cb5-2"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb5-5"><a href=""></a>model, preprocess <span class="op">=</span> clip.load(<span class="st">"ViT-B/32"</span>, device<span class="op">=</span>device)</span>
+<span id="cb5-6"><a href=""></a></span>
+<span id="cb5-7"><a href=""></a>image <span class="op">=</span> preprocess(Image.<span class="bu">open</span>(<span class="st">"coral.jpg"</span>)).unsqueeze(<span class="dv">0</span>).to(device)</span>
+<span id="cb5-8"><a href=""></a>texts <span class="op">=</span> clip.tokenize([</span>
+<span id="cb5-9"><a href=""></a>    <span class="st">"a photo of healthy coral"</span>,</span>
+<span id="cb5-10"><a href=""></a>    <span class="st">"a photo of bleached coral"</span>,</span>
+<span id="cb5-11"><a href=""></a>    <span class="st">"a photo of dead coral"</span>,</span>
+<span id="cb5-12"><a href=""></a>]).to(device)</span>
+<span id="cb5-13"><a href=""></a></span>
+<span id="cb5-14"><a href=""></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb5-15"><a href=""></a>    logits_per_image, _ <span class="op">=</span> model(image, texts)</span>
+<span id="cb5-16"><a href=""></a>    probs <span class="op">=</span> logits_per_image.softmax(dim<span class="op">=-</span><span class="dv">1</span>).cpu().numpy()</span>
+<span id="cb5-17"><a href=""></a></span>
+<span id="cb5-18"><a href=""></a><span class="bu">print</span>(probs)   <span class="co"># e.g. [[0.78, 0.18, 0.04]]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1046,11 +906,11 @@ flowchart LR
 </section>
 <section id="sam-masks-without-training" class="slide level2">
 <h2>SAM: masks without training</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> segment_anything <span class="im">import</span> SamAutomaticMaskGenerator, sam_model_registry</span>
-<span id="cb7-2"><a href=""></a></span>
-<span id="cb7-3"><a href=""></a>sam <span class="op">=</span> sam_model_registry[<span class="st">"vit_h"</span>](checkpoint<span class="op">=</span><span class="st">"sam_vit_h.pth"</span>).to(<span class="st">"cuda"</span>)</span>
-<span id="cb7-4"><a href=""></a>masks <span class="op">=</span> SamAutomaticMaskGenerator(sam).generate(image_rgb)</span>
-<span id="cb7-5"><a href=""></a><span class="co"># masks is a list of dicts: {'segmentation': ndarray, 'area': int, ...}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> segment_anything <span class="im">import</span> SamAutomaticMaskGenerator, sam_model_registry</span>
+<span id="cb6-2"><a href=""></a></span>
+<span id="cb6-3"><a href=""></a>sam <span class="op">=</span> sam_model_registry[<span class="st">"vit_h"</span>](checkpoint<span class="op">=</span><span class="st">"sam_vit_h.pth"</span>).to(<span class="st">"cuda"</span>)</span>
+<span id="cb6-4"><a href=""></a>masks <span class="op">=</span> SamAutomaticMaskGenerator(sam).generate(image_rgb)</span>
+<span id="cb6-5"><a href=""></a><span class="co"># masks is a list of dicts: {'segmentation': ndarray, 'area': int, ...}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1194,19 +1054,19 @@ flowchart LR
 </section>
 <section id="code-the-evaluation-essentials" class="slide level2">
 <h2>Code: the evaluation essentials</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (classification_report, confusion_matrix,</span>
-<span id="cb8-2"><a href=""></a>                             roc_auc_score, cohen_kappa_score)</span>
-<span id="cb8-3"><a href=""></a><span class="im">from</span> sklearn.calibration <span class="im">import</span> calibration_curve</span>
-<span id="cb8-4"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-5"><a href=""></a></span>
-<span id="cb8-6"><a href=""></a><span class="bu">print</span>(classification_report(y_true, y_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb8-7"><a href=""></a><span class="bu">print</span>(<span class="st">"kappa :"</span>, cohen_kappa_score(y_true, y_pred))</span>
-<span id="cb8-8"><a href=""></a><span class="bu">print</span>(<span class="st">"AUROC :"</span>, roc_auc_score(y_true, y_prob, multi_class<span class="op">=</span><span class="st">"ovr"</span>))</span>
-<span id="cb8-9"><a href=""></a></span>
-<span id="cb8-10"><a href=""></a><span class="co"># Calibration plot — are the probabilities trustworthy?</span></span>
-<span id="cb8-11"><a href=""></a>frac_pos, mean_pred <span class="op">=</span> calibration_curve(y_true <span class="op">==</span> <span class="dv">1</span>, y_prob[:, <span class="dv">1</span>], n_bins<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb8-12"><a href=""></a>plt.plot(mean_pred, frac_pos, <span class="st">"o-"</span>)<span class="op">;</span> plt.plot([<span class="dv">0</span>,<span class="dv">1</span>],[<span class="dv">0</span>,<span class="dv">1</span>], <span class="st">"--"</span>)</span>
-<span id="cb8-13"><a href=""></a>plt.xlabel(<span class="st">"Predicted probability"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Observed frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (classification_report, confusion_matrix,</span>
+<span id="cb7-2"><a href=""></a>                             roc_auc_score, cohen_kappa_score)</span>
+<span id="cb7-3"><a href=""></a><span class="im">from</span> sklearn.calibration <span class="im">import</span> calibration_curve</span>
+<span id="cb7-4"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-5"><a href=""></a></span>
+<span id="cb7-6"><a href=""></a><span class="bu">print</span>(classification_report(y_true, y_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb7-7"><a href=""></a><span class="bu">print</span>(<span class="st">"kappa :"</span>, cohen_kappa_score(y_true, y_pred))</span>
+<span id="cb7-8"><a href=""></a><span class="bu">print</span>(<span class="st">"AUROC :"</span>, roc_auc_score(y_true, y_prob, multi_class<span class="op">=</span><span class="st">"ovr"</span>))</span>
+<span id="cb7-9"><a href=""></a></span>
+<span id="cb7-10"><a href=""></a><span class="co"># Calibration plot — are the probabilities trustworthy?</span></span>
+<span id="cb7-11"><a href=""></a>frac_pos, mean_pred <span class="op">=</span> calibration_curve(y_true <span class="op">==</span> <span class="dv">1</span>, y_prob[:, <span class="dv">1</span>], n_bins<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-12"><a href=""></a>plt.plot(mean_pred, frac_pos, <span class="st">"o-"</span>)<span class="op">;</span> plt.plot([<span class="dv">0</span>,<span class="dv">1</span>],[<span class="dv">0</span>,<span class="dv">1</span>], <span class="st">"--"</span>)</span>
+<span id="cb7-13"><a href=""></a>plt.xlabel(<span class="st">"Predicted probability"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Observed frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1409,19 +1269,19 @@ flowchart LR
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># Minimal FastAPI inference service</span></span>
-<span id="cb9-2"><a href=""></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI, UploadFile</span>
-<span id="cb9-3"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb9-4"><a href=""></a><span class="im">import</span> io, torch</span>
-<span id="cb9-5"><a href=""></a></span>
-<span id="cb9-6"><a href=""></a>app <span class="op">=</span> FastAPI()<span class="op">;</span> model <span class="op">=</span> torch.jit.load(<span class="st">"model.ts"</span>).<span class="bu">eval</span>()</span>
-<span id="cb9-7"><a href=""></a></span>
-<span id="cb9-8"><a href=""></a><span class="at">@app.post</span>(<span class="st">"/predict"</span>)</span>
-<span id="cb9-9"><a href=""></a><span class="cf">async</span> <span class="kw">def</span> predict(<span class="bu">file</span>: UploadFile):</span>
-<span id="cb9-10"><a href=""></a>    img <span class="op">=</span> preprocess(Image.<span class="bu">open</span>(io.BytesIO(<span class="cf">await</span> <span class="bu">file</span>.read())))</span>
-<span id="cb9-11"><a href=""></a>    <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb9-12"><a href=""></a>        probs <span class="op">=</span> model(img.unsqueeze(<span class="dv">0</span>)).softmax(<span class="op">-</span><span class="dv">1</span>).tolist()[<span class="dv">0</span>]</span>
-<span id="cb9-13"><a href=""></a>    <span class="cf">return</span> {<span class="st">"probs"</span>: probs}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># Minimal FastAPI inference service</span></span>
+<span id="cb8-2"><a href=""></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI, UploadFile</span>
+<span id="cb8-3"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb8-4"><a href=""></a><span class="im">import</span> io, torch</span>
+<span id="cb8-5"><a href=""></a></span>
+<span id="cb8-6"><a href=""></a>app <span class="op">=</span> FastAPI()<span class="op">;</span> model <span class="op">=</span> torch.jit.load(<span class="st">"model.ts"</span>).<span class="bu">eval</span>()</span>
+<span id="cb8-7"><a href=""></a></span>
+<span id="cb8-8"><a href=""></a><span class="at">@app.post</span>(<span class="st">"/predict"</span>)</span>
+<span id="cb8-9"><a href=""></a><span class="cf">async</span> <span class="kw">def</span> predict(<span class="bu">file</span>: UploadFile):</span>
+<span id="cb8-10"><a href=""></a>    img <span class="op">=</span> preprocess(Image.<span class="bu">open</span>(io.BytesIO(<span class="cf">await</span> <span class="bu">file</span>.read())))</span>
+<span id="cb8-11"><a href=""></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb8-12"><a href=""></a>        probs <span class="op">=</span> model(img.unsqueeze(<span class="dv">0</span>)).softmax(<span class="op">-</span><span class="dv">1</span>).tolist()[<span class="dv">0</span>]</span>
+<span id="cb8-13"><a href=""></a>    <span class="cf">return</span> {<span class="st">"probs"</span>: probs}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>For 90% of research projects, “managed” is the right answer. The time cost of self-hosting GPUs rarely pays back. Roboflow’s hosted inference is a concrete option we’ll see in the practical.</p>
 <style type="text/css">
@@ -1662,23 +1522,23 @@ flowchart LR
 </section>
 <section id="code-averaging-tta" class="slide level2">
 <h2>Code: averaging &amp; TTA</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># --- Model averaging ---</span></span>
-<span id="cb10-2"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
-<span id="cb10-3"><a href=""></a></span>
-<span id="cb10-4"><a href=""></a><span class="kw">def</span> ensemble(models, x):</span>
-<span id="cb10-5"><a href=""></a>    probs <span class="op">=</span> [F.softmax(m(x), dim<span class="op">=-</span><span class="dv">1</span>) <span class="cf">for</span> m <span class="kw">in</span> models]</span>
-<span id="cb10-6"><a href=""></a>    <span class="cf">return</span> torch.stack(probs).mean(<span class="dv">0</span>)</span>
-<span id="cb10-7"><a href=""></a></span>
-<span id="cb10-8"><a href=""></a><span class="co"># --- Test-time augmentation ---</span></span>
-<span id="cb10-9"><a href=""></a><span class="kw">def</span> tta_predict(model, x, augs):</span>
-<span id="cb10-10"><a href=""></a>    preds <span class="op">=</span> [F.softmax(model(aug(x)), dim<span class="op">=-</span><span class="dv">1</span>) <span class="cf">for</span> aug <span class="kw">in</span> augs]</span>
-<span id="cb10-11"><a href=""></a>    <span class="cf">return</span> torch.stack(preds).mean(<span class="dv">0</span>)</span>
-<span id="cb10-12"><a href=""></a></span>
-<span id="cb10-13"><a href=""></a>augs <span class="op">=</span> [</span>
-<span id="cb10-14"><a href=""></a>    <span class="kw">lambda</span> x: x,</span>
-<span id="cb10-15"><a href=""></a>    <span class="kw">lambda</span> x: torch.flip(x, dims<span class="op">=</span>[<span class="op">-</span><span class="dv">1</span>]),   <span class="co"># horizontal flip</span></span>
-<span id="cb10-16"><a href=""></a>    <span class="kw">lambda</span> x: torch.flip(x, dims<span class="op">=</span>[<span class="op">-</span><span class="dv">2</span>]),   <span class="co"># vertical flip</span></span>
-<span id="cb10-17"><a href=""></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># --- Model averaging ---</span></span>
+<span id="cb9-2"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb9-3"><a href=""></a></span>
+<span id="cb9-4"><a href=""></a><span class="kw">def</span> ensemble(models, x):</span>
+<span id="cb9-5"><a href=""></a>    probs <span class="op">=</span> [F.softmax(m(x), dim<span class="op">=-</span><span class="dv">1</span>) <span class="cf">for</span> m <span class="kw">in</span> models]</span>
+<span id="cb9-6"><a href=""></a>    <span class="cf">return</span> torch.stack(probs).mean(<span class="dv">0</span>)</span>
+<span id="cb9-7"><a href=""></a></span>
+<span id="cb9-8"><a href=""></a><span class="co"># --- Test-time augmentation ---</span></span>
+<span id="cb9-9"><a href=""></a><span class="kw">def</span> tta_predict(model, x, augs):</span>
+<span id="cb9-10"><a href=""></a>    preds <span class="op">=</span> [F.softmax(model(aug(x)), dim<span class="op">=-</span><span class="dv">1</span>) <span class="cf">for</span> aug <span class="kw">in</span> augs]</span>
+<span id="cb9-11"><a href=""></a>    <span class="cf">return</span> torch.stack(preds).mean(<span class="dv">0</span>)</span>
+<span id="cb9-12"><a href=""></a></span>
+<span id="cb9-13"><a href=""></a>augs <span class="op">=</span> [</span>
+<span id="cb9-14"><a href=""></a>    <span class="kw">lambda</span> x: x,</span>
+<span id="cb9-15"><a href=""></a>    <span class="kw">lambda</span> x: torch.flip(x, dims<span class="op">=</span>[<span class="op">-</span><span class="dv">1</span>]),   <span class="co"># horizontal flip</span></span>
+<span id="cb9-16"><a href=""></a>    <span class="kw">lambda</span> x: torch.flip(x, dims<span class="op">=</span>[<span class="op">-</span><span class="dv">2</span>]),   <span class="co"># vertical flip</span></span>
+<span id="cb9-17"><a href=""></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>TTA typically gives +0.5-2% with no retraining. Warn: keep the same augmentations at eval that make sense for the domain — flipping microscopy might be invalid.</p>
 <style type="text/css">
@@ -1735,23 +1595,23 @@ flowchart LR
 </section>
 <section id="a-small-real-world-pattern" class="slide level2">
 <h2>A small real-world pattern</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="co"># Two-stage cascade with human-in-the-loop</span></span>
-<span id="cb11-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
-<span id="cb11-3"><a href=""></a>detector  <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
-<span id="cb11-4"><a href=""></a>classifier <span class="op">=</span> torch.jit.load(<span class="st">"fine_grained_classifier.ts"</span>).<span class="bu">eval</span>()</span>
-<span id="cb11-5"><a href=""></a></span>
-<span id="cb11-6"><a href=""></a><span class="kw">def</span> pipeline(image, conf_threshold<span class="op">=</span><span class="fl">0.85</span>):</span>
-<span id="cb11-7"><a href=""></a>    detections <span class="op">=</span> detector(image)[<span class="dv">0</span>].boxes</span>
-<span id="cb11-8"><a href=""></a>    outputs <span class="op">=</span> []</span>
-<span id="cb11-9"><a href=""></a>    <span class="cf">for</span> box <span class="kw">in</span> detections:</span>
-<span id="cb11-10"><a href=""></a>        crop <span class="op">=</span> crop_from_box(image, box)</span>
-<span id="cb11-11"><a href=""></a>        probs <span class="op">=</span> classifier(preprocess(crop).unsqueeze(<span class="dv">0</span>)).softmax(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb11-12"><a href=""></a>        conf, cls <span class="op">=</span> probs.<span class="bu">max</span>(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb11-13"><a href=""></a>        <span class="cf">if</span> conf.item() <span class="op">&lt;</span> conf_threshold:</span>
-<span id="cb11-14"><a href=""></a>            outputs.append({<span class="st">"bbox"</span>: box, <span class="st">"label"</span>: <span class="va">None</span>, <span class="st">"needs_review"</span>: <span class="va">True</span>})</span>
-<span id="cb11-15"><a href=""></a>        <span class="cf">else</span>:</span>
-<span id="cb11-16"><a href=""></a>            outputs.append({<span class="st">"bbox"</span>: box, <span class="st">"label"</span>: cls.item(), <span class="st">"conf"</span>: conf.item()})</span>
-<span id="cb11-17"><a href=""></a>    <span class="cf">return</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># Two-stage cascade with human-in-the-loop</span></span>
+<span id="cb10-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
+<span id="cb10-3"><a href=""></a>detector  <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
+<span id="cb10-4"><a href=""></a>classifier <span class="op">=</span> torch.jit.load(<span class="st">"fine_grained_classifier.ts"</span>).<span class="bu">eval</span>()</span>
+<span id="cb10-5"><a href=""></a></span>
+<span id="cb10-6"><a href=""></a><span class="kw">def</span> pipeline(image, conf_threshold<span class="op">=</span><span class="fl">0.85</span>):</span>
+<span id="cb10-7"><a href=""></a>    detections <span class="op">=</span> detector(image)[<span class="dv">0</span>].boxes</span>
+<span id="cb10-8"><a href=""></a>    outputs <span class="op">=</span> []</span>
+<span id="cb10-9"><a href=""></a>    <span class="cf">for</span> box <span class="kw">in</span> detections:</span>
+<span id="cb10-10"><a href=""></a>        crop <span class="op">=</span> crop_from_box(image, box)</span>
+<span id="cb10-11"><a href=""></a>        probs <span class="op">=</span> classifier(preprocess(crop).unsqueeze(<span class="dv">0</span>)).softmax(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb10-12"><a href=""></a>        conf, cls <span class="op">=</span> probs.<span class="bu">max</span>(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb10-13"><a href=""></a>        <span class="cf">if</span> conf.item() <span class="op">&lt;</span> conf_threshold:</span>
+<span id="cb10-14"><a href=""></a>            outputs.append({<span class="st">"bbox"</span>: box, <span class="st">"label"</span>: <span class="va">None</span>, <span class="st">"needs_review"</span>: <span class="va">True</span>})</span>
+<span id="cb10-15"><a href=""></a>        <span class="cf">else</span>:</span>
+<span id="cb10-16"><a href=""></a>            outputs.append({<span class="st">"bbox"</span>: box, <span class="st">"label"</span>: cls.item(), <span class="st">"conf"</span>: conf.item()})</span>
+<span id="cb10-17"><a href=""></a>    <span class="cf">return</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Walk through: detect → crop → classify fine-grained → threshold for human review. This single pattern covers a huge fraction of applied CV projects. Roboflow Workflows (their new feature) encodes exactly this.</p>
 <style type="text/css">
@@ -1816,18 +1676,18 @@ flowchart LR
 </section>
 <section id="roboflow-notebooks-quickstart" class="slide level2">
 <h2>Roboflow Notebooks · quickstart</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="co"># In Colab — first cell</span></span>
-<span id="cb12-2"><a href=""></a><span class="op">!</span>pip install roboflow ultralytics <span class="op">--</span>quiet</span>
-<span id="cb12-3"><a href=""></a></span>
-<span id="cb12-4"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
-<span id="cb12-5"><a href=""></a>rf <span class="op">=</span> Roboflow(api_key<span class="op">=</span><span class="st">"YOUR_KEY"</span>)</span>
-<span id="cb12-6"><a href=""></a>project <span class="op">=</span> rf.workspace(<span class="st">"qcif"</span>).project(<span class="st">"my-classification-project"</span>)</span>
-<span id="cb12-7"><a href=""></a>dataset <span class="op">=</span> project.version(<span class="dv">1</span>).download(<span class="st">"folder"</span>)   <span class="co"># classification format</span></span>
-<span id="cb12-8"><a href=""></a></span>
-<span id="cb12-9"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
-<span id="cb12-10"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n-cls.pt"</span>)</span>
-<span id="cb12-11"><a href=""></a>model.train(data<span class="op">=</span>dataset.location, epochs<span class="op">=</span><span class="dv">20</span>, imgsz<span class="op">=</span><span class="dv">224</span>)</span>
-<span id="cb12-12"><a href=""></a>model.val()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="co"># In Colab — first cell</span></span>
+<span id="cb11-2"><a href=""></a><span class="op">!</span>pip install roboflow ultralytics <span class="op">--</span>quiet</span>
+<span id="cb11-3"><a href=""></a></span>
+<span id="cb11-4"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
+<span id="cb11-5"><a href=""></a>rf <span class="op">=</span> Roboflow(api_key<span class="op">=</span><span class="st">"YOUR_KEY"</span>)</span>
+<span id="cb11-6"><a href=""></a>project <span class="op">=</span> rf.workspace(<span class="st">"qcif"</span>).project(<span class="st">"my-classification-project"</span>)</span>
+<span id="cb11-7"><a href=""></a>dataset <span class="op">=</span> project.version(<span class="dv">1</span>).download(<span class="st">"folder"</span>)   <span class="co"># classification format</span></span>
+<span id="cb11-8"><a href=""></a></span>
+<span id="cb11-9"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
+<span id="cb11-10"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n-cls.pt"</span>)</span>
+<span id="cb11-11"><a href=""></a>model.train(data<span class="op">=</span>dataset.location, epochs<span class="op">=</span><span class="dv">20</span>, imgsz<span class="op">=</span><span class="dv">224</span>)</span>
+<span id="cb11-12"><a href=""></a>model.val()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1841,19 +1701,6 @@ flowchart LR
 </div>
 </div>
 </div>
-<aside class="notes">
-<p>During the live demo: use a dataset we’ve pre-prepared. Let the training run for ~2-3 min while you explain transfer learning again in plain language. Come back to the trained model, show the confusion matrix, and end by downloading the weights.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="roboflow-universe-quickstart" class="slide level2">
 <h2>Roboflow Universe · quickstart</h2>

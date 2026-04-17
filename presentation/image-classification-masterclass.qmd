@@ -33,19 +33,16 @@ format:
 A 'masterclass-style' computer vision workshop (image classification)
 :::
 
----
-
 ## What you'll leave with
 
-- A clear mental model of **computer vision** and its sub-tasks
+- A clear understanding of **computer vision** and its sub-tasks
 - Confidence choosing between **classification / detection / segmentation**
-- Practical understanding of **training, evaluation, deployment**
+- Practical understanding of **training, validation, deployment**
 - Awareness of **domain shift, transfer learning, foundational models, ensembles**
 - Python **code gists** you can adapt
-- Hands-on with **Roboflow Notebooks + Universe**
-- A direct line to the **DS-CRP** for your own project
+- Short demos of **Roboflow Notebooks + Roboflow Universe**
+- A direct line to the Data Sicence CRP for your own project
 
----
 
 ## Ground rules
 
@@ -58,7 +55,7 @@ Code in these slides is illustrative.
 :::
 
 ::: {.callout-note}
-All theory will be paired with a Python examples so you can see how the idea lands in practice.
+Most of the theory will be paired with Python examples so you can see how the idea lands in practice.
 :::
 
 
@@ -68,36 +65,55 @@ All theory will be paired with a Python examples so you can see how the idea lan
 
 ::: {.cols}
 ::: {.col}
-- Teaching computers to **extract meaning** from pixels
-- Models learn **spatial patterns** inside an image (edges → textures → parts → objects)
-- Modern computer vision is dominated by **deep neural networks** (CNNs, Vision Transformers)
+- Teaching computers to extract meaning from pixels
+- Models learn spatial patterns inside an image (edges → textures → parts → objects)
+- Modern computer vision is dominated by deep neural networks (CNNs, Vision Transformers)
 :::
 ::: {.col}
-```{mermaid}
-flowchart TD
-    A[Pixels] --> B[Low-level features<br/>edges, colours]
-    B --> C[Mid-level features<br/>textures, shapes]
-    C --> D[High-level features<br/>parts, objects]
-    D --> E[Decision<br/>class, box, mask]
-```
+![](assets/Computervision_banner.webp)
+^[Image obtained from Algotive]
 :::
 :::
 
+## Computer vision applications
+
+![](assets/Screenshot-2025-02-13-at-11.55.59-AM.png)
+
+^[Image obtained from [Roboflow's website](https://roboflow.com).]
+
 ## What is Roboflow
-<!-- TODO: add here what is Roboflow, and all the packages in python they have - inference, roboflow and supervision -->
+Roboflow is a platform for computer vision projects. It provides tools for:
+
+- **Data management** — upload, annotate, version control
+- **Model training** — pre-trained backbones, transfer learning, custom training loops
+- **Validation and Testing** — metrics, confusion matrices, error analysis
+- **Deployment** — hosted inference, API, edge deployment
+
+https://roboflow.com/ 
+
+## Why use Roboflow?
+There are many apps and tools that are making computer vision more accessible. From experience, Roboflow is the most comprehensive and user-friendly for end-to-end projects. 
+
+::: {.callout-warning}
+Some of the advanced features (e.g. hosted inference) are paid, but the free tier is generous enough for most research projects.
+:::
+
+::: {.callout-warning}
+UQ or the Data Science CRP do not have any financial relationship with Roboflow. I just genuinely like their product and use it in my projects. Many people at UQ use it and have had good experiences.
+:::
+
+
 
 ## The computer vision workflow
 ```{mermaid}
 flowchart TD
-    A[Define problem & task] --> B[Collect & label data]
-    B --> C[Choose model & train]
-    C --> D[Evaluate and Test]
+    A[Define task] --> B[Data]
+    B --> C[Train]
+    C --> D[Val and Test]
     D --> C 
-    D --> E[Deploy & monitor]
+    D --> E[Deploy]
 ```
 
-
----
 
 ## Other aspects of computer vision
 
@@ -108,7 +124,7 @@ High quality, labelled data is most important 'asset' in computer vision.
 :::
 ::: {.col}
 [Compute]{.badge .orange}
-AI is becoming more accessible, adding more pressure into processing infrastructure (GPUs). 
+AI is becoming more accessible, adding more pressure into processing infrastructure. 
 :::
 ::: {.col}
 [Models]{.badge .green}
@@ -124,6 +140,7 @@ You almost never need to train a model from scratch. Assume there is a pre-train
 # 2 · Classification vs Detection vs Segmentation
 
 ## The three core CV tasks
+There are three core CV tasks that cover most use cases. They differ in the specificity of their output. 
 
 | Task | Output | Answers | Typical use |
 |---|---|---|---|
@@ -132,14 +149,20 @@ You almost never need to train a model from scratch. Assume there is a pre-train
 | **Segmentation** | Per-pixel labels (mask) | *What, where, exact shape?* | Medical imaging, area/biomass |
 
 ::: {.callout-warning}
-Cost scales with specificity. **Segmentation masks take ~10× longer to annotate** than classification labels. Pick the minimum task that answers your question.
+Cost scales with task type. Segmentation tasks are more expensive than classification tasks.
 :::
 
 ---
 
 ## Visual examples
 
-<!-- TODO: add this image here presentation/assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp -->
+![](assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp){width="100%"}
+
+^[Image obtained from Reddit r/ComputerVision]
+
+::: {.keybox}
+Image classification is = Image Recognition
+:::
 
 ## Visual examples (cont.)
 This is how the model 'sees' the data and what it learns to output for each task. 
@@ -159,9 +182,12 @@ This is how the model 'sees' the data and what it learns to output for each task
 :::
 :::
 
+The `conf` scores are the model's confidence in its prediction. More information on this in the validation and testing section.
+
 ---
 
 ## Code: three tasks, three one-liners (Roboflow)
+Roboflow has several python libraries to make it easy to pull pre-trained models and run inference on your images. In here we show how to use `inference`. 
 
 ```python
 from inference import get_model
@@ -196,10 +222,23 @@ Start from the decision you want to make; work out the minimum output that enabl
 
 
 # 3 · Collecting & Labelling Data
+---
+```{mermaid}
+flowchart TD
+    A["Define task ✅"] --> B[Data]
+    B --> C[Train]
+    C --> D[Val and Test]
+    D --> C 
+    D --> E[Deploy]
+```
+---
+
 ## The data-centric mindset
 Data is the foundation of computer vision. A better dataset beats a better model every time.
 
-[](presentation/assets/Image-Annotation-1.jpg){width="100%"}
+![](assets/Image-Annotation-1.jpg){width="100%"}
+
+^[Image obtained from DeepLobe]
 
 ## Moving away from manual labelling
 In the early days of computer vision, labelling was a purely manual process. Now we can leverage **semi-automated labelling** techniques to speed up the annotation process. 
@@ -210,39 +249,62 @@ For example we can ask 'foundational models' like 'CLIP' or 'SAM' to find and la
 In some situations manual labelling is still necessary - for those highly domain-specific tasks where pre-trained models struggle. 
 :::
 
+## General examples of manual vs automated labelling
+| Manual labelling | Semi-automated labelling |
+|---|---|
+| Detecting coral bleaching in a location where AI has never been trained before | Detect coral reefs and classify it into species / genus |
+| Classifying plant diseases from leaf images | Segment parts of a plant (leaf, trunk, fruit etc) |
+
+
+
 ## 'Rapid' in Roboflow
+Semi-automated labelling in action 
 
 <video controls autoplay muted loop width="100%">
   <source src="assets/rapid_demo.webm" type="video/webm">
 </video>
 
+^[Video obtained from [Roboflow's website](https://roboflow.com).]
+
+
 ## Other cool features in Roboflow (re to data collection & labelling)
 - You can upload and annotate data collected 'live' in your mobile
 - Accepts images, videos, pdfs, etc 
 
----
+![](assets/roboflow-upload.png){width="100%"}
 
-![](assets/Screenshot%202026-04-15%20at%202.44.48%20pm.png){width="100%"}
+^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
----
 
 ## Roboflow Universe: pre-labelled datasets & pre-trained models
 Roboflow Universe is a public repository of datasets and models. You can search for a dataset/model that matches your problem, and either use it directly or fine-tune it on your data.
 
-https://universe.roboflow.com/
+ 💡Lets have a quick look at the website and see what's there - https://universe.roboflow.com/
 
-# 3 · Training, Evaluation & Testing
+# 3 · Training, Validation & Testing
+---
+```{mermaid}
+flowchart TD
+    A["Define task ✅"] --> B["Data✅"]
+    B --> C[Train]
+    C --> D[Val and Test]
+    D --> C 
+    D --> E[Deploy]
+```
+---
+
 
 ## The three-split doctrine
+Once you have labelled data you need to split the data into three sets: Train, Validation, and Test. Each set has a specific purpose in the model development lifecycle.
 
 ```{mermaid}
 flowchart LR
-    D[All labelled data] --> T[Train ~70%]
-    D --> V[Validation ~15%]
+    D[Labelled data] --> T[Train ~70%]
+    D --> V[Val ~15%]
     D --> S[Test ~15%]
     T -->|fit weights| M[Model]
     V -->|tune hyperparams| M
-    S -->|report final metric, ONCE| R[Final result]
+    S -->|final metric| R[Final result]
 ```
 
 ::: {.callout-important}
@@ -250,9 +312,14 @@ The **test set is sacred**. Use it when you are ready to test / report your fina
 :::
 
 ## How to select data for each split?
-- **Random split** — good for i.i.d. data, but optimistic if there's temporal/spatial correlation
-- **Stratified split** — ensures class balance in each set, but still optimistic if there's correlation
-- **Group split** — splits by a grouping variable (e.g. site, date, camera), more realistic for deployment
+- **Random split** — simple and easy to do but problematic if there are correlations (e.g. same site, date, camera)
+- **Stratified split** — ensures labelled data is balanced in each set, but difficult to apply if you have many classes
+    - Training
+        - 100 images for disease A
+        - 100 images for disease B
+    - Validation
+        - 20 images for disease A
+        - 20 images for disease B
 
 ## Adding variability to your splits
 Models only learn from the data you show them. If your training set is too narrow, your model will fail when it sees something new in the real world.
@@ -282,7 +349,7 @@ model.train(data=f"{dataset.location}/data.yaml", epochs=30, imgsz=640)
 ```
 
 ## How to interpret evaluation and testing results?
-![](presentation/assets/eval-metrics.png){width="100%"}
+![](assets/eval-metrics.png){width="100%"}
 
 
 # 4 · Domain Shift
@@ -293,19 +360,7 @@ model.train(data=f"{dataset.location}/data.yaml", epochs=30, imgsz=640)
 **Domain shift** = when the distribution of data at deployment differs from the distribution at training.
 :::
 
-Common flavours:
 
-- **Covariate shift** — input pixels differ (new camera, lighting, season)
-- **Label shift** — class frequencies change (rare species becomes common)
-- **Concept drift** — the *meaning* of the label changes over time (new disease morphology)
-
-::: {.callout-warning}
-Domain shift is the **#1 reason** research models fail in the real world. Accuracy on a held-out test set predicts almost nothing about accuracy in a new environment.
-:::
-
-::: notes
-This is where "it worked in the lab" projects go to die. Examples from your domain: camera swap between field campaigns, turbidity change in water, new biofouling pattern on cages. Encourage: always evaluate on a *held-out deployment domain*, not just random split.
-:::
 
 ---
 
