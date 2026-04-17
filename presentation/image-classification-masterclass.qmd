@@ -448,9 +448,13 @@ Only accepts very confident predictions.
 :::
 
 ---
+
+## ☕ Break time!
+
 ::: {.small .muted}
 Let's take a 10 minute break!
 :::
+
 ---
 
 # 4 · Domain Shift, Transfer Learning & Foundational Models
@@ -586,12 +590,6 @@ The **DS-CRP** is UQ's centralised data-science support team. We exist to help r
 
 :::
 
-
-
-
-::: notes
-Pragmatic note: in industry, ensembles are often avoided because of latency. In research, use them shamelessly — they're a free accuracy boost. TTA is the cheapest ensemble of all (no extra training).
-:::
 
 
 
