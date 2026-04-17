@@ -324,6 +324,8 @@ The **test set is sacred**. Use it when you are ready to test / report your fina
 ## Adding variability to your splits
 Models only learn from the data you show them. If your training set is too narrow, your model will fail when it sees something new in the real world.
 
+
+
 ::: {.callout-warning}
 This is one of the most common sources of "it worked in the lab but fails in the field" problems. 
 :::
@@ -347,6 +349,9 @@ model = YOLO("yolov8n.pt")
 model.train(data=f"{dataset.location}/data.yaml", epochs=30, imgsz=640)
 
 ```
+
+## A quick overview of model frameworks
+
 
 ## How to interpret evaluation and testing results?
 ![](assets/eval-metrics.png){width="100%"}
