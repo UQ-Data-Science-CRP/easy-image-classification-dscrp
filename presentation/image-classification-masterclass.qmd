@@ -24,7 +24,7 @@ format:
       data-background-color: "#51247A"
       data-background-image: "assets/uq-banner.png"
       data-background-size: "cover"
-      data-background-opacity: "0.18"
+      data-background-opacity: "0.18"     
 ---
 
 # Welcome {.title-slide}
@@ -45,6 +45,8 @@ A 'masterclass-style' computer vision workshop (image classification)
 
 
 ## Ground rules
+
+9 to ~11 am. 
 
 ::: {.callout-tip}
 Ask as we go. 
@@ -160,12 +162,8 @@ Cost scales with task type. Segmentation tasks are more expensive than classific
 
 ^[Image obtained from Reddit r/ComputerVision]
 
-::: {.keybox}
-Image classification is = Image Recognition
-:::
-
 ## Visual examples (cont.)
-This is how the model 'sees' the data and what it learns to output for each task. 
+This is how the model 'sees' the data and what it learns to output for each task. The `conf` scores are the model's confidence in its prediction. More information on this in the validation and testing section.
 
 ::: {.cols}
 ::: {.col .center .small}
@@ -181,8 +179,6 @@ This is how the model 'sees' the data and what it learns to output for each task
 `mask: ndarray[H,W] of class ids`
 :::
 :::
-
-The `conf` scores are the model's confidence in its prediction. More information on this in the validation and testing section.
 
 ---
 
@@ -222,21 +218,24 @@ Start from the decision you want to make; work out the minimum output that enabl
 
 
 # 3 · Collecting & Labelling Data
+
 ---
+
 ```{mermaid}
 flowchart TD
     A["Define task ✅"] --> B[Data]
     B --> C[Train]
     C --> D[Val and Test]
-    D --> C 
+    D --> C
     D --> E[Deploy]
 ```
+
 ---
 
 ## The data-centric mindset
 Data is the foundation of computer vision. A better dataset beats a better model every time.
 
-![](assets/Image-Annotation-1.jpg){width="100%"}
+![](assets/Image-Annotation-1.jpg){width="70%"}
 
 ^[Image obtained from DeepLobe]
 
@@ -259,7 +258,7 @@ In some situations manual labelling is still necessary - for those highly domain
 ## 'Rapid' in Roboflow
 Semi-automated labelling in action 
 
-<video controls autoplay muted loop width="100%">
+<video controls autoplay muted loop width="70%">
   <source src="assets/rapid_demo.webm" type="video/webm">
 </video>
 
@@ -270,7 +269,7 @@ Semi-automated labelling in action
 - You can upload and annotate data collected 'live' in your mobile
 - Accepts images, videos, pdfs, etc 
 
-![](assets/roboflow-upload.png){width="100%"}
+![](assets/roboflow-upload.png) {width="70%"}
 
 ^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
@@ -281,15 +280,18 @@ Roboflow Universe is a public repository of datasets and models. You can search 
  💡Lets have a quick look at the website and see what's there - https://universe.roboflow.com/
 
 # 3 · Training, Validation & Testing
+
 ---
+
 ```{mermaid}
 flowchart TD
     A["Define task ✅"] --> B["Data✅"]
     B --> C[Train]
     C --> D[Val and Test]
-    D --> C 
+    D --> C
     D --> E[Deploy]
 ```
+
 ---
 
 
@@ -349,18 +351,21 @@ model.train(data=f"{dataset.location}/data.yaml", epochs=30, imgsz=640)
 ## How to *actually* train a model? (cont.)
 In Roboflow, its all point and click tools. Plenty of options, tutorials and code (if you want to do it yourself).
 
-![](assets/roboflow_training_1..png){width="100%"}
+## Training a model in Roboflow Part 1
+
+![](assets/roboflow_training_1.png)
 ^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
----
-![](assets/roboflow_training_2.png){width="100%"}
-^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
----
+## Training a model in Roboflow Part 2
 
----
-![](assets/training_in_roboflow.png){width="100%"}
+![](assets/roboflow_training_2.png){width="70%"}
 ^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
----
+
+## Training a model in Roboflow Part 3
+
+![](assets/training_in_roboflow.png)
+^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
+
 
 
 ## A quick overview of model frameworks
@@ -371,14 +376,11 @@ In Roboflow, its all point and click tools. Plenty of options, tutorials and cod
 | 🥉 | **RF-DETR** | Detection / Segmentation | Best cross-domain generalisation | Medical, infrastructure |
 | 4 | **OpenCV** | Classical CV | No ML needed, rock-solid preprocessing | Pipelines, rule-based vision |
 | 5 | **SAM 2** | Segmentation | Zero-shot, no labels needed | Healthcare, geospatial |
-| 6 | **Detectron2** | Detection / Segmentation | Modular, research-grade PyTorch | Academic, satellite imagery |
-| 7 | **DINOv2** | Self-supervised ViT | Rich features, no labels | Scarce data, fine-grained tasks |
-| 8 | **CLIP** | Vision-Language | Image + text, zero-shot classification | Search, e-commerce, multimodal |
-| 9 | **EfficientNet** | Classification | Lightweight, mobile-friendly | Mobile, edge, IoT |
-| 10 | **TensorRT / ONNX** | Inference Optimization | Max speed on any hardware | Production deployment |
+
+
 
 ## How to interpret evaluation and testing results?
-![](assets/eval-metrics.png){width="100%"}
+![](assets/eval-metrics.png)
 ^[Image obtained from [Roboflow's website](https://roboflow.com).]
 
 ## Precision, recall and F1 
@@ -390,14 +392,14 @@ In Roboflow, its all point and click tools. Plenty of options, tutorials and cod
 ## The accuracy trap
 Accuracy can be misleading, especially with imbalanced datasets. For example, if 95% of your data belongs to one class, a model that always predicts that class will have 95% accuracy but will fail to identify the minority class.
 
-![](assets/class_imbalance.jpeg){width="100%"}
+![](assets/class_imbalance.jpeg){width="70%"}
 ^[Image obtained from Towards Data Science]
 
 ## What to do when accuracies are not acceptable?
 - **Collect more data** — especially for underrepresented classes
 - **Data augmentation** — artificially increase dataset size by applying transformations (rotation, flipping, color jitter)
 
-![](assets/class_imbalance.jpeg){width="100%"}
+![](assets/class_imbalance.jpeg){width="70%"}
 ^[Image obtained from Towards Data Science]
 
 
@@ -458,15 +460,18 @@ Let's take a 10 minute break!
 ---
 
 # 4 · Domain Shift, Transfer Learning & Foundational Models
+
 ---
+
 ```{mermaid}
 flowchart TD
     A["Define task ✅"] --> B["Data✅"]
     B --> C[Train✅]
     C --> D[Val✅ and Test✅]
-    D --> C 
+    D --> C
     D --> E[Deploy]
 ```
+
 ---
 
 ## Issues and solutions for real-world deployment
@@ -479,7 +484,7 @@ flowchart TD
 **Domain shift** = when the distribution of data at deployment differs from the distribution at training.
 :::
 
-![](assets/domain_shift_example.jpeg){width="100%"}
+![](assets/domain_shift_example.jpeg)
 
 ^[Image obtained from ResearchGate]
 
@@ -491,13 +496,13 @@ To solve this, you need to monitor when domain shift occurs and adapt your model
 ## Transfer learning: a powerful tool to combat domain shift
 Transfer learning allows you to take a model trained on one dataset and fine-tune it on a smaller dataset from the new domain. This can help your model adapt to the new data distribution without needing to train from scratch.
 
-![](assets/transfer-learning.png){width="100%"}
+![](assets/transfer-learning.png){width="70%"}
 ^[Image obtained from Linkedin]
 
 ## Foundational models: the new frontier
 Foundational models are large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning. They are trained on internet-scale data and can often generalize well to new domains.
 
-![](assets/foundation-models.png){width="100%"}
+![](assets/foundation-models.png){width="70%"}
 
 ^[Image obtained from [Roboflow's website](https://roboflow.com).]
 
@@ -510,19 +515,15 @@ Deployment is not just about putting a model in production. It encompasses the e
 
 Lets display this in Roboflow
 
----
-![](assets/roboflow_deployment.png){width="100%"}
+## Easy deployment in Roboflow
+
+![](assets/deployment_roboflow.png)
 ^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
----
-
-
-## Active learning: a human-in-the-loop approach to deployment
-Active learning is a strategy where the model identifies uncertain predictions and requests human feedback to improve its performance
 
 ---
 
-# 6 · Ensembles & Workflows
+# 6 · Ensembles Models
 
 ## Ensembles: combining multiple models
 
@@ -530,7 +531,7 @@ Active learning is a strategy where the model identifies uncertain predictions a
 - Averaging reduces **variance**
 - Typical gain: +1-5% accuracy, "for free"
 
-![](assets/ensemble-learning.webp){width="100%"}
+![](assets/ensemble-learning.webp){width="70%"}
 ^[Image obtained from IBM]
 
 
@@ -541,62 +542,22 @@ Active learning is a strategy where the model identifies uncertain predictions a
 |---|---|---|---|
 | **Data Collection** | Scrape, photograph, organise yourself | Upload, version, collaborate in UI | When data is complex, sensitive or scarce |
 | **Data Labelling** | LabelImg, CVAT, manual annotation | Built-in labelling tool + auto-label (SAM) | Large-scale or medical-grade annotation |
-| **Data Augmentation** | Albumentations, imgaug in code | One-click augmentation presets in UI | Custom domain-specific augmentation strategies |
 | **Model Training** | PyTorch / YOLO CLI, manage compute yourself | Train YOLO, RF-DETR etc. in UI or via API | Custom architectures, fine-tuning foundation models |
 | **Eval & Testing** | Write mAP, confusion matrix scripts manually | Auto metrics dashboard, visual eval tools | Statistical analysis, edge case testing, bias audits |
 | **App Development** | Build Flask/FastAPI inference server from scratch | Roboflow Inference SDK + hosted API | Scalable backend, auth, multi-model pipelines |
 | **Deployment (Cloud)** | Docker, AWS/GCP setup, manage endpoints | One-click deploy to hosted inference endpoint | High availability, autoscaling, enterprise SLAs |
 | **Deployment (Edge)** | Export ONNX/TensorRT, flash device manually | Export-ready models + Inference on Jetson/RPi | Custom hardware, optimisation, quantisation |
-| **Model Monitoring** | Build custom logging and drift detection | Dataset health checks, re-labelling workflows | Production drift monitoring, automated retraining |
-| **Team Collaboration** | Git, shared drives, manual versioning | Workspaces, dataset versioning, role management | MLOps pipelines, CI/CD for models |
-
-
-# 8 · How DS-CRP Can Help
-
-## The Data Science Central Research Platform
-
-The **DS-CRP** is UQ's centralised data-science support team. We exist to help researchers across the university move from *"I have data and an idea"* to *"I have a reproducible, evaluated, deployable result."*
-
-::: {.cols}
-::: {.col .small}
-**We can help with**
-
-- Framing the CV problem
-- Dataset strategy & annotation plans
-- Model selection & training
-- Evaluation design (beyond F1!)
-- Deployment advice
-- Reproducibility, version control, MLOps
-:::
-::: {.col .small}
-**How we work**
-
-- Free short consultations
-- Project scoping sessions
-- Hands-on collaboration
-- Training and upskilling
-- Cost-recovery model for hands-on support
-:::
-:::
-
 
 ---
-
-## Book a consultation — it's free
-
-::: {.center}
-
-[➜ Book a short consultation](https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&origin=lprLink&route=shorturl)
-
-:::
-
-
-
 
 # 9 · Practical Demos
 
 ## What we'll do next (30 min)
 
+1. **Roboflow Playground**
+    - https://playground.roboflow.com/object-detection
+    - Explore the UI and key features
+    - Upload a sample image and see how different open-source models perform
 1. **Roboflow Notebooks + Google Colab** (~15 min)
    - Open a prepared notebook
    - Train a classification model on a small dataset
@@ -606,23 +567,19 @@ The **DS-CRP** is UQ's centralised data-science support team. We exist to help r
    - Use a pre-trained model for inference
    - Fork a dataset and adapt it to your own project
 
+# 10 · Support after the workshop
 
+## Book a consultation — it's free
 
+- This workshop includes a 30 min session with me to help you with your specific project.
+- We can discuss your project, help you choose the right approach, and even get you started 
 
-# Wrap-up
+::: {.center}
 
-## Recap
+[➜ Book a short consultation](https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&origin=lprLink&route=shorturl)
 
-::: {.small}
-- **CV** = learning functions from pixels to structured outputs
-- **Classification / Detection / Segmentation** — pick the minimum task
-- **Train / Val / Test** — test set is sacred, group-aware splits matter
-- **Domain shift** is the #1 real-world failure; mitigate with a little fine-tuning
-- **Transfer learning** turns big problems into small ones
-- **Foundational models** (CLIP / SAM / GroundingDINO) are a free head-start
-- **Ensembles & workflows** often beat a bigger model
-- **Know when to DIY vs call DS-CRP**
 :::
+
 
 
 ## Take these with you

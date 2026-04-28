@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland">
-  <meta name="dcterms.date" content="2026-04-17">
+  <meta name="dcterms.date" content="2026-04-28">
   <title>Easy Image Classification</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -96,7 +96,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="image-classification-masterclass_files/libs/revealjs/dist/theme/quarto-c90457718c1c597388ade5b4e78affc1.css">
+  <link rel="stylesheet" href="image-classification-masterclass_files/libs/revealjs/dist/theme/quarto-728a211b1fe085a1af40939b3653b139.css">
   <link href="image-classification-masterclass_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="image-classification-masterclass_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="image-classification-masterclass_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,7 +209,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 
-  <p class="date">2026-04-17</p>
+  <p class="date">2026-04-28</p>
 </section>
 <section>
 <section id="welcome" class="title-slide slide level1 center">
@@ -217,20 +217,17 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <div class="small muted">
 <p>A ‘masterclass-style’ computer vision workshop (image classification)</p>
 </div>
-<div class="verified-stamp">
-<p>✔</p>
-</div>
 </section>
 <section id="what-youll-leave-with" class="slide level2">
 <h2>What you’ll leave with</h2>
 <ul>
-<li>A clear mental model of <strong>computer vision</strong> and its sub-tasks</li>
+<li>A clear understanding of <strong>computer vision</strong> and its sub-tasks</li>
 <li>Confidence choosing between <strong>classification / detection / segmentation</strong></li>
-<li>Practical understanding of <strong>training, evaluation, deployment</strong></li>
+<li>Practical understanding of <strong>training, validation, deployment</strong></li>
 <li>Awareness of <strong>domain shift, transfer learning, foundational models, ensembles</strong></li>
 <li>Python <strong>code gists</strong> you can adapt</li>
-<li>Hands-on with <strong>Roboflow Notebooks + Universe</strong></li>
-<li>A direct line to the <strong>DS-CRP</strong> for your own project</li>
+<li>Short demos of <strong>Roboflow Notebooks + Roboflow Universe</strong></li>
+<li>A direct line to the Data Sicence CRP for your own project</li>
 </ul>
 </section>
 <section id="ground-rules" class="slide level2">
@@ -270,7 +267,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>All theory will be paired with Python examples so you can see how the idea lands in practice.</p>
+<p>Most of the theory will be paired with Python examples so you can see how the idea lands in practice.</p>
 </div>
 </div>
 </div>
@@ -285,35 +282,61 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <div class="cols">
 <div class="col">
 <ul>
-<li>Teaching computers to <strong>extract meaning</strong> from pixels</li>
-<li>Models learn <strong>spatial patterns</strong> inside an image (edges → textures → parts → objects)</li>
-<li>Modern computer vision is dominated by <strong>deep neural networks</strong> (CNNs, Vision Transformers)</li>
+<li>Teaching computers to extract meaning from pixels</li>
+<li>Models learn spatial patterns inside an image (edges → textures → parts → objects)</li>
+<li>Modern computer vision is dominated by deep neural networks (CNNs, Vision Transformers)</li>
 </ul>
 </div>
 <div class="col">
-<div class="cell" data-reveal="true" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Pixels] --&gt; B[Low-level features&lt;br/&gt;edges, colours]
-    B --&gt; C[Mid-level features&lt;br/&gt;textures, shapes]
-    C --&gt; D[High-level features&lt;br/&gt;parts, objects]
-    D --&gt; E[Decision&lt;br/&gt;class, box, mask]
-</pre>
-</div>
-<p></p></figure><p></p>
+<p><img data-src="assets/Computervision_banner.webp"> <sup>1</sup></p>
 </div>
 </div>
-</div>
-</div>
-</div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Image obtained from Algotive</p></li></ol></aside></section>
+<section id="computer-vision-applications" class="slide level2">
+<h2>Computer vision applications</h2>
+<p><img data-src="assets/Screenshot-2025-02-13-at-11.55.59-AM.png"></p>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="what-is-roboflow" class="slide level2">
 <h2>What is Roboflow</h2>
-<p>Roboflow is a platform for computer vision projects. It provides tools for: - <strong>Data management</strong> — upload, annotate, version control - <strong>Model training</strong> — pre-trained backbones, transfer learning, custom training loops - <strong>Evaluation</strong> — metrics, confusion matrices, error analysis - <strong>Deployment</strong> — hosted inference, API, edge deployment</p>
+<p>Roboflow is a platform for computer vision projects. It provides tools for:</p>
+<ul>
+<li><strong>Data management</strong> — upload, annotate, version control</li>
+<li><strong>Model training</strong> — pre-trained backbones, transfer learning, custom training loops</li>
+<li><strong>Validation and Testing</strong> — metrics, confusion matrices, error analysis</li>
+<li><strong>Deployment</strong> — hosted inference, API, edge deployment</li>
+</ul>
 <p>https://roboflow.com/</p>
+</section>
+<section id="why-use-roboflow" class="slide level2">
+<h2>Why use Roboflow?</h2>
+<p>There are many apps and tools that are making computer vision more accessible. From experience, Roboflow is the most comprehensive and user-friendly for end-to-end projects.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Some of the advanced features (e.g.&nbsp;hosted inference) are paid, but the free tier is generous enough for most research projects.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>UQ or the Data Science CRP do not have any financial relationship with Roboflow. I just genuinely like their product and use it in my projects. Many people at UQ use it and have had good experiences.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-computer-vision-workflow" class="slide level2">
 <h2>The computer vision workflow</h2>
@@ -323,11 +346,11 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TD
-    A[Define problem &amp; task] --&gt; B[Collect &amp; label data]
-    B --&gt; C[Choose model &amp; train]
-    C --&gt; D[Evaluate and Test]
+    A[Define task] --&gt; B[Data]
+    B --&gt; C[Train]
+    C --&gt; D[Val and Test]
     D --&gt; C 
-    D --&gt; E[Deploy &amp; monitor]
+    D --&gt; E[Deploy]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -342,7 +365,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <p><span class="badge">Data</span> High quality, labelled data is most important ‘asset’ in computer vision.</p>
 </div>
 <div class="col">
-<p><span class="badge orange">Compute</span> AI is becoming more accessible, adding more pressure into processing infrastructure (GPUs).</p>
+<p><span class="badge orange">Compute</span> AI is becoming more accessible, adding more pressure into processing infrastructure.</p>
 </div>
 <div class="col">
 <p><span class="badge green">Models</span> There are many pre-trained or foundation models you can already download.</p>
@@ -412,11 +435,15 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </section>
 <section id="visual-examples" class="slide level2">
 <h2>Visual examples</h2>
-
-<img data-src="assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp" style="width:100.0%" class="r-stretch"></section>
+<p><img data-src="assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp" style="width:100.0%"></p>
+<p><sup>1</sup></p>
+<div class="keybox">
+<p>Image classification is = Image Recognition</p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>Image obtained from Reddit r/ComputerVision</p></li></ol></aside></section>
 <section id="visual-examples-cont." class="slide level2">
 <h2>Visual examples (cont.)</h2>
-<p>This is how the model ‘sees’ the data and what it learns to output for each task.</p>
+<p>This is how the model ‘sees’ the data and what it learns to output for each task. The <code>conf</code> scores are the model’s confidence in its prediction. More information on this in the validation and testing section.</p>
 <div class="cols">
 <div class="col center small">
 <p><strong>Classification</strong><br> <code>{label: 'cat', conf: 0.94}</code></p>
@@ -431,6 +458,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </section>
 <section id="code-three-tasks-three-one-liners-roboflow" class="slide level2">
 <h2>Code: three tasks, three one-liners (Roboflow)</h2>
+<p>Roboflow has several python libraries to make it easy to pull pre-trained models and run inference on your images. In here we show how to use <code>inference</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> inference <span class="im">import</span> get_model</span>
 <span id="cb1-2"><a href=""></a></span>
 <span id="cb1-3"><a href=""></a><span class="co"># --- Classification — cell type from microscopy image ---</span></span>
@@ -497,11 +525,32 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <h1>3 · Collecting &amp; Labelling Data</h1>
 
 </section>
+<section class="slide level2">
+
+<div class="cell" data-reveal="true" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Define task ✅"] --&gt; B[Data]
+    B --&gt; C[Train]
+    C --&gt; D[Val and Test]
+    D --&gt; C
+    D --&gt; E[Deploy]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
 <section id="the-data-centric-mindset" class="slide level2">
 <h2>The data-centric mindset</h2>
 <p>Data is the foundation of computer vision. A better dataset beats a better model every time.</p>
-<p><a href="assets/Image-Annotation-1.jpg" width="100%"></a></p>
-</section>
+<p><img data-src="assets/Image-Annotation-1.jpg"></p>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Image obtained from DeepLobe</p></li></ol></aside></section>
 <section id="moving-away-from-manual-labelling" class="slide level2">
 <h2>Moving away from manual labelling</h2>
 <p>In the early days of computer vision, labelling was a purely manual process. Now we can leverage <strong>semi-automated labelling</strong> techniques to speed up the annotation process.</p>
@@ -520,47 +569,93 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 </section>
+<section id="general-examples-of-manual-vs-automated-labelling" class="slide level2">
+<h2>General examples of manual vs automated labelling</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Manual labelling</th>
+<th>Semi-automated labelling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Detecting coral bleaching in a location where AI has never been trained before</td>
+<td>Detect coral reefs and classify it into species / genus</td>
+</tr>
+<tr class="even">
+<td>Classifying plant diseases from leaf images</td>
+<td>Segment parts of a plant (leaf, trunk, fruit etc)</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="rapid-in-roboflow" class="slide level2">
 <h2>‘Rapid’ in Roboflow</h2>
-<video controls="" autoplay="" muted="" loop="" width="100%">
+<p>Semi-automated labelling in action</p>
+<video controls="" autoplay="" muted="" loop="" width="70%">
 <source src="assets/rapid_demo.webm" type="video/webm">
 </video>
-</section>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>Video obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="other-cool-features-in-roboflow-re-to-data-collection-labelling" class="slide level2">
 <h2>Other cool features in Roboflow (re to data collection &amp; labelling)</h2>
 <ul>
 <li>You can upload and annotate data collected ‘live’ in your mobile</li>
 <li>Accepts images, videos, pdfs, etc</li>
 </ul>
-</section>
-<section class="slide level2">
-
-
-<img data-src="assets/roboflow-upload.png" style="width:100.0%" class="r-stretch"></section>
+<p><img data-src="assets/roboflow-upload.png"></p>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="roboflow-universe-pre-labelled-datasets-pre-trained-models" class="slide level2">
 <h2>Roboflow Universe: pre-labelled datasets &amp; pre-trained models</h2>
 <p>Roboflow Universe is a public repository of datasets and models. You can search for a dataset/model that matches your problem, and either use it directly or fine-tune it on your data.</p>
-<p>https://universe.roboflow.com/</p>
+<p>💡Lets have a quick look at the website and see what’s there - https://universe.roboflow.com/</p>
 </section></section>
 <section>
-<section id="training-evaluation-testing" class="title-slide slide level1 center">
-<h1>3 · Training, Evaluation &amp; Testing</h1>
+<section id="training-validation-testing" class="title-slide slide level1 center">
+<h1>3 · Training, Validation &amp; Testing</h1>
 
+</section>
+<section class="slide level2">
+
+<div class="cell" data-reveal="true" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Define task ✅"] --&gt; B["Data✅"]
+    B --&gt; C[Train]
+    C --&gt; D[Val and Test]
+    D --&gt; C
+    D --&gt; E[Deploy]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-three-split-doctrine" class="slide level2">
 <h2>The three-split doctrine</h2>
+<p>Once you have labelled data you need to split the data into three sets: Train, Validation, and Test. Each set has a specific purpose in the model development lifecycle.</p>
 <div class="cell" data-reveal="true" data-layout-align="center">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    D[All labelled data] --&gt; T[Train ~70%]
-    D --&gt; V[Validation ~15%]
+    D[Labelled data] --&gt; T[Train ~70%]
+    D --&gt; V[Val ~15%]
     D --&gt; S[Test ~15%]
     T --&gt;|fit weights| M[Model]
     V --&gt;|tune hyperparams| M
-    S --&gt;|report final metric, ONCE| R[Final result]
+    S --&gt;|final metric| R[Final result]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -584,9 +679,20 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <section id="how-to-select-data-for-each-split" class="slide level2">
 <h2>How to select data for each split?</h2>
 <ul>
-<li><strong>Random split</strong> — good for i.i.d. data, but optimistic if there’s temporal/spatial correlation</li>
-<li><strong>Stratified split</strong> — ensures class balance in each set, but still optimistic if there’s correlation</li>
-<li><strong>Group split</strong> — splits by a grouping variable (e.g.&nbsp;site, date, camera), more realistic for deployment</li>
+<li><strong>Random split</strong> — simple and easy to do but problematic if there are correlations (e.g.&nbsp;same site, date, camera)</li>
+<li><strong>Stratified split</strong> — ensures labelled data is balanced in each set, but difficult to apply if you have many classes
+<ul>
+<li>Training
+<ul>
+<li>100 images for disease A</li>
+<li>100 images for disease B</li>
+</ul></li>
+<li>Validation
+<ul>
+<li>20 images for disease A</li>
+<li>20 images for disease B</li>
+</ul></li>
+</ul></li>
 </ul>
 </section>
 <section id="adding-variability-to-your-splits" class="slide level2">
@@ -607,7 +713,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </section>
 <section id="how-to-actually-train-a-model" class="slide level2">
-<h2>How to actually train a model?</h2>
+<h2>How to <em>actually</em> train a model?</h2>
 <p>There are many frameworks and libraries to train models, but here is classic object detection example</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
 <span id="cb2-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
@@ -623,765 +729,327 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <span id="cb2-12"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
 <span id="cb2-13"><a href=""></a>model.train(data<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>dataset<span class="sc">.</span>location<span class="sc">}</span><span class="ss">/data.yaml"</span>, epochs<span class="op">=</span><span class="dv">30</span>, imgsz<span class="op">=</span><span class="dv">640</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="how-to-actually-train-a-model-cont." class="slide level2">
+<h2>How to <em>actually</em> train a model? (cont.)</h2>
+<p>In Roboflow, its all point and click tools. Plenty of options, tutorials and code (if you want to do it yourself).</p>
+</section>
+<section id="training-a-model-in-roboflow-part-1" class="slide level2">
+<h2>Training a model in Roboflow Part 1</h2>
+<p><img data-src="assets/roboflow_training_1.png"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn7"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<section id="training-a-model-in-roboflow-part-2" class="slide level2">
+<h2>Training a model in Roboflow Part 2</h2>
+<p><img data-src="assets/roboflow_training_2.png"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<section id="training-a-model-in-roboflow-part-3" class="slide level2">
+<h2>Training a model in Roboflow Part 3</h2>
+<p><img data-src="assets/training_in_roboflow.png"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<section id="a-quick-overview-of-model-frameworks" class="slide level2">
+<h2>A quick overview of model frameworks</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Model</th>
+<th>Type</th>
+<th>Strengths</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>🥇</td>
+<td><strong>YOLO26</strong></td>
+<td>Detection / Multi-task</td>
+<td>Fastest edge inference, NMS-free, multi-task</td>
+<td>IoT, robotics, real-time apps</td>
+</tr>
+<tr class="even">
+<td>🥈</td>
+<td><strong>YOLOv12</strong></td>
+<td>Detection</td>
+<td>Best accuracy, attention-centric</td>
+<td>Research &amp; benchmarking</td>
+</tr>
+<tr class="odd">
+<td>🥉</td>
+<td><strong>RF-DETR</strong></td>
+<td>Detection / Segmentation</td>
+<td>Best cross-domain generalisation</td>
+<td>Medical, infrastructure</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>OpenCV</strong></td>
+<td>Classical CV</td>
+<td>No ML needed, rock-solid preprocessing</td>
+<td>Pipelines, rule-based vision</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><strong>SAM 2</strong></td>
+<td>Segmentation</td>
+<td>Zero-shot, no labels needed</td>
+<td>Healthcare, geospatial</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="how-to-interpret-evaluation-and-testing-results" class="slide level2">
 <h2>How to interpret evaluation and testing results?</h2>
-
-<img data-src="assets/eval-metrics.png" style="width:100.0%" class="r-stretch"></section></section>
-<section>
-<section id="domain-shift" class="title-slide slide level1 center">
-<h1>4 · Domain Shift</h1>
-
-</section>
-<section id="what-is-domain-shift" class="slide level2">
-<h2>What is domain shift?</h2>
-<div class="keybox">
-<p><strong>Domain shift</strong> = when the distribution of data at deployment differs from the distribution at training.</p>
-</div>
-</section>
-<section id="examples-quick-detection" class="slide level2">
-<h2>Examples &amp; quick detection</h2>
-<div class="cols">
-<div class="col small">
-<p><strong>Examples</strong> - Model trained on iPhone photos → deployed on drone - Daytime training → dawn/dusk deployment - Great Barrier Reef corals → Red Sea corals - Healthy crops 2024 → drought crops 2026</p>
-</div>
-<div class="col small">
-<p><strong>How to detect it</strong> - Compare <strong>feature embeddings</strong> (e.g.&nbsp;CLIP features) between train and deploy sets - Monitor <strong>prediction confidence</strong> distribution over time - Track <strong>class ratios</strong> in production - Periodic <strong>spot-checking</strong> by a human expert</p>
-</div>
-</div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co"># Quick "is my new data different?" check using embeddings</span></span>
-<span id="cb3-2"><a href=""></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
-<span id="cb3-3"><a href=""></a><span class="im">from</span> scipy.spatial.distance <span class="im">import</span> cdist</span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a>enc <span class="op">=</span> SentenceTransformer(<span class="st">"clip-ViT-B-32"</span>)</span>
-<span id="cb3-6"><a href=""></a>train_emb <span class="op">=</span> enc.encode(train_images)</span>
-<span id="cb3-7"><a href=""></a>new_emb   <span class="op">=</span> enc.encode(new_images)</span>
-<span id="cb3-8"><a href=""></a>mean_dist <span class="op">=</span> cdist(train_emb.mean(<span class="dv">0</span>, keepdims<span class="op">=</span><span class="va">True</span>), new_emb).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>Frame: “your metric is only as good as the assumption that tomorrow looks like yesterday.” Recommend building a small drift-monitoring dashboard into any real deployment.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="mitigations" class="slide level2">
-<h2>Mitigations</h2>
+<p><img data-src="assets/eval-metrics.png"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<section id="precision-recall-and-f1" class="slide level2">
+<h2>Precision, recall and F1</h2>
 <ul>
-<li><strong>Collect a little data in the new domain</strong> and fine-tune (usually best ROI)</li>
-<li><strong>Aggressive augmentation</strong> that simulates the shift (lighting, blur, colour jitter)</li>
-<li><strong>Domain adaptation</strong> techniques (DANN, CORAL) — rarely worth the complexity in practice</li>
-<li><strong>Foundation models</strong> — large pre-trained features are more robust out-of-the-box</li>
-<li><strong>Human-in-the-loop</strong> for the first N predictions in a new domain</li>
+<li><strong>Precision</strong>: Of all the positive predictions, how many were correct? (TP / (TP + FP))</li>
+<li><strong>Recall</strong>: Of all the actual positives, how many did we correctly identify? (TP / (TP + FN))</li>
+<li><strong>F1 Score</strong>: The harmonic mean of precision and recall. It balances the two metrics. (2 * (Precision * Recall) / (Precision + Recall))</li>
 </ul>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</section>
+<section id="the-accuracy-trap" class="slide level2">
+<h2>The accuracy trap</h2>
+<p>Accuracy can be misleading, especially with imbalanced datasets. For example, if 95% of your data belongs to one class, a model that always predicts that class will have 95% accuracy but will fail to identify the minority class.</p>
+<p><img data-src="assets/class_imbalance.jpeg"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn11"><p>Image obtained from Towards Data Science</p></li></ol></aside></section>
+<section id="what-to-do-when-accuracies-are-not-acceptable" class="slide level2">
+<h2>What to do when accuracies are not acceptable?</h2>
+<ul>
+<li><strong>Collect more data</strong> — especially for underrepresented classes</li>
+<li><strong>Data augmentation</strong> — artificially increase dataset size by applying transformations (rotation, flipping, color jitter)</li>
+</ul>
+<p><img data-src="assets/class_imbalance.jpeg"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn12"><p>Image obtained from Towards Data Science</p></li></ol></aside></section>
+<section id="dealing-with-confidence-scores" class="slide level2">
+<h2>Dealing with confidence scores</h2>
+<p>Most models output a confidence score for each prediction/inference. It’s important to choose an appropriate threshold for these scores to balance precision and recall according to your specific use case.</p>
+<div class="cols">
+<div class="col center small">
+<p><strong>Classification</strong><br> <code>{label: 'cat', conf: 0.94}</code></p>
 </div>
-<p><strong>Tip</strong></p>
+<div class="col center small">
+<p><strong>Detection</strong><br> <code>[{label:'cat', bbox:[x1,y1,x2,y2], conf:0.91}]</code></p>
 </div>
-<div class="callout-content">
-<p>A <strong>50-image fine-tune</strong> in the new domain usually beats a cleverer domain-adaptation algorithm on the old data.</p>
+<div class="col center small">
+<p><strong>Segmentation</strong><br> <code>mask: ndarray[H,W] of class ids</code></p>
 </div>
 </div>
+</section>
+<section id="dealing-with-confidence-scores-cont." class="slide level2">
+<h2>Dealing with confidence scores (cont.)</h2>
+<div class="cols">
+<div class="col small center">
+<p><strong>🔽 Low threshold (e.g.&nbsp;0.2)</strong></p>
+<p>Accepts many predictions, even uncertain ones.</p>
+<p><em>Use when missing a case is costly</em> <em>(e.g.&nbsp;disease screening)</em></p>
 </div>
-<aside class="notes">
-<p>Be honest: domain adaptation is an active research area but in applied settings the pragmatic answer is almost always “label a few hundred images in the new domain and fine-tune.” Tie this forward to transfer learning.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<div class="col small center">
+<p><strong>⚖️ Balanced threshold (e.g.&nbsp;0.5)</strong></p>
+<p>Accepts predictions the model is fairly sure about.</p>
+<p><em>Tune from here based on your use case</em></p>
+</div>
+<div class="col small center">
+<p><strong>🔼 High threshold (e.g.&nbsp;0.9)</strong></p>
+<p>Only accepts very confident predictions.</p>
+<p><em>Use when a false alarm is costly</em> <em>(e.g.&nbsp;automated actions)</em></p>
+</div>
+</div>
+</section>
+<section id="break-time" class="slide level2">
+<h2>☕ Break time!</h2>
+<div class="small muted">
+<p>Let’s take a 10 minute break!</p>
+</div>
+</section>
+<section class="slide level2">
+
 </section></section>
 <section>
-<section id="transfer-learning" class="title-slide slide level1 center">
-<h1>5 · Transfer Learning</h1>
+<section id="domain-shift-transfer-learning-foundational-models" class="title-slide slide level1 center">
+<h1>4 · Domain Shift, Transfer Learning &amp; Foundational Models</h1>
 
 </section>
-<section id="why-it-works" class="slide level2">
-<h2>Why it works</h2>
-<div class="cols">
-<div class="col">
-<ul>
-<li>Early layers learn <strong>generic features</strong> (edges, textures)</li>
-<li>Late layers learn <strong>task-specific features</strong></li>
-<li>Swap the final layer → keep the rest</li>
-<li>Small dataset? Only fine-tune the head. Bigger? Unfreeze more.</li>
-</ul>
-</div>
-<div class="col">
+<section class="slide level2">
+
 <div class="cell" data-reveal="true" data-layout-align="center">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    A[Big dataset&lt;br/&gt;ImageNet] --&gt; B[Pre-trained&lt;br/&gt;backbone]
-    B --&gt;|freeze most layers| C[Your small dataset]
-    C --&gt; D[New classification head]
-    D --&gt; E[Fine-tuned model]
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Define task ✅"] --&gt; B["Data✅"]
+    B --&gt; C[Train✅]
+    C --&gt; D[Val✅ and Test✅]
+    D --&gt; C
+    D --&gt; E[Deploy]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="keybox">
-<p>Transfer learning turns a 100k-image problem into a 1k-image problem.</p>
-</div>
-<aside class="notes">
-<p>Rule of thumb: with &lt;1k images, only train the head. 1k-10k: unfreeze last block. &gt;10k: unfreeze everything but keep a low LR on the backbone. Mention discriminative LRs (smaller LR for earlier layers).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="transfer-learning-in-15-lines" class="slide level2">
-<h2>Transfer learning in 15 lines</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">import</span> torch, torch.nn <span class="im">as</span> nn</span>
-<span id="cb4-2"><a href=""></a><span class="im">from</span> torchvision.models <span class="im">import</span> resnet50, ResNet50_Weights</span>
-<span id="cb4-3"><a href=""></a></span>
-<span id="cb4-4"><a href=""></a>model <span class="op">=</span> resnet50(weights<span class="op">=</span>ResNet50_Weights.DEFAULT)</span>
-<span id="cb4-5"><a href=""></a></span>
-<span id="cb4-6"><a href=""></a><span class="co"># 1) freeze the backbone</span></span>
-<span id="cb4-7"><a href=""></a><span class="cf">for</span> p <span class="kw">in</span> model.parameters():</span>
-<span id="cb4-8"><a href=""></a>    p.requires_grad <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb4-9"><a href=""></a></span>
-<span id="cb4-10"><a href=""></a><span class="co"># 2) replace the classification head (ImageNet had 1000 classes)</span></span>
-<span id="cb4-11"><a href=""></a>NUM_CLASSES <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb4-12"><a href=""></a>model.fc <span class="op">=</span> nn.Linear(model.fc.in_features, NUM_CLASSES)</span>
-<span id="cb4-13"><a href=""></a></span>
-<span id="cb4-14"><a href=""></a><span class="co"># 3) only the new head is trainable</span></span>
-<span id="cb4-15"><a href=""></a>opt <span class="op">=</span> torch.optim.AdamW(model.fc.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span>
-<span id="cb4-16"><a href=""></a></span>
-<span id="cb4-17"><a href=""></a><span class="co"># 4) train as usual (see Section 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>Point out: <code>timm</code> library has hundreds of backbones with the same API. Newer recipes often just use a Vision Transformer (ViT) backbone — convnets still competitive for small data.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="foundational-models" class="title-slide slide level1 center">
-<h1>6 · Foundational Models</h1>
-
-</section>
-<section id="what-are-they" class="slide level2">
-<h2>What are they?</h2>
-<div class="keybox">
-<p>Models trained on <strong>internet-scale</strong> data that can be used <strong>zero-shot</strong> or with minimal adaptation for many downstream tasks.</p>
-</div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>What it does</th>
-<th>Use it for</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>CLIP</strong></td>
-<td>Aligns image ↔︎ text embeddings</td>
-<td>Zero-shot classification, retrieval, drift detection</td>
-</tr>
-<tr class="even">
-<td><strong>DINOv2</strong></td>
-<td>Self-supervised image features</td>
-<td>Strong backbone, embeddings, clustering</td>
-</tr>
-<tr class="odd">
-<td><strong>SAM / SAM 2</strong></td>
-<td>Promptable segmentation</td>
-<td>Annotation acceleration, masks without training</td>
-</tr>
-<tr class="even">
-<td><strong>GroundingDINO</strong></td>
-<td>Open-vocabulary detection</td>
-<td>“Find anything” from a text prompt</td>
-</tr>
-<tr class="odd">
-<td><strong>YOLO-World</strong></td>
-<td>Real-time open-vocab detection</td>
-<td>Fast detection without retraining</td>
-</tr>
-</tbody>
-</table>
-<aside class="notes">
-<p>Foundational models have radically changed the workflow. 3 years ago you’d spend 2 weeks training a classifier from scratch. Now: CLIP zero-shot → SAM masks → GroundingDINO boxes → fine-tune only if needed. Mention licence gotchas (some are non-commercial).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="zero-shot-classification-with-clip" class="slide level2">
-<h2>Zero-shot classification with CLIP</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> torch, clip</span>
-<span id="cb5-2"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb5-5"><a href=""></a>model, preprocess <span class="op">=</span> clip.load(<span class="st">"ViT-B/32"</span>, device<span class="op">=</span>device)</span>
-<span id="cb5-6"><a href=""></a></span>
-<span id="cb5-7"><a href=""></a>image <span class="op">=</span> preprocess(Image.<span class="bu">open</span>(<span class="st">"coral.jpg"</span>)).unsqueeze(<span class="dv">0</span>).to(device)</span>
-<span id="cb5-8"><a href=""></a>texts <span class="op">=</span> clip.tokenize([</span>
-<span id="cb5-9"><a href=""></a>    <span class="st">"a photo of healthy coral"</span>,</span>
-<span id="cb5-10"><a href=""></a>    <span class="st">"a photo of bleached coral"</span>,</span>
-<span id="cb5-11"><a href=""></a>    <span class="st">"a photo of dead coral"</span>,</span>
-<span id="cb5-12"><a href=""></a>]).to(device)</span>
-<span id="cb5-13"><a href=""></a></span>
-<span id="cb5-14"><a href=""></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb5-15"><a href=""></a>    logits_per_image, _ <span class="op">=</span> model(image, texts)</span>
-<span id="cb5-16"><a href=""></a>    probs <span class="op">=</span> logits_per_image.softmax(dim<span class="op">=-</span><span class="dv">1</span>).cpu().numpy()</span>
-<span id="cb5-17"><a href=""></a></span>
-<span id="cb5-18"><a href=""></a><span class="bu">print</span>(probs)   <span class="co"># e.g. [[0.78, 0.18, 0.04]]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Use CLIP zero-shot as your <strong>baseline</strong>. If a fine-tuned model can’t beat it, something is wrong.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>CLIP as baseline is a habit that saves projects. Also mention: CLIP features are excellent inputs to a simple logistic regression — often matches a from-scratch CNN with 1% of the effort.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="sam-masks-without-training" class="slide level2">
-<h2>SAM: masks without training</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> segment_anything <span class="im">import</span> SamAutomaticMaskGenerator, sam_model_registry</span>
-<span id="cb6-2"><a href=""></a></span>
-<span id="cb6-3"><a href=""></a>sam <span class="op">=</span> sam_model_registry[<span class="st">"vit_h"</span>](checkpoint<span class="op">=</span><span class="st">"sam_vit_h.pth"</span>).to(<span class="st">"cuda"</span>)</span>
-<span id="cb6-4"><a href=""></a>masks <span class="op">=</span> SamAutomaticMaskGenerator(sam).generate(image_rgb)</span>
-<span id="cb6-5"><a href=""></a><span class="co"># masks is a list of dicts: {'segmentation': ndarray, 'area': int, ...}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>SAM gives you <strong>masks</strong> but not <strong>labels</strong>. Pair it with CLIP or a small classifier for “mask → label”.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>The “SAM + CLIP” combo is the modern annotation accelerator: one click per object, automatic labels, human review. Roboflow bakes this in as “Smart Polygon” and similar tools.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="evaluation-beyond-f1" class="title-slide slide level1 center">
-<h1>7 · Evaluation — Beyond F1</h1>
-
-</section>
-<section id="f1-is-a-starting-point-not-the-finish-line" class="slide level2">
-<h2>F1 is a starting point, not the finish line</h2>
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>A single F1 number hides <strong>where</strong> and <strong>why</strong> your model fails. Stakeholders deserve — and need — more.</p>
-</div>
-</div>
-</div>
-<p>Questions a single F1 can’t answer:</p>
+<section id="issues-and-solutions-for-real-world-deployment" class="slide level2">
+<h2>Issues and solutions for real-world deployment</h2>
 <ul>
-<li>Does it fail on the <strong>rare</strong> class or the <strong>common</strong> class?</li>
-<li>Is it <strong>over-confident</strong> when wrong?</li>
-<li>How does it degrade across <strong>subgroups</strong> (sites, seasons, camera types)?</li>
-<li>Are errors <strong>safety-critical</strong> or merely annoying?</li>
-<li>Is there a <strong>threshold</strong> I should choose differently?</li>
+<li><strong>Domain shift</strong> → monitor and adapt</li>
+<li><strong>Transfer learning</strong> → leverage pre-trained models</li>
+<li><strong>Foundational models</strong> → zero-shot or few-shot with large pre-trained models</li>
 </ul>
-<aside class="notes">
-<p>Reframe: F1 is a compressed summary — useful for model selection, terrible for deployment decisions. Push the audience to always bring at least 3 views to a stakeholder: confusion matrix, per-class metrics, calibration.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="a-richer-evaluation-toolkit" class="slide level2">
-<h2>A richer evaluation toolkit</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tool</th>
-<th>What it tells you</th>
-<th>When to use</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Confusion matrix</strong></td>
-<td>Per-class errors &amp; confusions</td>
-<td>Always</td>
-</tr>
-<tr class="even">
-<td><strong>Per-class precision/recall</strong></td>
-<td>Class imbalance effects</td>
-<td>Imbalanced data</td>
-</tr>
-<tr class="odd">
-<td><strong>ROC &amp; PR curves</strong></td>
-<td>Threshold trade-offs</td>
-<td>Binary / one-vs-rest</td>
-</tr>
-<tr class="even">
-<td><strong>Calibration plot</strong></td>
-<td>Are confidences trustworthy?</td>
-<td>Any probabilistic output</td>
-</tr>
-<tr class="odd">
-<td><strong>Cohen’s κ / MCC</strong></td>
-<td>Agreement beyond chance</td>
-<td>Imbalanced or ordinal</td>
-</tr>
-<tr class="even">
-<td><strong>mAP / IoU</strong></td>
-<td>Detection &amp; segmentation quality</td>
-<td>Detection / segmentation</td>
-</tr>
-<tr class="odd">
-<td><strong>Subgroup analysis</strong></td>
-<td>Fairness &amp; drift hotspots</td>
-<td>Always, if metadata exists</td>
-</tr>
-<tr class="even">
-<td><strong>Error case gallery</strong></td>
-<td>Qualitative failure modes</td>
-<td>Before deployment</td>
-</tr>
-</tbody>
-</table>
-<aside class="notes">
-<p>Emphasise the last two: subgroup analysis and error-case galleries have saved more projects than fancy metrics. Build an “error wall” — literally a folder of the 50 worst predictions — and review it with domain experts.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="domain-shift-the-silent-killer-of-cv-projects" class="slide level2">
+<h2>Domain shift: the silent killer of CV projects</h2>
+<div class="keybox">
+<p><strong>Domain shift</strong> = when the distribution of data at deployment differs from the distribution at training.</p>
+</div>
+<p><img data-src="assets/domain_shift_example.jpeg"></p>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn13"><p>Image obtained from ResearchGate</p></li></ol></aside></section>
+<section id="why-domain-shift-is-a-problem" class="slide level2">
+<h2>Why domain shift is a problem</h2>
+<p>Models learn patterns in the training data. If the deployment data looks different, those patterns may not hold, leading to poor performance.</p>
+<p>To solve this, you need to monitor when domain shift occurs and adapt your model or data collection strategy accordingly.</p>
 </section>
-<section id="code-the-evaluation-essentials" class="slide level2">
-<h2>Code: the evaluation essentials</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (classification_report, confusion_matrix,</span>
-<span id="cb7-2"><a href=""></a>                             roc_auc_score, cohen_kappa_score)</span>
-<span id="cb7-3"><a href=""></a><span class="im">from</span> sklearn.calibration <span class="im">import</span> calibration_curve</span>
-<span id="cb7-4"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-5"><a href=""></a></span>
-<span id="cb7-6"><a href=""></a><span class="bu">print</span>(classification_report(y_true, y_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb7-7"><a href=""></a><span class="bu">print</span>(<span class="st">"kappa :"</span>, cohen_kappa_score(y_true, y_pred))</span>
-<span id="cb7-8"><a href=""></a><span class="bu">print</span>(<span class="st">"AUROC :"</span>, roc_auc_score(y_true, y_prob, multi_class<span class="op">=</span><span class="st">"ovr"</span>))</span>
-<span id="cb7-9"><a href=""></a></span>
-<span id="cb7-10"><a href=""></a><span class="co"># Calibration plot — are the probabilities trustworthy?</span></span>
-<span id="cb7-11"><a href=""></a>frac_pos, mean_pred <span class="op">=</span> calibration_curve(y_true <span class="op">==</span> <span class="dv">1</span>, y_prob[:, <span class="dv">1</span>], n_bins<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb7-12"><a href=""></a>plt.plot(mean_pred, frac_pos, <span class="st">"o-"</span>)<span class="op">;</span> plt.plot([<span class="dv">0</span>,<span class="dv">1</span>],[<span class="dv">0</span>,<span class="dv">1</span>], <span class="st">"--"</span>)</span>
-<span id="cb7-13"><a href=""></a>plt.xlabel(<span class="st">"Predicted probability"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Observed frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>well-calibrated</strong> 0.7 should happen ~70% of the time. If it happens 30% or 95% of the time, your confidences are lying.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Calibration is under-taught. For any system that triages or ranks, miscalibration is worse than miscoverage. Mention temperature scaling as a cheap post-hoc fix.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="for-detection-segmentation" class="slide level2">
-<h2>For detection &amp; segmentation</h2>
-<ul>
-<li><strong>IoU</strong> (Intersection over Union) — overlap between prediction and truth</li>
-<li><strong>mAP @ 0.5</strong> — mean Average Precision at IoU threshold 0.5 (lenient)</li>
-<li><strong>mAP @ 0.5:0.95</strong> — averaged over 10 IoU thresholds (COCO standard, strict)</li>
-<li><strong>Per-class AP</strong> — same story as per-class F1</li>
-<li><strong>Boundary F-score</strong> — specifically for segmentation edge quality</li>
-</ul>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>mAP can hide systematic issues. Always <strong>visualise predictions on ~50 images</strong> before trusting a number.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Stress visual inspection. I have seen mAP 0.85 models that were unusable because they missed the one species that actually mattered to the ecologist.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
+<section id="transfer-learning-a-powerful-tool-to-combat-domain-shift" class="slide level2">
+<h2>Transfer learning: a powerful tool to combat domain shift</h2>
+<p>Transfer learning allows you to take a model trained on one dataset and fine-tune it on a smaller dataset from the new domain. This can help your model adapt to the new data distribution without needing to train from scratch.</p>
+<p><img data-src="assets/transfer-learning.png"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn14"><p>Image obtained from Linkedin</p></li></ol></aside></section>
+<section id="foundational-models-the-new-frontier" class="slide level2">
+<h2>Foundational models: the new frontier</h2>
+<p>Foundational models are large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning. They are trained on internet-scale data and can often generalize well to new domains.</p>
+<p><img data-src="assets/foundation-models.png"></p>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn15"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section></section>
 <section>
 <section id="deployment" class="title-slide slide level1 center">
-<h1>8 · Deployment</h1>
+<h1>5 · Deployment</h1>
 
 </section>
 <section id="what-deployment-actually-means" class="slide level2">
 <h2>What “deployment” actually means</h2>
-<div class="cell" data-reveal="true" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    A[Trained weights] --&gt; B[Package&lt;br/&gt;ONNX / TorchScript / TFLite]
-    B --&gt; C[Serve&lt;br/&gt;API / edge / batch]
-    C --&gt; D[Monitor&lt;br/&gt;drift, latency, errors]
-    D --&gt;|alerts| E[Retrain / rollback]
-    E --&gt; A
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="keybox">
-<p><strong>Shipping weights is 20% of deployment. The other 80% is monitoring, retraining, and the humans in the loop.</strong></p>
-</div>
-<aside class="notes">
-<p>This is the biggest gap between academic ML and production ML. Most research models never cross this line. The slide after next is the checklist you should answer before shipping.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>Deployment is not just about putting a model in production. It encompasses the entire lifecycle of maintaining and improving a model after it’s been deployed.</p>
+<p>Lets display this in Roboflow</p>
+<p><img data-src="assets/deployment_roboflow.png"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn16"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<section id="active-learning-a-human-in-the-loop-approach-to-deployment" class="slide level2">
+<h2>Active learning: a human-in-the-loop approach to deployment</h2>
+<p>Active learning is a strategy where the model identifies uncertain predictions and requests human feedback to improve its performance</p>
 </section>
-<section id="the-deployment-checklist" class="slide level2">
-<h2>The deployment checklist</h2>
-<div class="cols">
-<div class="col small">
-<p><strong>Performance</strong></p>
-<ul>
-<li>Target latency (ms/frame)?</li>
-<li>Throughput (images/sec)?</li>
-<li>Batch vs streaming?</li>
-</ul>
-<p><strong>Hardware</strong></p>
-<ul>
-<li>CPU / GPU / edge (Jetson, Coral)?</li>
-<li>Offline vs connected?</li>
-<li>Memory ceiling?</li>
-</ul>
-<p><strong>Data pipeline</strong></p>
-<ul>
-<li>Pre/post-processing matches training?</li>
-<li>Input validation &amp; logging?</li>
-<li>Fallback when input is bad?</li>
-</ul>
-</div>
-<div class="col small">
-<p><strong>Operations</strong></p>
-<ul>
-<li>Versioning of model + data + code?</li>
-<li>Rollback plan?</li>
-<li>Monitoring (drift, latency, errors)?</li>
-<li>Retraining cadence?</li>
-</ul>
-<p><strong>Humans &amp; ethics</strong></p>
-<ul>
-<li>Who reviews flagged cases?</li>
-<li>Who is accountable for errors?</li>
-<li>Privacy / consent of imagery?</li>
-<li>Bias &amp; fairness audits?</li>
-</ul>
-<p><strong>Cost</strong></p>
-<ul>
-<li>$ per 1000 inferences?</li>
-<li>$ per retrain cycle?</li>
-</ul>
-</div>
-</div>
-<aside class="notes">
-<p>Walk through each bullet at pace. Highlight: “pre/post-processing matches training” is the silent killer — a 0.5 drop in mean normalisation can halve accuracy. Also: privacy of human subjects in imagery is increasingly non-optional.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="ensembles-workflows" class="title-slide slide level1 center">
+<h1>6 · Ensembles &amp; Workflows</h1>
+
 </section>
-<section id="serving-patterns" class="slide level2">
-<h2>Serving patterns</h2>
+<section id="ensembles-combining-multiple-models" class="slide level2">
+<h2>Ensembles: combining multiple models</h2>
+<ul>
+<li>Different models make <strong>different mistakes</strong></li>
+<li>Averaging reduces <strong>variance</strong></li>
+<li>Typical gain: +1-5% accuracy, “for free”</li>
+</ul>
+<p><img data-src="assets/ensemble-learning.webp" style="width:100.0%"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn17"><p>Image obtained from IBM</p></li></ol></aside></section></section>
+<section>
+<section id="ai-vs-expertise" class="title-slide slide level1 center">
+<h1>7· AI vs Expertise</h1>
+
+</section>
+<section id="a-simplified-list-of-things-you-can-do-manually-with-roboflow-or-with-expertise" class="slide level2">
+<h2>A simplified list of things you can do manually, with Roboflow or with expertise:</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Pattern</th>
-<th>When</th>
-<th>Example</th>
+<th>Task</th>
+<th>Manual / Code</th>
+<th>Roboflow</th>
+<th>Need an Expert</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Batch</strong></td>
-<td>You have a pile of images to process overnight</td>
-<td>Cron + script on a GPU node</td>
+<td><strong>Data Collection</strong></td>
+<td>Scrape, photograph, organise yourself</td>
+<td>Upload, version, collaborate in UI</td>
+<td>When data is complex, sensitive or scarce</td>
 </tr>
 <tr class="even">
-<td><strong>REST API</strong></td>
-<td>Web/mobile apps need on-demand inference</td>
-<td>FastAPI + ONNX on a cloud GPU</td>
+<td><strong>Data Labelling</strong></td>
+<td>LabelImg, CVAT, manual annotation</td>
+<td>Built-in labelling tool + auto-label (SAM)</td>
+<td>Large-scale or medical-grade annotation</td>
 </tr>
 <tr class="odd">
-<td><strong>Edge</strong></td>
-<td>Network/privacy/latency constraints</td>
-<td>Jetson Nano / Coral TPU</td>
+<td><strong>Data Augmentation</strong></td>
+<td>Albumentations, imgaug in code</td>
+<td>One-click augmentation presets in UI</td>
+<td>Custom domain-specific augmentation strategies</td>
 </tr>
 <tr class="even">
-<td><strong>Managed</strong></td>
-<td>You don’t want to babysit infrastructure</td>
-<td>Roboflow Hosted, Replicate, Modal</td>
+<td><strong>Model Training</strong></td>
+<td>PyTorch / YOLO CLI, manage compute yourself</td>
+<td>Train YOLO, RF-DETR etc. in UI or via API</td>
+<td>Custom architectures, fine-tuning foundation models</td>
+</tr>
+<tr class="odd">
+<td><strong>Eval &amp; Testing</strong></td>
+<td>Write mAP, confusion matrix scripts manually</td>
+<td>Auto metrics dashboard, visual eval tools</td>
+<td>Statistical analysis, edge case testing, bias audits</td>
+</tr>
+<tr class="even">
+<td><strong>App Development</strong></td>
+<td>Build Flask/FastAPI inference server from scratch</td>
+<td>Roboflow Inference SDK + hosted API</td>
+<td>Scalable backend, auth, multi-model pipelines</td>
+</tr>
+<tr class="odd">
+<td><strong>Deployment (Cloud)</strong></td>
+<td>Docker, AWS/GCP setup, manage endpoints</td>
+<td>One-click deploy to hosted inference endpoint</td>
+<td>High availability, autoscaling, enterprise SLAs</td>
+</tr>
+<tr class="even">
+<td><strong>Deployment (Edge)</strong></td>
+<td>Export ONNX/TensorRT, flash device manually</td>
+<td>Export-ready models + Inference on Jetson/RPi</td>
+<td>Custom hardware, optimisation, quantisation</td>
+</tr>
+<tr class="odd">
+<td><strong>Model Monitoring</strong></td>
+<td>Build custom logging and drift detection</td>
+<td>Dataset health checks, re-labelling workflows</td>
+<td>Production drift monitoring, automated retraining</td>
+</tr>
+<tr class="even">
+<td><strong>Team Collaboration</strong></td>
+<td>Git, shared drives, manual versioning</td>
+<td>Workspaces, dataset versioning, role management</td>
+<td>MLOps pipelines, CI/CD for models</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># Minimal FastAPI inference service</span></span>
-<span id="cb8-2"><a href=""></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI, UploadFile</span>
-<span id="cb8-3"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb8-4"><a href=""></a><span class="im">import</span> io, torch</span>
-<span id="cb8-5"><a href=""></a></span>
-<span id="cb8-6"><a href=""></a>app <span class="op">=</span> FastAPI()<span class="op">;</span> model <span class="op">=</span> torch.jit.load(<span class="st">"model.ts"</span>).<span class="bu">eval</span>()</span>
-<span id="cb8-7"><a href=""></a></span>
-<span id="cb8-8"><a href=""></a><span class="at">@app.post</span>(<span class="st">"/predict"</span>)</span>
-<span id="cb8-9"><a href=""></a><span class="cf">async</span> <span class="kw">def</span> predict(<span class="bu">file</span>: UploadFile):</span>
-<span id="cb8-10"><a href=""></a>    img <span class="op">=</span> preprocess(Image.<span class="bu">open</span>(io.BytesIO(<span class="cf">await</span> <span class="bu">file</span>.read())))</span>
-<span id="cb8-11"><a href=""></a>    <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb8-12"><a href=""></a>        probs <span class="op">=</span> model(img.unsqueeze(<span class="dv">0</span>)).softmax(<span class="op">-</span><span class="dv">1</span>).tolist()[<span class="dv">0</span>]</span>
-<span id="cb8-13"><a href=""></a>    <span class="cf">return</span> {<span class="st">"probs"</span>: probs}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>For 90% of research projects, “managed” is the right answer. The time cost of self-hosting GPUs rarely pays back. Roboflow’s hosted inference is a concrete option we’ll see in the practical.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="ai-vs-expertise" class="title-slide slide level1 center">
-<h1>9 · AI vs Expertise</h1>
-
-</section>
-<section id="what-you-can-confidently-do-yourself" class="slide level2">
-<h2>What you can <em>confidently</em> do yourself</h2>
-<div class="cols">
-<div class="col">
-<p><span class="badge green">DIY-friendly</span></p>
-<ul>
-<li><strong>Zero-shot</strong> classification with CLIP on clear categories</li>
-<li><strong>Fine-tune</strong> a pre-trained classifier on 500-5000 labelled images</li>
-<li><strong>Run inference</strong> with pre-trained detection/segmentation models</li>
-<li>Use <strong>Roboflow / Ultralytics / HuggingFace</strong> end-to-end</li>
-<li>Simple <strong>evaluation</strong> dashboards (confusion matrix + curves)</li>
-</ul>
-</div>
-<div class="col">
-<p><span class="badge red">Call-an-expert</span></p>
-<ul>
-<li>Deployment at <strong>scale</strong> (1000s of req/sec, edge fleets)</li>
-<li><strong>Safety-critical</strong> decisions (medical, autonomous, regulatory)</li>
-<li><strong>Novel modalities</strong> (multi-spectral, 3D, video, time-series)</li>
-<li><strong>Custom architectures</strong> or loss functions</li>
-<li><strong>Dataset strategy</strong> for very rare classes / severe imbalance</li>
-<li><strong>MLOps, monitoring, drift detection</strong> pipelines</li>
-</ul>
-</div>
-</div>
-<aside class="notes">
-<p>Reframe the question from “can AI do this?” to “can <em>I</em> do this with today’s tools, and is the risk of being wrong acceptable?” Emphasise: the tools are genuinely great for 80% of problems. The remaining 20% eat 80% of the effort — that’s where specialists earn their keep.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="a-decision-sketch" class="slide level2">
-<h2>A decision sketch</h2>
-<div class="cell" data-reveal="true" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart TD
-    A[I have an image problem] --&gt; B{Is it a standard task&lt;br/&gt;class/detect/segment?}
-    B -- no --&gt; X[Talk to an expert]
-    B -- yes --&gt; C{Can I collect / label&lt;br/&gt;a few hundred images?}
-    C -- no --&gt; Y[Zero-shot with CLIP/SAM&lt;br/&gt;or talk to an expert]
-    C -- yes --&gt; D{Is the consequence of a&lt;br/&gt;wrong prediction acceptable?}
-    D -- no --&gt; X
-    D -- yes --&gt; E[DIY with Roboflow /&lt;br/&gt;transfer learning]
-    E --&gt; F{Does it meet&lt;br/&gt;evaluation criteria?}
-    F -- yes --&gt; G[Deploy, monitor, iterate]
-    F -- no --&gt; X
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Keep this diagram as a take-home. Many attendees will map their project to this tree in real time. Offer to walk through it one-on-one in the DS-CRP consultation (next section).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section></section>
 <section>
 <section id="how-ds-crp-can-help" class="title-slide slide level1 center">
-<h1>10 · How DS-CRP Can Help</h1>
+<h1>8 · How DS-CRP Can Help</h1>
 
 </section>
 <section id="the-data-science-central-research-platform" class="slide level2">
@@ -1406,229 +1074,20 @@ flowchart TD
 <li>Project scoping sessions</li>
 <li>Hands-on collaboration</li>
 <li>Training and upskilling</li>
-<li>Referrals to specialist partners (QCIF, RCC, eResearch)</li>
+<li>Cost-recovery model for hands-on support</li>
 </ul>
 </div>
 </div>
-<aside class="notes">
-<p>Be concrete about what a short consultation looks like: 30 minutes, bring your data and your question, leave with a plan. Emphasise that there is no charge and no commitment.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="book-a-consultation-its-free" class="slide level2">
 <h2>Book a consultation — it’s free</h2>
 <div class="center">
-<p><strong>Image classification consultation with Sebastian</strong></p>
 <p><a href="https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&amp;origin=lprLink&amp;route=shorturl">➜ Book a short consultation</a></p>
-<div class="small muted">
-<p>The form above will go straight to me. Bring your data, your question, or just your curiosity — I will help you figure out the next step.</p>
 </div>
-</div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Good candidates for a consultation: <em>“I think I need CV but I’m not sure which task,”</em> <em>“My model works in the lab but fails in the field,”</em> <em>“I have 5000 images and no idea where to start,”</em> <em>“Should I use Roboflow or build from scratch?”</em></p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Spend a minute on this. Explicitly invite questions from the room. If any attendee describes a project that fits, offer to book them on the spot. Also mention: I can route you to other DS-CRP specialists if your problem is tabular/NLP/etc.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section></section>
 <section>
-<section id="ensembles-workflows" class="title-slide slide level1 center">
-<h1>11 · Ensembles &amp; Workflows</h1>
-
-</section>
-<section id="ensembles-combining-multiple-models" class="slide level2">
-<h2>Ensembles: combining multiple models</h2>
-<div class="cols">
-<div class="col">
-<p><strong>Why ensemble?</strong></p>
-<ul>
-<li>Different models make <strong>different mistakes</strong></li>
-<li>Averaging reduces <strong>variance</strong></li>
-<li>Typical gain: +1-5% accuracy, “for free”</li>
-</ul>
-<p><strong>Types</strong></p>
-<ul>
-<li><strong>Averaging</strong> — average softmax outputs</li>
-<li><strong>Voting</strong> — majority class wins</li>
-<li><strong>Stacking</strong> — a meta-model learns how to combine</li>
-<li><strong>Test-time augmentation (TTA)</strong> — same model, multiple augmented views</li>
-</ul>
-</div>
-<div class="col">
-<div class="cell" data-reveal="true" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    I[Image] --&gt; M1[Model A&lt;br/&gt;ResNet]
-    I --&gt; M2[Model B&lt;br/&gt;ViT]
-    I --&gt; M3[Model C&lt;br/&gt;EfficientNet]
-    M1 --&gt; AVG[Average / Vote]
-    M2 --&gt; AVG
-    M3 --&gt; AVG
-    AVG --&gt; P[Prediction]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Pragmatic note: in industry, ensembles are often avoided because of latency. In research, use them shamelessly — they’re a free accuracy boost. TTA is the cheapest ensemble of all (no extra training).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="code-averaging-tta" class="slide level2">
-<h2>Code: averaging &amp; TTA</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># --- Model averaging ---</span></span>
-<span id="cb9-2"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
-<span id="cb9-3"><a href=""></a></span>
-<span id="cb9-4"><a href=""></a><span class="kw">def</span> ensemble(models, x):</span>
-<span id="cb9-5"><a href=""></a>    probs <span class="op">=</span> [F.softmax(m(x), dim<span class="op">=-</span><span class="dv">1</span>) <span class="cf">for</span> m <span class="kw">in</span> models]</span>
-<span id="cb9-6"><a href=""></a>    <span class="cf">return</span> torch.stack(probs).mean(<span class="dv">0</span>)</span>
-<span id="cb9-7"><a href=""></a></span>
-<span id="cb9-8"><a href=""></a><span class="co"># --- Test-time augmentation ---</span></span>
-<span id="cb9-9"><a href=""></a><span class="kw">def</span> tta_predict(model, x, augs):</span>
-<span id="cb9-10"><a href=""></a>    preds <span class="op">=</span> [F.softmax(model(aug(x)), dim<span class="op">=-</span><span class="dv">1</span>) <span class="cf">for</span> aug <span class="kw">in</span> augs]</span>
-<span id="cb9-11"><a href=""></a>    <span class="cf">return</span> torch.stack(preds).mean(<span class="dv">0</span>)</span>
-<span id="cb9-12"><a href=""></a></span>
-<span id="cb9-13"><a href=""></a>augs <span class="op">=</span> [</span>
-<span id="cb9-14"><a href=""></a>    <span class="kw">lambda</span> x: x,</span>
-<span id="cb9-15"><a href=""></a>    <span class="kw">lambda</span> x: torch.flip(x, dims<span class="op">=</span>[<span class="op">-</span><span class="dv">1</span>]),   <span class="co"># horizontal flip</span></span>
-<span id="cb9-16"><a href=""></a>    <span class="kw">lambda</span> x: torch.flip(x, dims<span class="op">=</span>[<span class="op">-</span><span class="dv">2</span>]),   <span class="co"># vertical flip</span></span>
-<span id="cb9-17"><a href=""></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>TTA typically gives +0.5-2% with no retraining. Warn: keep the same augmentations at eval that make sense for the domain — flipping microscopy might be invalid.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="workflows-cascades-humans-in-the-loop" class="slide level2">
-<h2>Workflows: cascades &amp; humans-in-the-loop</h2>
-<p>Ensembles combine models. <strong>Workflows</strong> combine <em>steps</em>. In production this often matters more.</p>
-<div class="cell" data-reveal="true" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#4085c6", "primaryTextColor": "#ffffff", "primaryBorderColor": "#2d6ba8", "lineColor": "#2d6ba8", "edgeLabelBackground": "#e8f0fa"}}}%%
-flowchart LR
-    A[Image] --&gt; B[Fast detector&lt;br/&gt;YOLO]
-    B --&gt;|crops| C[Accurate classifier&lt;br/&gt;ViT]
-    C --&gt;|low conf| H[Human review]
-    C --&gt;|high conf| O[Output + log]
-    H --&gt; O
-    O --&gt; D[Drift monitor]
-    D --&gt;|shift detected| R[Retrain trigger]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="keybox">
-<p>A clever workflow often beats a smarter model. Think in terms of <strong>pipelines</strong>, not monoliths.</p>
-</div>
-<aside class="notes">
-<p>Real-world tip: a fast “reject” stage (is there even an object here?) + a slow accurate stage on the hits is cheaper and better than one big model on every frame. Also: a confidence-thresholded human-review stage is the single highest-leverage workflow pattern.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="a-small-real-world-pattern" class="slide level2">
-<h2>A small real-world pattern</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># Two-stage cascade with human-in-the-loop</span></span>
-<span id="cb10-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
-<span id="cb10-3"><a href=""></a>detector  <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
-<span id="cb10-4"><a href=""></a>classifier <span class="op">=</span> torch.jit.load(<span class="st">"fine_grained_classifier.ts"</span>).<span class="bu">eval</span>()</span>
-<span id="cb10-5"><a href=""></a></span>
-<span id="cb10-6"><a href=""></a><span class="kw">def</span> pipeline(image, conf_threshold<span class="op">=</span><span class="fl">0.85</span>):</span>
-<span id="cb10-7"><a href=""></a>    detections <span class="op">=</span> detector(image)[<span class="dv">0</span>].boxes</span>
-<span id="cb10-8"><a href=""></a>    outputs <span class="op">=</span> []</span>
-<span id="cb10-9"><a href=""></a>    <span class="cf">for</span> box <span class="kw">in</span> detections:</span>
-<span id="cb10-10"><a href=""></a>        crop <span class="op">=</span> crop_from_box(image, box)</span>
-<span id="cb10-11"><a href=""></a>        probs <span class="op">=</span> classifier(preprocess(crop).unsqueeze(<span class="dv">0</span>)).softmax(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb10-12"><a href=""></a>        conf, cls <span class="op">=</span> probs.<span class="bu">max</span>(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb10-13"><a href=""></a>        <span class="cf">if</span> conf.item() <span class="op">&lt;</span> conf_threshold:</span>
-<span id="cb10-14"><a href=""></a>            outputs.append({<span class="st">"bbox"</span>: box, <span class="st">"label"</span>: <span class="va">None</span>, <span class="st">"needs_review"</span>: <span class="va">True</span>})</span>
-<span id="cb10-15"><a href=""></a>        <span class="cf">else</span>:</span>
-<span id="cb10-16"><a href=""></a>            outputs.append({<span class="st">"bbox"</span>: box, <span class="st">"label"</span>: cls.item(), <span class="st">"conf"</span>: conf.item()})</span>
-<span id="cb10-17"><a href=""></a>    <span class="cf">return</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<aside class="notes">
-<p>Walk through: detect → crop → classify fine-grained → threshold for human review. This single pattern covers a huge fraction of applied CV projects. Roboflow Workflows (their new feature) encodes exactly this.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="practical-roboflow" class="title-slide slide level1 center">
-<h1>Practical · Roboflow</h1>
+<section id="practical-demos" class="title-slide slide level1 center">
+<h1>9 · Practical Demos</h1>
 
 </section>
 <section id="what-well-do-next-30-min" class="slide level2">
@@ -1647,96 +1106,6 @@ flowchart LR
 <li>Fork a dataset and adapt it to your own project</li>
 </ul></li>
 </ol>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Everything we do is mirrored in the companion repo: <strong>github.com/QCIF-SustainableFutures/roboflow-training</strong></p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Housekeeping: make sure everyone has a free Roboflow account and a Google account. Share the Colab link. Remind them Colab gives a free GPU — Runtime → Change runtime type → GPU. Do a slow first pass then let them explore.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="roboflow-notebooks-quickstart" class="slide level2">
-<h2>Roboflow Notebooks · quickstart</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="co"># In Colab — first cell</span></span>
-<span id="cb11-2"><a href=""></a><span class="op">!</span>pip install roboflow ultralytics <span class="op">--</span>quiet</span>
-<span id="cb11-3"><a href=""></a></span>
-<span id="cb11-4"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
-<span id="cb11-5"><a href=""></a>rf <span class="op">=</span> Roboflow(api_key<span class="op">=</span><span class="st">"YOUR_KEY"</span>)</span>
-<span id="cb11-6"><a href=""></a>project <span class="op">=</span> rf.workspace(<span class="st">"qcif"</span>).project(<span class="st">"my-classification-project"</span>)</span>
-<span id="cb11-7"><a href=""></a>dataset <span class="op">=</span> project.version(<span class="dv">1</span>).download(<span class="st">"folder"</span>)   <span class="co"># classification format</span></span>
-<span id="cb11-8"><a href=""></a></span>
-<span id="cb11-9"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
-<span id="cb11-10"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n-cls.pt"</span>)</span>
-<span id="cb11-11"><a href=""></a>model.train(data<span class="op">=</span>dataset.location, epochs<span class="op">=</span><span class="dv">20</span>, imgsz<span class="op">=</span><span class="dv">224</span>)</span>
-<span id="cb11-12"><a href=""></a>model.val()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>Never commit your Roboflow API key. Use Colab secrets or environment variables.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="roboflow-universe-quickstart" class="slide level2">
-<h2>Roboflow Universe · quickstart</h2>
-<ul>
-<li><strong>Universe</strong> = public catalogue of datasets and models</li>
-<li>Filter by task (classification / detection / segmentation)</li>
-<li><strong>Fork</strong> any dataset to your workspace</li>
-<li>One-click <strong>deploy</strong> for many models</li>
-<li>Great for <strong>baselines</strong> and rapid prototyping</li>
-</ul>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Before collecting your own data, <strong>always check Universe first</strong>. Someone may have already labelled exactly what you need.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>Live demo: search for a dataset close to the audience’s domain (marine, agriculture, medical). Show forking, show “Deploy” → “Hosted API”, call the hosted API from a Colab cell. End by emphasising this is a legitimate starting point, not a shortcut.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section></section>
 <section>
 <section id="wrap-up" class="title-slide slide level1 center">
@@ -1753,33 +1122,16 @@ flowchart LR
 <li><strong>Domain shift</strong> is the #1 real-world failure; mitigate with a little fine-tuning</li>
 <li><strong>Transfer learning</strong> turns big problems into small ones</li>
 <li><strong>Foundational models</strong> (CLIP / SAM / GroundingDINO) are a free head-start</li>
-<li><strong>Evaluate beyond F1</strong> — calibration, subgroups, error galleries</li>
-<li><strong>Deployment is 80% operations</strong>, not weights</li>
 <li><strong>Ensembles &amp; workflows</strong> often beat a bigger model</li>
 <li><strong>Know when to DIY vs call DS-CRP</strong></li>
 </ul>
 </div>
-<aside class="notes">
-<p>Keep recap fast. Invite final questions. Reiterate the consultation link and the GitHub repo.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="take-these-with-you" class="slide level2">
 <h2>Take these with you</h2>
 <ul>
-<li><strong>Companion repo</strong> — github.com/QCIF-SustainableFutures/roboflow-training</li>
 <li><strong>DS-CRP consultation</strong> — <a href="https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&amp;origin=lprLink&amp;route=shorturl">booking form</a></li>
 <li><strong>Roboflow Universe</strong> — universe.roboflow.com</li>
-<li><strong>Papers With Code</strong> — for any task: paperswithcode.com</li>
 <li><strong>HuggingFace Models</strong> — huggingface.co/models</li>
 </ul>
 </section>
@@ -1787,20 +1139,8 @@ flowchart LR
 <h2>Thank you 🙏</h2>
 <p><strong>s.lopezmarcano@uq.edu.au</strong></p>
 </section>
-<aside class="notes">
-<p>End warm. Offer to stay behind for 10 minutes for one-on-one questions. Remind about the thumbs-up/down feedback and any survey link.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="assets/uq-mark.png" class="slide-logo"></p>
