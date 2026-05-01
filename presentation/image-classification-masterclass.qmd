@@ -558,11 +558,11 @@ Lets display this in Roboflow
     - https://playground.roboflow.com/object-detection
     - Explore the UI and key features
     - Upload a sample image and see how different open-source models perform
-1. **Roboflow Notebooks + Google Colab** (~15 min)
+2. **Roboflow Notebooks + Google Colab** (~15 min)
    - Open a prepared notebook
    - Train a classification model on a small dataset
    - Evaluate + download weights
-2. **Roboflow Universe** (~15 min)
+3. **Roboflow Universe** (~15 min)
    - Browse public datasets & models
    - Use a pre-trained model for inference
    - Fork a dataset and adapt it to your own project
