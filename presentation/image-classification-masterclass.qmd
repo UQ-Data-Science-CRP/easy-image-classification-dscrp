@@ -33,6 +33,10 @@ format:
 A 'masterclass-style' computer vision workshop (image classification)
 :::
 
+::: {.small .muted}
+We acknowledge the Traditional Owners of the lands on which we work and learn, and pay our respects to their Elders past, present and emerging.
+:::
+
 ## What you'll leave with
 
 - A clear understanding of **computer vision** and its sub-tasks
@@ -41,7 +45,7 @@ A 'masterclass-style' computer vision workshop (image classification)
 - Awareness of **domain shift, transfer learning, foundational models, ensembles**
 - Python **code gists** you can adapt
 - Short demos of **Roboflow Notebooks + Roboflow Universe**
-- A direct line to the Data Sicence CRP for your own project
+- A direct line to the Data Science CRP for your own project
 
 
 ## Ground rules
@@ -52,14 +56,15 @@ A 'masterclass-style' computer vision workshop (image classification)
 Ask as we go. 
 :::
 
-::: {.callout-warning}
-Code in these slides is illustrative.
-:::
-
 ::: {.callout-note}
 Most of the theory will be paired with Python examples so you can see how the idea lands in practice.
 :::
 
+## My background and experience
+- PhD in computer vision for fisheries monitoring 
+- [Catlin Seaview Survey](https://catlinseaviewsurvey.com/)
+- [FishID Australia](https://fishid.org/)
+- [WildObs Australia](https://wildobs.org.au/)
 
 # 1 · Computer Vision
 
@@ -77,6 +82,7 @@ Most of the theory will be paired with Python examples so you can see how the id
 :::
 :::
 
+
 ## Computer vision applications
 
 ![](assets/Screenshot-2025-02-13-at-11.55.59-AM.png)
@@ -91,7 +97,7 @@ Roboflow is a platform for computer vision projects. It provides tools for:
 - **Validation and Testing** — metrics, confusion matrices, error analysis
 - **Deployment** — hosted inference, API, edge deployment
 
-https://roboflow.com/ 
+[Roboflow](https://roboflow.com/) 
 
 ## Why use Roboflow?
 There are many apps and tools that are making computer vision more accessible. From experience, Roboflow is the most comprehensive and user-friendly for end-to-end projects. 
@@ -269,7 +275,9 @@ Semi-automated labelling in action
 - You can upload and annotate data collected 'live' in your mobile
 - Accepts images, videos, pdfs, etc 
 
-![](assets/roboflow-upload.png) {width="70%"}
+## Uploading data in Roboflow
+
+![](assets/roboflow-upload.png){width="70%"}
 
 ^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
@@ -277,7 +285,14 @@ Semi-automated labelling in action
 ## Roboflow Universe: pre-labelled datasets & pre-trained models
 Roboflow Universe is a public repository of datasets and models. You can search for a dataset/model that matches your problem, and either use it directly or fine-tune it on your data.
 
- 💡Lets have a quick look at the website and see what's there - https://universe.roboflow.com/
+- 💡Lets have a quick look at the website and see what's there - [Roboflow Universe](https://universe.roboflow.com/)
+
+## How do you use a dataset or model from Roboflow Universe?
+```python
+from inference import get_model
+# Pull a pre-trained model from Roboflow Universe
+model = get_model("owner/model-name/version").infer("my-image.jpg")
+```
 
 # 3 · Training, Validation & Testing
 
@@ -321,6 +336,11 @@ The **test set is sacred**. Use it when you are ready to test / report your fina
     - Validation
         - 20 images for disease A
         - 20 images for disease B
+
+---
+
+![Data splitting](assets/random_splitting.png){width="70%"}
+
 
 ## Adding variability to your splits
 Models only learn from the data you show them. If your training set is too narrow, your model will fail when it sees something new in the real world.
@@ -385,22 +405,23 @@ In Roboflow, its all point and click tools. Plenty of options, tutorials and cod
 
 ## Precision, recall and F1 
 - **Precision**: Of all the positive predictions, how many were correct? (TP / (TP + FP))
+    - Is the model making a lot of false positives? (e.g. detecting disease when there is none)
 - **Recall**: Of all the actual positives, how many did we correctly identify? (TP / (TP + FN))
+    - Is the model missing a lot of true cases? (e.g. failing to detect disease when it is present)
 - **F1 Score**: The harmonic mean of precision and recall. It balances the two metrics. (2 * (Precision * Recall) / (Precision + Recall))
+    - Useful when you want a single metric to evaluate model performance. 
 
 
 ## The accuracy trap
-Accuracy can be misleading, especially with imbalanced datasets. For example, if 95% of your data belongs to one class, a model that always predicts that class will have 95% accuracy but will fail to identify the minority class.
+Accuracy can be misleading, especially with imbalanced datasets.
 
 ![](assets/class_imbalance.jpeg){width="70%"}
 ^[Image obtained from Towards Data Science]
 
 ## What to do when accuracies are not acceptable?
-- **Collect more data** — especially for underrepresented classes
-- **Data augmentation** — artificially increase dataset size by applying transformations (rotation, flipping, color jitter)
+- **Collect more data**  or **use data augmentation** to balance the classes
 
 ![](assets/class_imbalance.jpeg){width="70%"}
-^[Image obtained from Towards Data Science]
 
 
 ## Dealing with confidence scores
@@ -484,9 +505,9 @@ flowchart TD
 **Domain shift** = when the distribution of data at deployment differs from the distribution at training.
 :::
 
-![](assets/domain_shift_example.jpeg)
+![](assets/domain_shift.png){width="50%"}
+^[Image obtained from Medium]
 
-^[Image obtained from ResearchGate]
 
 ## Why domain shift is a problem
 Models learn patterns in the training data. If the deployment data looks different, those patterns may not hold, leading to poor performance.
@@ -494,13 +515,13 @@ Models learn patterns in the training data. If the deployment data looks differe
 To solve this, you need to monitor when domain shift occurs and adapt your model or data collection strategy accordingly.
 
 ## Transfer learning: a powerful tool to combat domain shift
-Transfer learning allows you to take a model trained on one dataset and fine-tune it on a smaller dataset from the new domain. This can help your model adapt to the new data distribution without needing to train from scratch.
+Can help your model adapt to the new data distribution without needing to train from scratch.
 
 ![](assets/transfer-learning.png){width="70%"}
 ^[Image obtained from Linkedin]
 
 ## Foundational models: the new frontier
-Foundational models are large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning. They are trained on internet-scale data and can often generalize well to new domains.
+Large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning
 
 ![](assets/foundation-models.png){width="70%"}
 
@@ -518,54 +539,46 @@ Lets display this in Roboflow
 ## Easy deployment in Roboflow
 
 ![](assets/deployment_roboflow.png)
+
 ^[Screenshot obtained from [Roboflow's website](https://roboflow.com).]
 
 
----
 
 # 6 · Ensembles Models
 
 ## Ensembles: combining multiple models
 
 - Different models make **different mistakes**
-- Averaging reduces **variance**
 - Typical gain: +1-5% accuracy, "for free"
 
 ![](assets/ensemble-learning.webp){width="70%"}
+
 ^[Image obtained from IBM]
 
 
 # 7· AI vs Expertise
 
-## A simplified list of things you can do manually, with Roboflow or with expertise:
-| Task | Manual / Code | Roboflow | Need an Expert |
-|---|---|---|---|
-| **Data Collection** | Scrape, photograph, organise yourself | Upload, version, collaborate in UI | When data is complex, sensitive or scarce |
-| **Data Labelling** | LabelImg, CVAT, manual annotation | Built-in labelling tool + auto-label (SAM) | Large-scale or medical-grade annotation |
-| **Model Training** | PyTorch / YOLO CLI, manage compute yourself | Train YOLO, RF-DETR etc. in UI or via API | Custom architectures, fine-tuning foundation models |
-| **Eval & Testing** | Write mAP, confusion matrix scripts manually | Auto metrics dashboard, visual eval tools | Statistical analysis, edge case testing, bias audits |
-| **App Development** | Build Flask/FastAPI inference server from scratch | Roboflow Inference SDK + hosted API | Scalable backend, auth, multi-model pipelines |
-| **Deployment (Cloud)** | Docker, AWS/GCP setup, manage endpoints | One-click deploy to hosted inference endpoint | High availability, autoscaling, enterprise SLAs |
-| **Deployment (Edge)** | Export ONNX/TensorRT, flash device manually | Export-ready models + Inference on Jetson/RPi | Custom hardware, optimisation, quantisation |
+## What can you do yourself — and when do you need help?
+For simple use cases, tools like **Roboflow** can take you a long way: collecting data, labelling, training and basic evaluation are often possible with little code.
+
+When your project moves beyond a prototype, expert support becomes more important.
+
+- **App development**: building reliable, secure, user-facing software
+- **Deployment to devices/edge**: hardware limits, speed, and model optimisation
+- **Production systems**: scaling, monitoring, maintenance, and reliability
 
 ---
 
 # 9 · Practical Demos
 
-## What we'll do next (30 min)
+## What we'll do next (15 min)
 
-1. **Roboflow Playground**
-    - https://playground.roboflow.com/object-detection
-    - Explore the UI and key features
-    - Upload a sample image and see how different open-source models perform
-2. **Roboflow Notebooks + Google Colab** (~15 min)
+1. **Roboflow Playground** (~5 min)
+    - (https://playground.roboflow.com/object-detection)
+2. **Roboflow Notebooks + Google Colab** (~5 min)
    - Open a prepared notebook
-   - Train a classification model on a small dataset
-   - Evaluate + download weights
-3. **Roboflow Universe** (~15 min)
+3. **Roboflow Universe** (~5 min)
    - Browse public datasets & models
-   - Use a pre-trained model for inference
-   - Fork a dataset and adapt it to your own project
 
 # 10 · Support after the workshop
 
@@ -579,14 +592,6 @@ Lets display this in Roboflow
 [➜ Book a short consultation](https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&origin=lprLink&route=shorturl)
 
 :::
-
-
-
-## Take these with you
-
-- **DS-CRP consultation** — [booking form](https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&origin=lprLink&route=shorturl)
-- **Roboflow Universe** — universe.roboflow.com
-- **HuggingFace Models** — huggingface.co/models
 
 ::: {.center}
 ## Thank you 🙏

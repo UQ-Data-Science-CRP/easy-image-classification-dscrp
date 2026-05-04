@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland">
-  <meta name="dcterms.date" content="2026-04-28">
+  <meta name="dcterms.date" content="2026-05-04">
   <title>Easy Image Classification</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -209,13 +209,16 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 
-  <p class="date">2026-04-28</p>
+  <p class="date">2026-05-04</p>
 </section>
 <section>
 <section id="welcome" class="title-slide slide level1 center">
 <h1>Welcome</h1>
 <div class="small muted">
 <p>A ‘masterclass-style’ computer vision workshop (image classification)</p>
+</div>
+<div class="small muted">
+<p>We acknowledge the Traditional Owners of the lands on which we work and learn, and pay our respects to their Elders past, present and emerging.</p>
 </div>
 </section>
 <section id="what-youll-leave-with" class="slide level2">
@@ -227,11 +230,12 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <li>Awareness of <strong>domain shift, transfer learning, foundational models, ensembles</strong></li>
 <li>Python <strong>code gists</strong> you can adapt</li>
 <li>Short demos of <strong>Roboflow Notebooks + Roboflow Universe</strong></li>
-<li>A direct line to the Data Sicence CRP for your own project</li>
+<li>A direct line to the Data Science CRP for your own project</li>
 </ul>
 </section>
 <section id="ground-rules" class="slide level2">
 <h2>Ground rules</h2>
+<p>9 to ~11 am.</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -242,19 +246,6 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 <div class="callout-content">
 <p>Ask as we go.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>Code in these slides is illustrative.</p>
 </div>
 </div>
 </div>
@@ -271,6 +262,15 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 </div>
+</section>
+<section id="my-background-and-experience" class="slide level2">
+<h2>My background and experience</h2>
+<ul>
+<li>PhD in computer vision for fisheries monitoring</li>
+<li><a href="https://catlinseaviewsurvey.com/">Catlin Seaview Survey</a></li>
+<li><a href="https://fishid.org/">FishID Australia</a></li>
+<li><a href="https://wildobs.org.au/">WildObs Australia</a></li>
+</ul>
 </section></section>
 <section>
 <section id="computer-vision" class="title-slide slide level1 center">
@@ -292,11 +292,15 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </div>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Image obtained from Algotive</p></li></ol></aside></section>
+<section id="computer-vision-in-the-context-of-ai" class="slide level2">
+<h2>Computer vision in the context of AI</h2>
+<p><img data-src="assets/ai-cv-dl.jpeg" style="width:100.0%"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>Image obtained from Mind Supernova</p></li></ol></aside></section>
 <section id="computer-vision-applications" class="slide level2">
 <h2>Computer vision applications</h2>
 <p><img data-src="assets/Screenshot-2025-02-13-at-11.55.59-AM.png"></p>
 <p><sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="what-is-roboflow" class="slide level2">
 <h2>What is Roboflow</h2>
 <p>Roboflow is a platform for computer vision projects. It provides tools for:</p>
@@ -306,7 +310,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <li><strong>Validation and Testing</strong> — metrics, confusion matrices, error analysis</li>
 <li><strong>Deployment</strong> — hosted inference, API, edge deployment</li>
 </ul>
-<p>https://roboflow.com/</p>
+<p><a href="https://roboflow.com/">Roboflow</a></p>
 </section>
 <section id="why-use-roboflow" class="slide level2">
 <h2>Why use Roboflow?</h2>
@@ -437,10 +441,7 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <h2>Visual examples</h2>
 <p><img data-src="assets/difference-in-image-classification-semantic-segmentation-v0-apse69opd3a61.webp" style="width:100.0%"></p>
 <p><sup>1</sup></p>
-<div class="keybox">
-<p>Image classification is = Image Recognition</p>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Image obtained from Reddit r/ComputerVision</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Image obtained from Reddit r/ComputerVision</p></li></ol></aside></section>
 <section id="visual-examples-cont." class="slide level2">
 <h2>Visual examples (cont.)</h2>
 <p>This is how the model ‘sees’ the data and what it learns to output for each task. The <code>conf</code> scores are the model’s confidence in its prediction. More information on this in the validation and testing section.</p>
@@ -548,9 +549,9 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <section id="the-data-centric-mindset" class="slide level2">
 <h2>The data-centric mindset</h2>
 <p>Data is the foundation of computer vision. A better dataset beats a better model every time.</p>
-<p><img data-src="assets/Image-Annotation-1.jpg"></p>
+<p><img data-src="assets/Image-Annotation-1.jpg" style="width:70.0%"></p>
 <p><sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>Image obtained from DeepLobe</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>Image obtained from DeepLobe</p></li></ol></aside></section>
 <section id="moving-away-from-manual-labelling" class="slide level2">
 <h2>Moving away from manual labelling</h2>
 <p>In the early days of computer vision, labelling was a purely manual process. Now we can leverage <strong>semi-automated labelling</strong> techniques to speed up the annotation process.</p>
@@ -601,20 +602,31 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <source src="assets/rapid_demo.webm" type="video/webm">
 </video>
 <p><sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>Video obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>Video obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="other-cool-features-in-roboflow-re-to-data-collection-labelling" class="slide level2">
 <h2>Other cool features in Roboflow (re to data collection &amp; labelling)</h2>
 <ul>
 <li>You can upload and annotate data collected ‘live’ in your mobile</li>
 <li>Accepts images, videos, pdfs, etc</li>
 </ul>
-<p><img data-src="assets/roboflow-upload.png"></p>
+</section>
+<section id="uploading-data-in-roboflow" class="slide level2">
+<h2>Uploading data in Roboflow</h2>
+<p><img data-src="assets/roboflow-upload.png"> {width=“70%”}</p>
 <p><sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn6"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn7"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="roboflow-universe-pre-labelled-datasets-pre-trained-models" class="slide level2">
 <h2>Roboflow Universe: pre-labelled datasets &amp; pre-trained models</h2>
 <p>Roboflow Universe is a public repository of datasets and models. You can search for a dataset/model that matches your problem, and either use it directly or fine-tune it on your data.</p>
-<p>💡Lets have a quick look at the website and see what’s there - https://universe.roboflow.com/</p>
+<ul>
+<li>💡Lets have a quick look at the website and see what’s there - (Roboflow Universe)[https://universe.roboflow.com/]</li>
+</ul>
+</section>
+<section id="how-do-you-use-a-dataset-or-model-from-roboflow-universe" class="slide level2">
+<h2>How do you use a dataset or model from Roboflow Universe?</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> inference <span class="im">import</span> get_model</span>
+<span id="cb2-2"><a href=""></a><span class="co"># Pull a pre-trained model from Roboflow Universe</span></span>
+<span id="cb2-3"><a href=""></a>model <span class="op">=</span> get_model(<span class="st">"owner/model-name/version"</span>).infer(<span class="st">"my-image.jpg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="training-validation-testing" class="title-slide slide level1 center">
@@ -695,6 +707,10 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </ul></li>
 </ul>
 </section>
+<section class="slide level2">
+
+
+<img data-src="assets/random_splitting.png" style="width:70.0%" class="r-stretch quarto-figure-center"><p class="caption">Stratified vs random split</p></section>
 <section id="adding-variability-to-your-splits" class="slide level2">
 <h2>Adding variability to your splits</h2>
 <p>Models only learn from the data you show them. If your training set is too narrow, your model will fail when it sees something new in the real world.</p>
@@ -715,19 +731,19 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <section id="how-to-actually-train-a-model" class="slide level2">
 <h2>How to <em>actually</em> train a model?</h2>
 <p>There are many frameworks and libraries to train models, but here is classic object detection example</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
-<span id="cb2-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
-<span id="cb2-3"><a href=""></a><span class="im">import</span> supervision <span class="im">as</span> sv</span>
-<span id="cb2-4"><a href=""></a></span>
-<span id="cb2-5"><a href=""></a><span class="co"># 1. pull dataset</span></span>
-<span id="cb2-6"><a href=""></a>dataset <span class="op">=</span> Roboflow(api_key<span class="op">=</span><span class="st">"YOUR_KEY"</span>) <span class="op">\</span></span>
-<span id="cb2-7"><a href=""></a>    .workspace(<span class="st">"my-workspace"</span>) <span class="op">\</span></span>
-<span id="cb2-8"><a href=""></a>    .project(<span class="st">"my-detection-project"</span>) <span class="op">\</span></span>
-<span id="cb2-9"><a href=""></a>    .version(<span class="dv">1</span>).download(<span class="st">"yolov8"</span>)</span>
-<span id="cb2-10"><a href=""></a></span>
-<span id="cb2-11"><a href=""></a><span class="co"># 2. train</span></span>
-<span id="cb2-12"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
-<span id="cb2-13"><a href=""></a>model.train(data<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>dataset<span class="sc">.</span>location<span class="sc">}</span><span class="ss">/data.yaml"</span>, epochs<span class="op">=</span><span class="dv">30</span>, imgsz<span class="op">=</span><span class="dv">640</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> roboflow <span class="im">import</span> Roboflow</span>
+<span id="cb3-2"><a href=""></a><span class="im">from</span> ultralytics <span class="im">import</span> YOLO</span>
+<span id="cb3-3"><a href=""></a><span class="im">import</span> supervision <span class="im">as</span> sv</span>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a><span class="co"># 1. pull dataset</span></span>
+<span id="cb3-6"><a href=""></a>dataset <span class="op">=</span> Roboflow(api_key<span class="op">=</span><span class="st">"YOUR_KEY"</span>) <span class="op">\</span></span>
+<span id="cb3-7"><a href=""></a>    .workspace(<span class="st">"my-workspace"</span>) <span class="op">\</span></span>
+<span id="cb3-8"><a href=""></a>    .project(<span class="st">"my-detection-project"</span>) <span class="op">\</span></span>
+<span id="cb3-9"><a href=""></a>    .version(<span class="dv">1</span>).download(<span class="st">"yolov8"</span>)</span>
+<span id="cb3-10"><a href=""></a></span>
+<span id="cb3-11"><a href=""></a><span class="co"># 2. train</span></span>
+<span id="cb3-12"><a href=""></a>model <span class="op">=</span> YOLO(<span class="st">"yolov8n.pt"</span>)</span>
+<span id="cb3-13"><a href=""></a>model.train(data<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>dataset<span class="sc">.</span>location<span class="sc">}</span><span class="ss">/data.yaml"</span>, epochs<span class="op">=</span><span class="dv">30</span>, imgsz<span class="op">=</span><span class="dv">640</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="how-to-actually-train-a-model-cont." class="slide level2">
 <h2>How to <em>actually</em> train a model? (cont.)</h2>
@@ -736,15 +752,15 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <section id="training-a-model-in-roboflow-part-1" class="slide level2">
 <h2>Training a model in Roboflow Part 1</h2>
 <p><img data-src="assets/roboflow_training_1.png"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn7"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="training-a-model-in-roboflow-part-2" class="slide level2">
 <h2>Training a model in Roboflow Part 2</h2>
-<p><img data-src="assets/roboflow_training_2.png"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn8"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<p><img data-src="assets/roboflow_training_2.png" style="width:70.0%"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="training-a-model-in-roboflow-part-3" class="slide level2">
 <h2>Training a model in Roboflow Part 3</h2>
 <p><img data-src="assets/training_in_roboflow.png"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="a-quick-overview-of-model-frameworks" class="slide level2">
 <h2>A quick overview of model frameworks</h2>
 <table class="caption-top">
@@ -806,28 +822,36 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <section id="how-to-interpret-evaluation-and-testing-results" class="slide level2">
 <h2>How to interpret evaluation and testing results?</h2>
 <p><img data-src="assets/eval-metrics.png"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn10"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn11"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
 <section id="precision-recall-and-f1" class="slide level2">
 <h2>Precision, recall and F1</h2>
 <ul>
-<li><strong>Precision</strong>: Of all the positive predictions, how many were correct? (TP / (TP + FP))</li>
-<li><strong>Recall</strong>: Of all the actual positives, how many did we correctly identify? (TP / (TP + FN))</li>
-<li><strong>F1 Score</strong>: The harmonic mean of precision and recall. It balances the two metrics. (2 * (Precision * Recall) / (Precision + Recall))</li>
+<li><strong>Precision</strong>: Of all the positive predictions, how many were correct? (TP / (TP + FP))
+<ul>
+<li>Is the model making a lot of false positives? (e.g.&nbsp;detecting disease when there is none)</li>
+</ul></li>
+<li><strong>Recall</strong>: Of all the actual positives, how many did we correctly identify? (TP / (TP + FN))
+<ul>
+<li>Is the model missing a lot of true cases? (e.g.&nbsp;failing to detect disease when it is present)</li>
+</ul></li>
+<li><strong>F1 Score</strong>: The harmonic mean of precision and recall. It balances the two metrics. (2 * (Precision * Recall) / (Precision + Recall))
+<ul>
+<li>Useful when you want a single metric to evaluate model performance.</li>
+</ul></li>
 </ul>
 </section>
 <section id="the-accuracy-trap" class="slide level2">
 <h2>The accuracy trap</h2>
-<p>Accuracy can be misleading, especially with imbalanced datasets. For example, if 95% of your data belongs to one class, a model that always predicts that class will have 95% accuracy but will fail to identify the minority class.</p>
-<p><img data-src="assets/class_imbalance.jpeg"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn11"><p>Image obtained from Towards Data Science</p></li></ol></aside></section>
+<p>Accuracy can be misleading, especially with imbalanced datasets.</p>
+<p><img data-src="assets/class_imbalance.jpeg" style="width:70.0%"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn12"><p>Image obtained from Towards Data Science</p></li></ol></aside></section>
 <section id="what-to-do-when-accuracies-are-not-acceptable" class="slide level2">
 <h2>What to do when accuracies are not acceptable?</h2>
 <ul>
-<li><strong>Collect more data</strong> — especially for underrepresented classes</li>
-<li><strong>Data augmentation</strong> — artificially increase dataset size by applying transformations (rotation, flipping, color jitter)</li>
+<li><strong>Collect more data</strong> or <strong>use data augmentation</strong> to balance the classes</li>
 </ul>
-<p><img data-src="assets/class_imbalance.jpeg"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn12"><p>Image obtained from Towards Data Science</p></li></ol></aside></section>
+
+<img data-src="assets/class_imbalance.jpeg" style="width:70.0%" class="r-stretch"></section>
 <section id="dealing-with-confidence-scores" class="slide level2">
 <h2>Dealing with confidence scores</h2>
 <p>Most models output a confidence score for each prediction/inference. It’s important to choose an appropriate threshold for these scores to balance precision and recall according to your specific use case.</p>
@@ -910,9 +934,8 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <div class="keybox">
 <p><strong>Domain shift</strong> = when the distribution of data at deployment differs from the distribution at training.</p>
 </div>
-<p><img data-src="assets/domain_shift_example.jpeg"></p>
-<p><sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn13"><p>Image obtained from ResearchGate</p></li></ol></aside></section>
+<p><img data-src="assets/domain_shift.png" style="width:50.0%"> <sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn13"><p>Image obtained from Medium</p></li></ol></aside></section>
 <section id="why-domain-shift-is-a-problem" class="slide level2">
 <h2>Why domain shift is a problem</h2>
 <p>Models learn patterns in the training data. If the deployment data looks different, those patterns may not hold, leading to poor performance.</p>
@@ -920,13 +943,13 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </section>
 <section id="transfer-learning-a-powerful-tool-to-combat-domain-shift" class="slide level2">
 <h2>Transfer learning: a powerful tool to combat domain shift</h2>
-<p>Transfer learning allows you to take a model trained on one dataset and fine-tune it on a smaller dataset from the new domain. This can help your model adapt to the new data distribution without needing to train from scratch.</p>
-<p><img data-src="assets/transfer-learning.png"> <sup>1</sup></p>
+<p>Can help your model adapt to the new data distribution without needing to train from scratch.</p>
+<p><img data-src="assets/transfer-learning.png" style="width:70.0%"> <sup>1</sup></p>
 <aside><ol class="aside-footnotes"><li id="fn14"><p>Image obtained from Linkedin</p></li></ol></aside></section>
 <section id="foundational-models-the-new-frontier" class="slide level2">
 <h2>Foundational models: the new frontier</h2>
-<p>Foundational models are large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning. They are trained on internet-scale data and can often generalize well to new domains.</p>
-<p><img data-src="assets/foundation-models.png"></p>
+<p>Large pre-trained models that can be used for a wide range of tasks with little to no fine-tuning</p>
+<p><img data-src="assets/foundation-models.png" style="width:70.0%"></p>
 <p><sup>1</sup></p>
 <aside><ol class="aside-footnotes"><li id="fn15"><p>Image obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section></section>
 <section>
@@ -938,36 +961,33 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <h2>What “deployment” actually means</h2>
 <p>Deployment is not just about putting a model in production. It encompasses the entire lifecycle of maintaining and improving a model after it’s been deployed.</p>
 <p>Lets display this in Roboflow</p>
-<p><img data-src="assets/deployment_roboflow.png"> <sup>1</sup></p>
-<aside><ol class="aside-footnotes"><li id="fn16"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section>
-<section id="active-learning-a-human-in-the-loop-approach-to-deployment" class="slide level2">
-<h2>Active learning: a human-in-the-loop approach to deployment</h2>
-<p>Active learning is a strategy where the model identifies uncertain predictions and requests human feedback to improve its performance</p>
 </section>
-<section class="slide level2">
-
-</section></section>
+<section id="easy-deployment-in-roboflow" class="slide level2">
+<h2>Easy deployment in Roboflow</h2>
+<p><img data-src="assets/deployment_roboflow.png"></p>
+<p><sup>1</sup></p>
+<aside><ol class="aside-footnotes"><li id="fn16"><p>Screenshot obtained from <a href="https://roboflow.com">Roboflow’s website</a>.</p></li></ol></aside></section></section>
 <section>
-<section id="ensembles-workflows" class="title-slide slide level1 center">
-<h1>6 · Ensembles &amp; Workflows</h1>
+<section id="ensembles-models" class="title-slide slide level1 center">
+<h1>6 · Ensembles Models</h1>
 
 </section>
 <section id="ensembles-combining-multiple-models" class="slide level2">
 <h2>Ensembles: combining multiple models</h2>
 <ul>
 <li>Different models make <strong>different mistakes</strong></li>
-<li>Averaging reduces <strong>variance</strong></li>
 <li>Typical gain: +1-5% accuracy, “for free”</li>
 </ul>
-<p><img data-src="assets/ensemble-learning.webp" style="width:100.0%"> <sup>1</sup></p>
+<p><img data-src="assets/ensemble-learning.webp" style="width:70.0%"></p>
+<p><sup>1</sup></p>
 <aside><ol class="aside-footnotes"><li id="fn17"><p>Image obtained from IBM</p></li></ol></aside></section></section>
 <section>
 <section id="ai-vs-expertise" class="title-slide slide level1 center">
 <h1>7· AI vs Expertise</h1>
 
 </section>
-<section id="a-simplified-list-of-things-you-can-do-manually-with-roboflow-or-with-expertise" class="slide level2">
-<h2>A simplified list of things you can do manually, with Roboflow or with expertise:</h2>
+<section id="what-can-you-do-yourself-and-when-do-you-need-help" class="slide level2">
+<h2>What can you do yourself — and when do you need help?</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -978,112 +998,59 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <thead>
 <tr class="header">
 <th>Task</th>
-<th>Manual / Code</th>
-<th>Roboflow</th>
-<th>Need an Expert</th>
+<th>Most of the time → use a tool</th>
+<th>Rarely → do it yourself</th>
+<th>Need an expert when…</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Data Collection</strong></td>
-<td>Scrape, photograph, organise yourself</td>
-<td>Upload, version, collaborate in UI</td>
-<td>When data is complex, sensitive or scarce</td>
+<td><strong>Collect data</strong></td>
+<td>Roboflow Universe — find existing datasets</td>
+<td>Photograph &amp; organise your own images</td>
+<td>Data is rare, sensitive or needs special fieldwork</td>
 </tr>
 <tr class="even">
-<td><strong>Data Labelling</strong></td>
-<td>LabelImg, CVAT, manual annotation</td>
-<td>Built-in labelling tool + auto-label (SAM)</td>
-<td>Large-scale or medical-grade annotation</td>
+<td><strong>Label data</strong></td>
+<td>Auto-label with AI (SAM, CLIP) in Roboflow</td>
+<td>Label a small sample to verify quality</td>
+<td>Highly specialised domain (e.g.&nbsp;medical, rare species)</td>
 </tr>
 <tr class="odd">
-<td><strong>Data Augmentation</strong></td>
-<td>Albumentations, imgaug in code</td>
-<td>One-click augmentation presets in UI</td>
-<td>Custom domain-specific augmentation strategies</td>
+<td><strong>Train a model</strong></td>
+<td>Click-to-train in Roboflow or Colab notebook</td>
+<td>Fine-tune with custom scripts</td>
+<td>Novel architecture or very scarce data</td>
 </tr>
 <tr class="even">
-<td><strong>Model Training</strong></td>
-<td>PyTorch / YOLO CLI, manage compute yourself</td>
-<td>Train YOLO, RF-DETR etc. in UI or via API</td>
-<td>Custom architectures, fine-tuning foundation models</td>
+<td><strong>Evaluate results</strong></td>
+<td>Auto metrics dashboard in Roboflow</td>
+<td>Read exported CSV and plot manually</td>
+<td>Bias audits or statistical rigour required</td>
 </tr>
 <tr class="odd">
-<td><strong>Eval &amp; Testing</strong></td>
-<td>Write mAP, confusion matrix scripts manually</td>
-<td>Auto metrics dashboard, visual eval tools</td>
-<td>Statistical analysis, edge case testing, bias audits</td>
-</tr>
-<tr class="even">
-<td><strong>App Development</strong></td>
-<td>Build Flask/FastAPI inference server from scratch</td>
+<td><strong>Build an app</strong></td>
 <td>Roboflow Inference SDK + hosted API</td>
-<td>Scalable backend, auth, multi-model pipelines</td>
-</tr>
-<tr class="odd">
-<td><strong>Deployment (Cloud)</strong></td>
-<td>Docker, AWS/GCP setup, manage endpoints</td>
-<td>One-click deploy to hosted inference endpoint</td>
-<td>High availability, autoscaling, enterprise SLAs</td>
+<td>Code a lightweight local script</td>
+<td>Scalable multi-model pipeline or strict security</td>
 </tr>
 <tr class="even">
-<td><strong>Deployment (Edge)</strong></td>
-<td>Export ONNX/TensorRT, flash device manually</td>
-<td>Export-ready models + Inference on Jetson/RPi</td>
-<td>Custom hardware, optimisation, quantisation</td>
+<td><strong>Deploy to cloud</strong></td>
+<td>One-click hosted endpoint in Roboflow</td>
+<td>Set up your own server</td>
+<td>High traffic or enterprise reliability needs</td>
 </tr>
 <tr class="odd">
-<td><strong>Model Monitoring</strong></td>
-<td>Build custom logging and drift detection</td>
-<td>Dataset health checks, re-labelling workflows</td>
-<td>Production drift monitoring, automated retraining</td>
-</tr>
-<tr class="even">
-<td><strong>Team Collaboration</strong></td>
-<td>Git, shared drives, manual versioning</td>
-<td>Workspaces, dataset versioning, role management</td>
-<td>MLOps pipelines, CI/CD for models</td>
+<td><strong>Deploy to device</strong></td>
+<td>Export ready-to-run model file</td>
+<td>Flash and configure device manually</td>
+<td>Custom hardware or real-time performance constraints</td>
 </tr>
 </tbody>
 </table>
-</section></section>
-<section>
-<section id="how-ds-crp-can-help" class="title-slide slide level1 center">
-<h1>8 · How DS-CRP Can Help</h1>
+</section>
+<section class="slide level2">
 
-</section>
-<section id="the-data-science-central-research-platform" class="slide level2">
-<h2>The Data Science Central Research Platform</h2>
-<p>The <strong>DS-CRP</strong> is UQ’s centralised data-science support team. We exist to help researchers across the university move from <em>“I have data and an idea”</em> to <em>“I have a reproducible, evaluated, deployable result.”</em></p>
-<div class="cols">
-<div class="col small">
-<p><strong>We can help with</strong></p>
-<ul>
-<li>Framing the CV problem</li>
-<li>Dataset strategy &amp; annotation plans</li>
-<li>Model selection &amp; training</li>
-<li>Evaluation design (beyond F1!)</li>
-<li>Deployment advice</li>
-<li>Reproducibility, version control, MLOps</li>
-</ul>
-</div>
-<div class="col small">
-<p><strong>How we work</strong></p>
-<ul>
-<li>Free short consultations</li>
-<li>Project scoping sessions</li>
-<li>Hands-on collaboration</li>
-<li>Training and upskilling</li>
-<li>Cost-recovery model for hands-on support</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="book-a-consultation-its-free" class="slide level2">
-<h2>Book a consultation — it’s free</h2>
-<div class="center">
-<p><a href="https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&amp;origin=lprLink&amp;route=shorturl">➜ Book a short consultation</a></p>
-</div>
 </section></section>
 <section>
 <section id="practical-demos" class="title-slide slide level1 center">
@@ -1093,6 +1060,12 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 <section id="what-well-do-next-30-min" class="slide level2">
 <h2>What we’ll do next (30 min)</h2>
 <ol type="1">
+<li><strong>Roboflow Playground</strong>
+<ul>
+<li>(https://playground.roboflow.com/object-detection)</li>
+<li>Explore the UI and key features</li>
+<li>Upload a sample image and see how different open-source models perform</li>
+</ul></li>
 <li><strong>Roboflow Notebooks + Google Colab</strong> (~15 min)
 <ul>
 <li>Open a prepared notebook</li>
@@ -1108,32 +1081,19 @@ Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland
 </ol>
 </section></section>
 <section>
-<section id="wrap-up" class="title-slide slide level1 center">
-<h1>Wrap-up</h1>
+<section id="support-after-the-workshop" class="title-slide slide level1 center">
+<h1>10 · Support after the workshop</h1>
 
 </section>
-<section id="recap" class="slide level2">
-<h2>Recap</h2>
-<div class="small">
+<section id="book-a-consultation-its-free" class="slide level2">
+<h2>Book a consultation — it’s free</h2>
 <ul>
-<li><strong>CV</strong> = learning functions from pixels to structured outputs</li>
-<li><strong>Classification / Detection / Segmentation</strong> — pick the minimum task</li>
-<li><strong>Train / Val / Test</strong> — test set is sacred, group-aware splits matter</li>
-<li><strong>Domain shift</strong> is the #1 real-world failure; mitigate with a little fine-tuning</li>
-<li><strong>Transfer learning</strong> turns big problems into small ones</li>
-<li><strong>Foundational models</strong> (CLIP / SAM / GroundingDINO) are a free head-start</li>
-<li><strong>Ensembles &amp; workflows</strong> often beat a bigger model</li>
-<li><strong>Know when to DIY vs call DS-CRP</strong></li>
+<li>This workshop includes a 30 min session with me to help you with your specific project.</li>
+<li>We can discuss your project, help you choose the right approach, and even get you started</li>
 </ul>
+<div class="center">
+<p><a href="https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&amp;origin=lprLink&amp;route=shorturl">➜ Book a short consultation</a></p>
 </div>
-</section>
-<section id="take-these-with-you" class="slide level2">
-<h2>Take these with you</h2>
-<ul>
-<li><strong>DS-CRP consultation</strong> — <a href="https://forms.office.com/pages/responsepage.aspx?id=z3fjtrOdy0aRovrZYFuxXHrMWx_fw6JJmXvfvvf8jRBUMk9PUVJaVjUzWFNUQkdZWkQxRDUyTTFROSQlQCN0PWcu&amp;origin=lprLink&amp;route=shorturl">booking form</a></li>
-<li><strong>Roboflow Universe</strong> — universe.roboflow.com</li>
-<li><strong>HuggingFace Models</strong> — huggingface.co/models</li>
-</ul>
 </section>
 <section id="thank-you" class="slide level2 center">
 <h2>Thank you 🙏</h2>
