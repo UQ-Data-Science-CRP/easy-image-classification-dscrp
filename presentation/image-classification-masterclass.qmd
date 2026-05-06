@@ -1,7 +1,7 @@
 ---
 title: "Easy Image Classification"
 subtitle: "A 2-hour Masterclass · Theory, Code & Practical Demos"
-author: "Sebastian Lopez-Marcano — Data Science CRP, The University of Queensland"
+author: "Sebastian Lopez-Marcano (ORCID: https://orcid.org/0000-0002-0814-2906) — Data Science CRP, The University of Queensland"
 date: today
 format:
   revealjs:
@@ -567,9 +567,8 @@ When your project moves beyond a prototype, expert support becomes more importan
 - **Deployment to devices/edge**: hardware limits, speed, and model optimisation
 - **Production systems**: scaling, monitoring, maintenance, and reliability
 
----
 
-# 9 · Practical Demos
+# 8 · Practical Demos
 
 ## What we'll do next (15 min)
 
