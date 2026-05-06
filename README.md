@@ -13,6 +13,7 @@ The workshop focuses on clear decision-making for real projects: choosing the ri
 
 - Main slide deck: [presentation/image-classification-masterclass.qmd](presentation/image-classification-masterclass.qmd)
 - Rendered slides (if generated): [presentation/image-classification-masterclass.html](presentation/image-classification-masterclass.html)
+- Live slides (GitHub Pages): [image-classification-masterclass](https://uq-data-science-crp.github.io/easy-image-classification-dscrp/image-classification-masterclass.html#/title-slide)
 - Custom styling: [presentation/custom.scss](presentation/custom.scss)
 
 ## Masterclass Scope
